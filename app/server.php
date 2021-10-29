@@ -1,7 +1,7 @@
 <?php    
 function db_demo(){
     $username = 'xkeprt03';
-    $password = 'pu9andoj';
+    $password = 'otoj5epu';
     try {
         $PDO = new PDO("mysql:host=localhost;dbname=xkeprt03;port=/var/run/mysql/mysql.sock", $username, $password);
     } 
