@@ -8,6 +8,12 @@ key_file = res/generated_key
 src_dir  = src/
 dest_dir = ~/WWW/
 
+# This makefile takes everything in 'src_dir' directory
+# and uploads it into 'dest_dir' on FIT server mserlin
+# under user xfabom01. Make sure the 'key_file' has
+# permissions value of 600 or 400 (readable only by user)
+
+# TL;DR $(src_dir) -> $(dest_dir)
 
 update: | $(key_file)
 	@tar -cf - -C $(src_dir) . | ssh -i $(key_file) -oStrictHostKeyChecking=no xfabom01@merlin.fit.vutbr.cz "tar -xf - -C $(dest_dir)"
