@@ -5,3 +5,4 @@ phpinfo();
 exit();
 
 
+?>
