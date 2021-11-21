@@ -1,1 +1,3 @@
+RewriteEngine On
 AddHandler application/x-httpd-php74 .phpAddHandler application/x-httpd-php74 .php
+RewriteRule bordel bordel.php
