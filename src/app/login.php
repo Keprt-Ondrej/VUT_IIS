@@ -7,15 +7,22 @@
 
   $database = new database();
   $db = $database->init();
-  $obj = json_decode($_POST[0], false);
-  echo var_dumb($obj);
+  //$obj = json_decode($_POST[0], false);
+  $data = array();
+  $data["user"] = "admin";
+
+  return json_encode($data);
+  
 
   if($db != null){
     
-    $stmt = $db->prepare("SELECT * from ".);
+    $stmt = $db->prepare("SELECT * from ");
     $stmt->execute();
 
     $data = array();
+    $data["user"] = "admin";
+
+    return json_encode($data);
     
     while($row = $stmt->fetch()){
       $tmp = new stdClass();

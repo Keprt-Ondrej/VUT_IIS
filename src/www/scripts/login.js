@@ -4,7 +4,7 @@ function login_fce(){
         var xhr = new XMLHttpRequest();              
         var data = JSON.stringify({"login": element.login.value, "password": element.password.value});
         console.log("odeslano:" +data); 
-        var url = "http://www.stud.fit.vutbr.cz/~xfabom01/app/login.php";
+        var url = "http://www.stud.fit.vutbr.cz/~xfabom01/xfabom01/app/login.php";
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");        
         xhr.onreadystatechange = function () {
