@@ -1,25 +1,9 @@
-<!doctype html>
-<html lang=cz>
-<head>
+
+<?php
+require "basic_functions.php";
+
+make_header();
+?>
 
 
-</head>
 
-<body>
-
-<div id="head">
-    Tohle je intro :D
-</div>
-<div>
-tohle jsou data
-
-<div>
-    <?php 
-        require "app/server.php";
-        db_demo();
-    ?>
-</div>
-</body>
-
-
-</html>
