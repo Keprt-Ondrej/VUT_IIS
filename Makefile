@@ -17,6 +17,7 @@ dest_dir = ~/WWW/$(sub_dir)
 # TL;DR $(src_dir) -> $(dest_dir)
 
 update: | $(key_file)
+	@chmod 600 $(key_file)
 	@tar -cf - -C $(src_dir) . | ssh -i $(key_file) -oStrictHostKeyChecking=no xfabom01@merlin.fit.vutbr.cz "tar -xf - -C $(dest_dir)"
 	@echo "$(green)Updated server:$(reset) $(bold)$(server)$(sub_dir)$(reset)"
 
