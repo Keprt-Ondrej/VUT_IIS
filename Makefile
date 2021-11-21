@@ -3,10 +3,11 @@ green = \033[32m
 bold  = \033[1m
 reset = \033[0m
 
+sub_dir  = xfabom01/
 server   = http://www.stud.fit.vutbr.cz/~xfabom01/
 key_file = res/generated_key
 src_dir  = src/
-dest_dir = ~/WWW/
+dest_dir = ~/WWW/$(sub_dir)
 
 # This makefile takes everything in 'src_dir' directory
 # and uploads it into 'dest_dir' on FIT server mserlin
@@ -17,11 +18,11 @@ dest_dir = ~/WWW/
 
 update: | $(key_file)
 	@tar -cf - -C $(src_dir) . | ssh -i $(key_file) -oStrictHostKeyChecking=no xfabom01@merlin.fit.vutbr.cz "tar -xf - -C $(dest_dir)"
-	@echo "$(green)Updated server:$(reset) $(bold)$(server)$(reset)"
+	@echo "$(green)Updated server:$(reset) $(bold)$(server)$(sub_dir)$(reset)"
 
 open: update
-	@xdg-open $(server)
+	@xdg-open $(server)$(sub_dir)
 
 $(key_file):
-	@echo "$(red)SSH Key '$(key_file)' doesn't exist. Download it from github repository.$(reset)"
+	@echo "$(red)SSH Key '$(key_file)' doesn't exist. Download it from github repository and set up proper permissions.$(reset)"
 	@false
