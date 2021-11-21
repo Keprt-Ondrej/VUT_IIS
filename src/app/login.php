@@ -3,18 +3,19 @@
   header('Access-Control-Allow-Origin: *');
   header('Content-Type: application/json');
 
-  include_once './database.php';
+  //include_once './database.php';
 
-  $database = new database();
-  $db = $database->init();
-  //$obj = json_decode($_POST[0], false);
-  $data = array();
-  $data["user"] = "admin";
 
-  return json_encode($data);
+  //$database = new database();
+  //$db = $database->init();
+  //$obj = json_decode($_POST, false);
+  $data = json_decode(file_get_contents('php://input'), true); 
+  echo json_encode($data);
+  return;
+
   
 
-  if($db != null){
+if($db != null){
     
     $stmt = $db->prepare("SELECT * from ");
     $stmt->execute();
@@ -32,5 +33,5 @@
     }
 
       return json_encode($data);
-    }
+}
     else return json_encode("database init failed");
