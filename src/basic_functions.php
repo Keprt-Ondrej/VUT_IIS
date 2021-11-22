@@ -1,8 +1,7 @@
 <?php
-start_session();
-
-function make_header(){
-?><!DOCTYPE html>
+session_start();
+?>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset='utf-8'>  
@@ -52,7 +51,3 @@ function make_header(){
    
 </body>
 </html>
-<?php
-}
-
-?>
