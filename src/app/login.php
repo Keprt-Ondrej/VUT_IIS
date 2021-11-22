@@ -3,35 +3,48 @@
   header('Access-Control-Allow-Origin: *');
   header('Content-Type: application/json');
 
-  //include_once './database.php';
+  include_once 'database.php';
 
-
-  //$database = new database();
-  //$db = $database->init();
-  //$obj = json_decode($_POST, false);
-  $data = json_decode(file_get_contents('php://input'), true); 
-  echo json_encode($data);
-  return;
-
+  $database = new database;
+  $db = $database->init();
   
+  $recv_data = json_decode(file_get_contents('php://input'), true); 
 
-if($db != null){
+  if($db != null){
+
+    //echo  $recv_data["login"];
     
-    $stmt = $db->prepare("SELECT * from ");
+    $stmt = $db->prepare("SELECT * from users where login=". $recv_data["login"]);
     $stmt->execute();
 
-    $data = array();
-    $data["user"] = "admin";
+    $response = array();
 
-    return json_encode($data);
-    
     while($row = $stmt->fetch()){
-      $tmp = new stdClass();
-      $tmp->login    = $row["login"];
-      $tmp->password = $row["password"];
-      array_push($data, $tmp);
+            $tmp = new stdClass();
+            $tmp->login    = $row["login"];
+            $tmp->password = $row["password"];
+            array_push($response, $tmp);
+        }
+
+    echo json_encode($row);
+    return;
+
+    if(isset($row["login"]) && isset($row["password"])){
+        
+        $tmp->login = $row["login"];
+        $tmp->password = $row["password"];
+    }
+    else{
+      $response["user"] = "not";
+      echo json_encode($response);
     }
 
-      return json_encode($data);
-}
-    else return json_encode("database init failed");
+    if ($tmp->password == recv_data["password"]){
+      $response["user"] = $tmp->role;
+      echo json_encode($response);
+    }
+    else{
+      $response["user"] = "pwd";
+      echo json_encode($response);
+    }
+  }

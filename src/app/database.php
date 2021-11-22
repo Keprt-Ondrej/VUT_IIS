@@ -1,19 +1,24 @@
 <?php 
-  class Database {
-    $db_user  = 'xkeprt03';
-    $db_pass  = 'otoj5epu';
-    $database;
+  class database {
+
+    private $db_user  = 'xkeprt03';
+    private $db_pass  = 'otoj5epu';
+    private $db;
 
 
     public function init() {
+      
       try {
-        $database = new PDO("mysql:host=localhost;dbname=".$db_user.";port=/var/run/mysql/mysql.sock", $db_user,$db_pass);
+       $this->db = new PDO("mysql:host=localhost;dbname=".$this->db_user.";port=/var/run/mysql/mysql.sock", 
+        $this->db_user,$this->db_pass);
       }
       catch (PDOException $e) {
-        $database = null;
-        echo "Database connection failed.". e->getMessage(); 
+        $this->db = null;
+        echo "Database connection failed.". $e->getMessage(); 
       }
+      return $this->db;
     }
-    return database;
+    
   }
->?
+
+?>
