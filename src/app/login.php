@@ -12,8 +12,8 @@
   $recv_data = json_decode(file_get_contents('php://input'), true); // POST Data
 
   $response = array();
-  $response["session"] = session_id();
-  //print_r($response);
+  
+  $_SESSION["pocet"] = 0; 
 
   if($db != null){
 
