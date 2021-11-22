@@ -4,38 +4,31 @@ function login_fce(){
         var xhr = new XMLHttpRequest();              
         var data = JSON.stringify({"login": element.login.value, "password": element.password.value});
         console.log("odeslano:" +data); 
-        var url = "http://www.stud.fit.vutbr.cz/~xfabom01/xfabom01/app/login.php";
-        //var url = "http://itu.uranus-portal.com/userlogin";
+        var url = apiURL+"/app/login.php";
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");        
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                var element = document.getElementById('err_msg');
-                element.text = "";
                 console.log(xhr.responseText);
                 var received_data = JSON.parse(xhr.responseText);               
-                var user = received_data.user;
-
+                var user = received_data.user
                 switch(user){
-                    case "admin" :
+                    case "a" :
                         window.location.href = "admin/index.php";
                         break;
-                    case "teacher" :
+                    case "t" :
                         window.location.href = "teacher/index.php";
                         break;
-                    case "student" :
+                    case "s" :
                         window.location.href = "student/index.php";
                         break;
-                    case "not_user" :
-                        var element = document.getElementById('err_msg');
-                        element.text = "user not found";  
+                    case "not_user" :                       
+                        alert("Invalid login")
                         break;
-                    case "w_pwd" :
-                        var element = document.getElementById('err_msg');
-                        element.text = "wrong password or username";  
+                    case "w_pwd" :                        
+                        alert("Invalid password");
                         break;
                 }
-             
             }
         }
         xhr.send(data);
