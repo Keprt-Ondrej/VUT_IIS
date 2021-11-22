@@ -9,26 +9,35 @@ function login_fce(){
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");        
         xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {   
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var element = document.getElementById('err_msg');
+                element.text = "";
                 console.log(xhr.responseText);
-                //var received_data = JSON.parse(xhr.responseText);
-                //console.log(received_data);        
-                return;       
+                var received_data = JSON.parse(xhr.responseText);               
                 var user = received_data.user;
-                if(!user.localeCompare("admin")){
-                    window.location.href = "admin/index.php";
+
+                switch(user){
+                    case "admin" :
+                        window.location.href = "admin/index.php";
+                        break;
+                    case "teacher" :
+                        window.location.href = "teacher/index.php";
+                        break;
+                    case "student" :
+                        window.location.href = "student/index.php";
+                        break;
+                    case "not_user" :
+                        var element = document.getElementById('err_msg');
+                        element.text = "user not found";  
+                        break;
+                    case "w_pwd" :
+                        var element = document.getElementById('err_msg');
+                        element.text = "wrong password or username";  
+                        break;
                 }
-                else if(!user.localeCompare("teacher")){
-                    window.location.href = "teacher/index.php";
-                }
-                else if(!user.localeCompare("student")){
-                    window.location.href = "student/index.php";
-                }                
-                else{
-                    alert("Špatné jméno nebo heslo!");
-                }
+             
             }
-        }; 
+        }
         xhr.send(data);
     }     
     catch (e){
