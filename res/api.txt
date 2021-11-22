@@ -5,6 +5,7 @@ insert user
 request
     {
         "login" : "log";
+        "role" : "rol";
         "pwd" : "pwd";
     }
 response
