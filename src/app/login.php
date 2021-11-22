@@ -1,5 +1,5 @@
 <?php 
-
+  session_start();
   header('Access-Control-Allow-Origin: *');
   header('Content-Type: application/json');
 
@@ -12,6 +12,8 @@
   $recv_data = json_decode(file_get_contents('php://input'), true); // POST Data
 
   $response = array();
+  $response["session"] = session_id();
+  //print_r($response);
 
   if($db != null){
 
@@ -32,7 +34,6 @@
     else{
       $response["user"] = "w_pwd"; // passwords don't matchs 
       echo json_encode($response);  
-    }         
- 
+    } 
   }
 ?>

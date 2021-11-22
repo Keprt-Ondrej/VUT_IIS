@@ -10,7 +10,8 @@ function login_fce(){
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 console.log(xhr.responseText);
-                var received_data = JSON.parse(xhr.responseText);               
+                var received_data = JSON.parse(xhr.responseText);   
+                document.cookie = "ID_session="+received_data.session;          
                 var user = received_data.user
                 switch(user){
                     case "a" :
