@@ -29,6 +29,7 @@
 
     if($row["password"] == $recv_data["password"]){ 
       $response["user"] = $row["role"];
+      $_SESSION['role'] = $row["role"];
       echo json_encode($response);
     }
     else{
