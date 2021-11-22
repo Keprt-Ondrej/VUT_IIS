@@ -35,9 +35,12 @@
             </table>
         </form>
 
-    </div>   
+    </div>
     <div style="text-align:center">
         <a href="user/index.php" id="link">Pokračovat bez přihlášení</a>
-    </div>     
+    </div>
+    <div style="text-align:center">
+        <a id="err_msg"></a>
+    </div> 
 </body>
 </html>
