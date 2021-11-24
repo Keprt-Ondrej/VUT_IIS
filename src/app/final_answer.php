@@ -17,14 +17,14 @@
 
   if($db != null){
 
-    if(isset($_SESSION['role']) && $_SESSION['role']  == 'a'){
+    if(isset($_SESSION['role']) && $_SESSION['role']  == 't'){
 
-      $stmt = $db->prepare('INSERT INTO users (login,password,role)VALUES(:login,:password,:role)');
+      $stmt = $db->prepare('UPDATE questions SET answer=:answer WHERE question_ID=:question_ID, category_ID =:category_ID ');
 
       if($stmt->execute($recv_data))
         $response['status'] = 'ok';
       else
-        $response['status'] = 'login_used';
+        $response['status'] = 'error';
 
       echo json_decode($response);
 

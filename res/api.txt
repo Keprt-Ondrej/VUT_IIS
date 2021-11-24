@@ -3,26 +3,26 @@ API:
 ADMIN
 insert user
 request
-    {
+{
         "login" : "log";
         "role" : "a" | "m" | "s" | "t" ;
         "pwd" : "pwd";
-    }
+}
 response
-    {
+{
         "status" : "ok" | "login_used"
-    }
+}
 
 change pwd
 request
-    {
+{
         "login" : "login";
         "password": "pwd"
-    }
+}
 response
-    {
+{
         "status" : "ok" | "wrong_login"
-    }
+}
 MODERATOR
 
 display not approveved
@@ -36,12 +36,12 @@ response
 }
 
 approve teaching
-    requested 
-    {   
+requested 
+{   
         "approveved" : 0 | 1
         "login" : "login"
         "teach": "subject_ID"
-    }
+}
 response
 {
     "status" : "ok" | "error"
@@ -93,8 +93,9 @@ write final answer
 request
 {
         "question_ID" : "question_ID"
+        "category_ID" : "category_ID"
         "answer" : "answer"
-        // ?
+        
 
 }
 response
