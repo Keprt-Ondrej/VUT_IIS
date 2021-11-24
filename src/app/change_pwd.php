@@ -17,18 +17,9 @@
 
   if($db != null){
 
-    if(isset($_SESSION['role']) && $_SESSION['role']  == 'm'){
+    if(isset($_SESSION['role']) && $_SESSION['role']  == 'a'){
 
-      $stmt = $db->prepare("SELECT role from users where login=?"); 
-      $stmt->execute($recv_data["login"]);
-      $row = $stmt->fetch();
-
-      if($row['role'] != 't'){
-        $response['status'] = 'error';
-        return;
-      }
-
-      $stmt = $db->prepare('UPDATE teach SET approveved=:approveved WHERE login=:login ,subject_ID=:subject_ID ');
+      $stmt = $db->prepare('UPDATE users SET password=:password WHERE login=:login ');
 
       if($stmt->execute($recv_data))
         $response['status'] = 'ok';

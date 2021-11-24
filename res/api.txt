@@ -13,11 +13,11 @@ response
         "status" : "ok" | "login_used"
     }
 
-edit user
+change pwd
 request
     {
-        "login" : "log";
-        "new_pwd": "pwd"
+        "login" : "login";
+        "password": "pwd"
     }
 response
     {
