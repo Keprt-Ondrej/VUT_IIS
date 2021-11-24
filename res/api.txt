@@ -36,7 +36,8 @@ response
 
 approve teaching
     requested 
-    {
+    {   
+        "approveved" : 0 | 1;
         "login" : "login";
         "teach": "subject_ID";
     }
