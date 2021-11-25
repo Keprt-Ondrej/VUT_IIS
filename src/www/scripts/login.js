@@ -20,9 +20,10 @@ function login_fce(){
                         show_admin(received_data.login);
                         fill_header(received_data.login,"administrátor");
                     break;
-                    case "t" :
-                        window.location.href = "teacher/index.php";
+                    case "m" :
                         login.innerHTML = "";
+                        show_moderator();
+                        fill_header(received_data.login,"moderátor");
                     break;
                     case "s" :
                         window.location.href = "student/index.php";
@@ -87,9 +88,13 @@ function require_user(){
                     console.log(login);
                     switch(role){
                         case "a" :
-                                show_admin();
-                                fill_header(login,"administrátor");                                
-                            break;
+                            show_admin();
+                            fill_header(login,"administrátor");                                
+                        break;
+                        case "m":
+                            show_moderator();
+                            fill_header(received_data.login,"moderátor");
+                        break;
                         case "t" :
                             window.location.href = "teacher/index.php";
                             break;
@@ -114,7 +119,17 @@ function fill_header(login,role){
     document.getElementById("header_role").innerHTML = role;
 }
 
-function show_admin(){
-    loadHTML("header","header.html",false);    
+function show_admin(){        
     loadHTML("navigation","admin/admin_navigation.html");
+    loadHTML("header","header.html",false);
+}
+
+function show_moderator(){
+    loadHTML("navigation","moderator/moderator_navigation.html");
+    loadHTML("header","header.html",false);
+}
+
+function show_teacher(){
+    loadHTML("navigation","teacher/teacher_navigation.html");
+    loadHTML("header","header.html",false);
 }
