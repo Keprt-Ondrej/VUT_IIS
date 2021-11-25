@@ -4,7 +4,7 @@
         "insert_user":{
             "request":{
                 "login": "username",
-                "role" : "a | m | s | t",
+                "role" : "a | m | r",
                 "pwd"  : "password"
             },
             "response":{
@@ -24,13 +24,12 @@
 
         "list_users":{
             "request":{
-
             },
             "response":{
                 "users":[
                     {
                         "login": "username",
-                        "role": "role",
+                        "role": "role"
                     }
                 ]
                 
@@ -44,80 +43,54 @@
             "response":{
                 "status": "ok | wrong_login"
             }
+<<<<<<< HEAD
         },
 
+=======
+        }
+>>>>>>> 43c52da... fix: merge conflict
     },
 
     "MODERATOR":{
+<<<<<<< HEAD
         "show_subjects":{
-            "request":{
-                "uapproved" : "true | false",
-                "approved"  : "true | false",
-                "all"       : "true | false"
-            },
-            "response":{
-                "status": "ok | unauthorized",
-                "subjects":[
-                    {
-                        "login": "teacher_username",
-                        "teach": "unapproved_subject_ID",
-                        "__comment-REMOVE__": "There will be N times of these subjects"
-                    }
-                ]
-            }
-        },
-
+=======
         "approve_subject":{
+>>>>>>> cede56b... add: REGISTERED role
             "request":{
-                "approved": "true | false",
-                "login"   : "username",
-                "subject_ID" : "subject_ID"
+                "approved"  : "true | false",
+                "login"     : "username",
+                "subject_ID": "subject_ID"
             },
             "response":{
-                "login" : "login",
-                "status": "ok | internal_error"
+                "status"    : "ok | internal_error",
+                "approved"  : "true | false",
+                "login"     : "username",
+                "subject_ID": "subject_ID"
             }
         }
     },
 
     "TEACHER":{
-        "approve_students":{
+        "approve_student":{
             "request":{
-                "students":[
-                    {   
-                        "login" : "student_username",
-                        "study" : "subject_ID",
-                        "approved": "true | false",
-                        "__comment-REMOVE__": "There will be N times of these students"
-                    }
-                ]
+                "login" : "student_username",
+                "study" : "subject_ID",
+                "approved": "true | false"
             },
             "response":{
-                "status": "ok | internal_error"
-            }
-        },
-
-        "ask_question":{
-            "request":{
-                "category_ID"  : "category_ID",
-                "brief"        : "brief_version",
-                "full_question": "question"
-            },
-            "response":{
-                "status": "ok | internal_error"
+                "status": "ok | internal_error",
+                "login" : "student_username",
+                "study" : "subject_ID",
+                "approved": "true | false"
             }
         },
 
         "mark_answer":{
             "request":{
-                "answers":[
-                    {
-                        "login"  : "student_username",
-                        "study"  : "subject_ID",
-                        "correct": "true | false",
-                        "__comment-REMOVE__": "There will be N times of these answers"
-                    }
-                ]
+                "login"  : "student_username",
+                "study"  : "subject_ID",
+                "correct": "true | false"
             },
             "response":{
                 "status": "ok | internal_error"
@@ -137,18 +110,6 @@
     },
 
     "STUDENT":{
-        "ask_question":{
-            "__comment-REMOVE__": "This is the same request as teacher",
-            "request":{
-                "category_ID"  : "category_ID",
-                "brief"        : "brief_version",
-                "full_question": "question"
-            },
-            "response":{
-                "status": "ok | internal_error"
-            }
-        },
-
         "write_answer":{
             "request":{
                "login"      : "login",
@@ -176,11 +137,63 @@
             "request":{
                "answer_login"  : "student_login",
                "question_ID"   : "question_ID",
-               "reaction"      : "reaction_message",
-                "__comment-REMOVE__": "Removed reaction login since that is implied by sessionID"
+               "reaction"      : "reaction_message"
             },
             "response":{
                 "status": "ok | internal_error"
+            }
+        }
+    },
+
+    "TEACHER | STUDENT":{
+        "ask_question":{
+            "request":{
+                "category_ID"  : "category_ID",
+                "brief"        : "brief_version",
+                "full_question": "question"
+            },
+            "response":{
+                "status": "ok | internal_error"
+            }
+        }
+    },
+
+    "REGISTERED":{
+        "create_course":{
+            "request":{
+                "subject_ID"  : "subject_shortcut",
+                "subject_name": "subject_full_name"
+            },
+            "response":{
+                "status": "ok | internal_error"
+            }
+        },
+
+        "sign_up_as_student":{
+            "request":{
+                "subject_ID"  : "subject_shortcut"
+            },
+            "response":{
+                "status": "ok | internal_error"
+            }
+        }
+    },
+
+    "UNREGISTERED":{
+        "list_subjects":{
+            "request":{
+                "unapproved": "true | false",
+                "approved"  : "true | false",
+                "undecided" : "true | false"
+            },
+            "response":{
+                "status": "ok | unauthorized",
+                "subjects":[
+                    {
+                        "login": "teacher_username",
+                        "teach": "unapproved_subject_ID"
+                    }
+                ]
             }
         }
     }
