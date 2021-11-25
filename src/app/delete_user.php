@@ -25,7 +25,7 @@
         $response['status'] = 'wrong_login';
 
 
-      echo json_decode($response);
+      echo json_encode($response);
 
     }
   }

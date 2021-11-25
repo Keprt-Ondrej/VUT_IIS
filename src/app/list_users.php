@@ -29,7 +29,7 @@
             array_push($response, $tmp);
         } 
 
-      echo json_decode($response);
+      echo json_encode($response);
 
     }
   }
