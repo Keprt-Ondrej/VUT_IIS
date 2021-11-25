@@ -28,7 +28,7 @@
       else
         $response['status'] = 'internal_error';
 
-      echo json_decode($response);
+      echo json_encode($response);
 
     }
   }
