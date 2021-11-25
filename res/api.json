@@ -79,9 +79,9 @@
 
         "mark_answer":{
             "request":{
-                "login"  : "student_username",
-                "study"  : "subject_ID",
-                "correct": "true | false"
+                "login"      : "student_username",
+                "question_ID": "question_ID",
+                "correct"    : "true | false"
             },
             "response":{
                 "status": "ok | internal_error"
@@ -116,8 +116,7 @@
             "request":{
                 "answer_login"  : "student_login",
                 "question_ID"   : "question_ID",
-                "reaction"      : "reaction_message",
-                "__comment-REMOVE__": "Removed reaction login since that is implied by sessionID"
+                "reaction"      : "reaction_message"
             },
             "response":{
                 "status": "ok | internal_error"
