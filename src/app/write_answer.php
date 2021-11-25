@@ -19,15 +19,23 @@
 
     if(isset($_SESSION['role']) && $_SESSION['role']  == 's' ){
 
-      $stmt = $db->prepare('INSERT INTO answers (login,question_ID,answer)VALUES(:login,:question_ID,:answer)');
+      $stmt = $stmt = $db->prepare("SELECT questions.question_ID answers.question_ID from answers LEFT JOIN answers ON questions.question_ID = answers.question_ID  "); // join s answer ?
 
-      if($stmt->execute($recv_data))
-        $response['status'] = 'ok';
-      else
+          // asi to bude zle ! 
+  
+      if($stmt['login'] != $recv_data['login']){
         $response['status'] = 'error';
+      }
+      else{
+        $stmt = $db->prepare('INSERT INTO answers (login,question_ID,answer)VALUES(:login,:question_ID,:answer)');
+
+        if($stmt->execute($recv_data))
+          $response['status'] = 'ok';
+        else
+          $response['status'] = 'error';
+      }
 
       echo json_decode($response);
-
     }
   }
 ?>
