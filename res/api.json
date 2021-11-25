@@ -43,20 +43,11 @@
             "response":{
                 "status": "ok | wrong_login"
             }
-<<<<<<< HEAD
-        },
-
-=======
         }
->>>>>>> 43c52da... fix: merge conflict
     },
 
     "MODERATOR":{
-<<<<<<< HEAD
-        "show_subjects":{
-=======
         "approve_subject":{
->>>>>>> cede56b... add: REGISTERED role
             "request":{
                 "approved"  : "true | false",
                 "login"     : "username",
