@@ -20,12 +20,30 @@
             "response":{
                 "status": "ok | wrong_login"
             }
+        },
+
+        "list_users":{
+            "request":{
+
+            },
+            "response":{
+                "users":[
+                    {
+                        "login": "username",
+                        "role": "role",
+                    }
+                ]
+                
+            }
         }
     },
 
     "MODERATOR":{
         "uapproved_subjects":{
             "request":{
+                "uapproved" : "true | false",
+                "approved"  : "true | false",
+                "all"       : "true | false"
             },
             "response":{
                 "status": "ok | unauthorized",
@@ -46,6 +64,7 @@
                 "subject_ID" : "subject_ID"
             },
             "response":{
+                "login" : "login",
                 "status": "ok | internal_error"
             }
         }

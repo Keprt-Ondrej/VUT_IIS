@@ -13,6 +13,8 @@
 
   $response = array();
 
+  $recv_data["reaction_login"] = $_SESSION["login"];
+
   $response["session"] = session_id();
 
   if($db != null){
