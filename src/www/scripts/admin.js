@@ -74,7 +74,7 @@ function show_all_users_content(){
                 <tr class="header"><th>Login</th><th>Role</th><th></th><th></th></tr>`
                 var table = document.getElementById("myTable");
                 received_data.forEach(element => {                    
-                    table.innerHTML += `<tr><td>`+ element.login + `</td><td>` + stringify_role(element.password) + `</td><td>button chng pwd</td><td>delete user button</td></tr>`;
+                    table.innerHTML += `<tr><td>`+ element.login + `</td><td>` + stringify_role(element.role) + `</td><td>button chng pwd</td><td>delete user button</td></tr>`;
                 });
                 destination.innerHTML += "</table>";
             }
