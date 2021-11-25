@@ -32,6 +32,7 @@
       $_SESSION["role"] = $row["role"];
       $response["login"] = $row["login"];      
       $_SESSION["login"] = $row["login"];
+
       echo json_encode($response);
     }
     else{
