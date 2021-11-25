@@ -28,7 +28,10 @@
     }
 
     if($row["password"] == $recv_data["password"]){ 
-      $response["user"] = $row["role"];
+      $response["role"] = $row["role"];
+      $_SESSION["role"] = $row["role"];
+      $response["login"] = $row["login"];      
+      $_SESSION["login"] = $row["login"];
       echo json_encode($response);
     }
     else{
