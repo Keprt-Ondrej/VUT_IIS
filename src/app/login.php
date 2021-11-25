@@ -22,7 +22,7 @@
     $row = $stmt->fetch();
 
     if(!isset($row["login"])){ // user not found
-      $response["user"] = "not_user";
+      $response["role"] = "not_user";
       echo json_encode($response);
       return;
     }
@@ -36,7 +36,7 @@
       echo json_encode($response);
     }
     else{
-      $response["user"] = "w_pwd"; // passwords don't matchs 
+      $response["role"] = "w_pwd"; // passwords don't matchs 
       echo json_encode($response);  
     } 
   }
