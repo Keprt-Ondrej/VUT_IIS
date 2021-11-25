@@ -19,7 +19,11 @@
 
       $stmt = $stmt = $db->prepare("DELETE  from users WHERE login=:login");
 
-      $stmt->execute($recv_data);
+      if($stmt->execute($recv_data))
+        $response['status'] = 'ok';
+      else
+        $response['status'] = 'wrong_login';
+
 
       echo json_decode($response);
 
