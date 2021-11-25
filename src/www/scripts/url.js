@@ -14,3 +14,29 @@ function readCookie(name) {
     }
     return null;
 }
+
+function loadHTML(destination,file_name,sync=true){
+    var xhttp;
+    console.log(destination);
+    var element = document.getElementById(destination);
+    let file = file_name;
+    if (file){
+        xhttp = new XMLHttpRequest();
+        xhttp.open("GET",`${file}`,sync);
+        xhttp.onreadystatechange = function(){
+            if(this.readyState == 4){
+                if(this.status == 200){                    
+                    element.innerHTML = `${this.responseText}`;
+                }
+                if(this.status == 404){element.innerHTML = "Not found"}
+            }
+        }        
+        xhttp.send();
+        return;
+    }
+}   
+
+function test_cookie(){
+    var session = readCookie("PHPSESSID");
+    console.log(session);
+}

@@ -1,0 +1,107 @@
+
+#site-margin{
+    margin-top: 10px;
+    margin-left: 20px
+}
+
+#login-information{
+    position: relative;
+    left:20px        
+} 
+
+table.menu_table, th.menu_table, td.menu_table{
+    text-align: center;     
+    width: 200px;
+    padding: 12px;
+    border: 2px solid black;
+}
+
+/*nav bar */
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+    border: 1px solid black;
+    border-bottom: none;
+}
+  
+li a{
+    display: block;
+    border-bottom: 1px solid #555;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+    text-align: center;
+}
+
+li a:hover {
+    background-color: #555;
+    color: white;
+}
+/*end nav bar */
+
+
+table.proffesor-upcoming_tests{
+    border: 1px solid black;
+    width: 100%;    
+    padding: 12px;
+    text-align: center;            
+}
+th.proffesor-upcoming_tests, td.proffesor-upcoming_tests{
+    border: 1px solid black;
+    width: 25%;
+    padding: 12px;
+    text-align: center; 
+}
+
+table.proffesor-my_groups{
+    border: 1px solid black;
+    width: 100%;    
+    padding: 12px;
+    text-align: center;
+    margin-bottom: 40px;            
+}
+th.proffesor-my_groups, td.proffesor-my_groups{
+    border: 1px solid black;
+    width: 16.6666%;
+    padding: 12px;
+    text-align: center; 
+}
+
+th.proffesor-create_test td.proffesor-create_test{
+    border: none;   
+    /*width: 100px;*/
+}
+table.proffesor-create_test{
+    border: none;
+    /*border: 1px solid black;*/
+} 
+
+th.admin-users td.proffesor-create_test{
+    border: none;   
+    /*width: 100px;*/
+}
+
+
+#link{
+    color: #000000
+} 
+
+#menu-style{
+    float:left;
+    width: 200px;
+    margin-right: 20px;
+} 
+
+#content{
+    margin-left: 240px;
+    margin-right: 20px;    
+}
+
+#uprostred{
+    text-align: center;
+}
+
+
