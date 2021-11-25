@@ -25,7 +25,7 @@
       while($row = $stmt->fetch()){
             $tmp = new stdClass();
             $tmp->login    = $row["login"];
-            $tmp->password = $row["role"];
+            $tmp->role = $row["role"];
             array_push($response, $tmp);
         } 
 
