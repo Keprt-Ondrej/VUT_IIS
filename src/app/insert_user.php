@@ -19,9 +19,9 @@
 
     if(isset($_SESSION['role']) && $_SESSION['role']  == 'a'){
 
-      $stmt = $db->prepare('INSERT INTO users (login,password,role)VALUES(?,?,?)');
+      $stmt = $db->prepare('INSERT INTO users (login,password,role)VALUES(:login,:pwd,:role)');
 
-      if($stmt->execute(array($recv_data["login"],$recv_data["pwd"],$recv_data["role"])))    //$recv_data
+      if($stmt->execute($recv_data))
         $response['status'] = 'ok';
       else
         $response['status'] = 'login_used';
