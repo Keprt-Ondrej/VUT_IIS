@@ -43,7 +43,7 @@
             "request":{
                 "approved": "true | false",
                 "login"   : "username",
-                "pwd"     : "password"
+                "subject_ID" : "subject_ID"
             },
             "response":{
                 "status": "ok | internal_error"
@@ -55,9 +55,10 @@
         "approve_students":{
             "request":{
                 "students":[
-                    {
+                    {   
                         "login" : "student_username",
                         "study" : "subject_ID",
+                        "approved": "true | false",
                         "__comment-REMOVE__": "There will be N times of these students"
                     }
                 ]
@@ -97,7 +98,8 @@
         "final_answer":{
             "request":{
                 "category_ID": "category_ID",
-                "answer"     : "subject_ID"
+                "question_ID": "question_ID",
+                "answer"     : "answer"
             },
             "response":{
                 "status": "ok | internal_error"

@@ -19,12 +19,12 @@
 
     if(isset($_SESSION['role']) && $_SESSION['role']  == 'a'){
 
-      $stmt = $db->prepare('UPDATE users SET password=:password WHERE login=:login ');
+      $stmt = $db->prepare('UPDATE users SET password=:pwd WHERE login=:login ');
 
       if($stmt->execute($recv_data))
         $response['status'] = 'ok';
       else
-        $response['status'] = 'error';
+        $response['status'] = 'internal_error';
 
       echo json_decode($response);
 

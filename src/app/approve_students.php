@@ -28,12 +28,12 @@
         return;
       }
 
-      $stmt = $db->prepare('UPDATE study SET approveved=:approveved WHERE login=:login ,subject_ID=:subject_ID');
+      $stmt = $db->prepare('UPDATE study SET approveved=:approved WHERE login=:login ,subject_ID=:study');
 
       if($stmt->execute($recv_data))
         $response['status'] = 'ok';
       else
-        $response['status'] = 'error';
+        $response['status'] = 'internal_error';
 
       echo json_decode($response);
 
