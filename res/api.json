@@ -35,11 +35,21 @@
                 ]
                 
             }
-        }
+        },
+
+        "delete_user":{
+            "request":{
+                "login": "username",
+            },
+            "response":{
+                "status": "ok | wrong_login"
+            }
+        },
+
     },
 
     "MODERATOR":{
-        "uapproved_subjects":{
+        "show_subjects":{
             "request":{
                 "uapproved" : "true | false",
                 "approved"  : "true | false",
