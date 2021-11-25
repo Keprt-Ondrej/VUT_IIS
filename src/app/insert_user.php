@@ -13,21 +13,20 @@
 
   $response = array();
 
-  $response["session"] = session_id();
+  //$response["session"] = session_id(); 
 
   if($db != null){
 
     if(isset($_SESSION['role']) && $_SESSION['role']  == 'a'){
 
-      $stmt = $db->prepare('INSERT INTO users (login,password,role)VALUES(:login,:password,:role)');
+      $stmt = $db->prepare('INSERT INTO users (login,password,role)VALUES(?,?,?)');
 
-      if($stmt->execute($recv_data))
+      if($stmt->execute(array($recv_data["login"],$recv_data["pwd"],$recv_data["role"])))    //$recv_data
         $response['status'] = 'ok';
       else
         $response['status'] = 'login_used';
 
-      echo json_decode($response);
-
+      echo json_encode($response);
     }
   }
 ?>
