@@ -1,0 +1,156 @@
+{
+    "name": "IIS API",
+    "ADMIN":{
+        "insert_user":{
+            "request":{
+                "login": "username",
+                "role" : "a | m | s | t",
+                "pwd"  : "password"
+            },
+            "response":{
+                "status": "ok | login_used"
+            }
+        },
+
+        "change_password":{
+            "request":{
+                "login": "username",
+                "pwd"  : "new_password"
+            },
+            "response":{
+                "status": "ok | wrong_login"
+            }
+        }
+    },
+
+    "MODERATOR":{
+        "uapproved_subjects":{
+            "request":{
+            },
+            "response":{
+                "status": "ok | unauthorized",
+                "subjects":[
+                    {
+                        "login": "teacher_username",
+                        "teach": "unapproved_subject_ID",
+                        "__comment-REMOVE__": "There will be N times of these subjects"
+                    }
+                ]
+            }
+        },
+
+        "approve_subject":{
+            "request":{
+                "approved": "true | false",
+                "login"   : "username",
+                "pwd"     : "password"
+            },
+            "response":{
+                "status": "ok | internal_error"
+            }
+        }
+    },
+
+    "TEACHER":{
+        "approve_students":{
+            "request":{
+                "students":[
+                    {
+                        "login" : "student_username",
+                        "study" : "subject_ID",
+                        "__comment-REMOVE__": "There will be N times of these students"
+                    }
+                ]
+            },
+            "response":{
+                "status": "ok | internal_error"
+            }
+        },
+
+        "ask_question":{
+            "request":{
+                "category_ID"  : "category_ID",
+                "brief"        : "brief_version",
+                "full_question": "question"
+            },
+            "response":{
+                "status": "ok | internal_error"
+            }
+        },
+
+        "mark_answer":{
+            "request":{
+                "answers":[
+                    {
+                        "login"  : "student_username",
+                        "study"  : "subject_ID",
+                        "correct": "true | false",
+                        "__comment-REMOVE__": "There will be N times of these answers"
+                    }
+                ]
+            },
+            "response":{
+                "status": "ok | internal_error"
+            }
+        },
+
+        "final_answer":{
+            "request":{
+                "category_ID": "category_ID",
+                "answer"     : "subject_ID"
+            },
+            "response":{
+                "status": "ok | internal_error"
+            }
+        }
+    },
+
+    "STUDENT":{
+        "ask_question":{
+            "__comment-REMOVE__": "This is the same request as teacher",
+            "request":{
+                "category_ID"  : "category_ID",
+                "brief"        : "brief_version",
+                "full_question": "question"
+            },
+            "response":{
+                "status": "ok | internal_error"
+            }
+        },
+
+        "write_answer":{
+            "request":{
+               "login"      : "login",
+               "question_ID": "question_ID",
+               "answer"     : "answer"
+            },
+            "response":{
+                "status": "ok | internal_error"
+            }
+        },
+
+        "react":{
+            "request":{
+                "answer_login"  : "student_login",
+                "question_ID"   : "question_ID",
+                "reaction"      : "reaction_message",
+                "__comment-REMOVE__": "Removed reaction login since that is implied by sessionID"
+            },
+            "response":{
+                "status": "ok | internal_error"
+            }
+        },
+
+        "vote":{
+            "request":{
+               "answer_login"  : "student_login",
+               "question_ID"   : "question_ID",
+               "reaction"      : "reaction_message",
+                "__comment-REMOVE__": "Removed reaction login since that is implied by sessionID"
+            },
+            "response":{
+                "status": "ok | internal_error"
+            }
+        }
+    }
+}
