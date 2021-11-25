@@ -13,6 +13,8 @@
 
   $response = array();
 
+  $recv_data["reaction_login"] = $_SESSION["login"];
+
   $response["session"] = session_id();
 
   if($db != null){
@@ -24,9 +26,9 @@
       if($stmt->execute($recv_data))
         $response['status'] = 'ok';
       else
-        $response['status'] = 'error';
+        $response['status'] = 'internal_error';
 
-      echo json_decode($response);
+      echo json_encode($response);
 
     }
   }

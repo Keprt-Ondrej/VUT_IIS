@@ -24,9 +24,9 @@
       if($stmt->execute($recv_data))
         $response['status'] = 'ok';
       else
-        $response['status'] = 'error';
+        $response['status'] = 'internal_error';
 
-      echo json_decode($response);
+      echo json_encode($response);
 
     }
   }

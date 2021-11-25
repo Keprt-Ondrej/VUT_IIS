@@ -13,18 +13,17 @@
 
   $response = array();
 
-  $response["session"] = session_id();
-
   if($db != null){
 
-    if(isset($_SESSION['role']) && $_SESSION['role']  == 'a'){
+    if(isset($_SESSION['role']) && ($_SESSION['role']  == 'a'  || $_SESSION['role']  == 'm')){
 
-      $stmt = $db->prepare('UPDATE users SET password=:pwd WHERE login=:login ');
+      $stmt = $stmt = $db->prepare("DELETE  from users WHERE login=:login");
 
       if($stmt->execute($recv_data))
         $response['status'] = 'ok';
       else
-        $response['status'] = 'internal_error';
+        $response['status'] = 'wrong_login';
+
 
       echo json_encode($response);
 

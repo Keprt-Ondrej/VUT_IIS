@@ -20,12 +20,40 @@
             "response":{
                 "status": "ok | wrong_login"
             }
-        }
+        },
+
+        "list_users":{
+            "request":{
+
+            },
+            "response":{
+                "users":[
+                    {
+                        "login": "username",
+                        "role": "role",
+                    }
+                ]
+                
+            }
+        },
+
+        "delete_user":{
+            "request":{
+                "login": "username",
+            },
+            "response":{
+                "status": "ok | wrong_login"
+            }
+        },
+
     },
 
     "MODERATOR":{
-        "uapproved_subjects":{
+        "show_subjects":{
             "request":{
+                "uapproved" : "true | false",
+                "approved"  : "true | false",
+                "all"       : "true | false"
             },
             "response":{
                 "status": "ok | unauthorized",
@@ -43,9 +71,10 @@
             "request":{
                 "approved": "true | false",
                 "login"   : "username",
-                "pwd"     : "password"
+                "subject_ID" : "subject_ID"
             },
             "response":{
+                "login" : "login",
                 "status": "ok | internal_error"
             }
         }
@@ -55,9 +84,10 @@
         "approve_students":{
             "request":{
                 "students":[
-                    {
+                    {   
                         "login" : "student_username",
                         "study" : "subject_ID",
+                        "approved": "true | false",
                         "__comment-REMOVE__": "There will be N times of these students"
                     }
                 ]
@@ -97,7 +127,8 @@
         "final_answer":{
             "request":{
                 "category_ID": "category_ID",
-                "answer"     : "subject_ID"
+                "question_ID": "question_ID",
+                "answer"     : "answer"
             },
             "response":{
                 "status": "ok | internal_error"

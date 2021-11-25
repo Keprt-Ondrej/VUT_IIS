@@ -19,14 +19,14 @@
 
     if(isset($_SESSION['role']) && $_SESSION['role']  == 't' || $_SESSION['role']  == 's' ){
 
-      $stmt = $db->prepare('INSERT INTO questions (category_ID,brief,full_question)VALUES(:login,:password,:role)');
+      $stmt = $db->prepare('INSERT INTO questions (category_ID,brief,full_question)VALUES(:category_ID,:brief,:full_question)');
 
       if($stmt->execute($recv_data))
         $response['status'] = 'ok';
       else
-        $response['status'] = 'error';
+        $response['status'] = 'internal_error';
 
-      echo json_decode($response);
+      echo json_encode($response);
 
     }
   }
