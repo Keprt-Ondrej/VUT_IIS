@@ -16,7 +16,7 @@
 
   if($db != null){
 
-    if(isset($_SESSION['role']) && $_SESSION['role']  == 's' ){
+    if(isset($_SESSION['role']) && ($_SESSION['role']  == 'a'  || $_SESSION['role']  == 'm')){
 
       $stmt = $stmt = $db->prepare("SELECT login,role from users");
 
