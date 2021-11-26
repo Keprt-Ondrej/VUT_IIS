@@ -9,7 +9,8 @@
 
   $recv_data = json_decode(file_get_contents('php://input'), true); // POST Data
 
-    if(isset($_SESSION['role']) && $_SESSION['role']  == 'a'){
+    if(isset($_SESSION['role']) && $_SESSION['role']  != 's'){
+
       $retval = $database->approve_student($recv_data);
       echo json_encode($retval);
     }

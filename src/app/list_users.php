@@ -13,7 +13,14 @@
 
       $retval = $database->list_users($recv_data);
 
+      if($retval['status'] != 'ok'){
+        echo json_encode($retval);
+        return;
+      }
+
       $response = array();
+
+      $response['status'] = 'ok';
 
        while($row = $retval['statement']->fetch()){
             $tmp = new stdClass();

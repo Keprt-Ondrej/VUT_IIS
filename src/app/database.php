@@ -29,7 +29,7 @@
 
     public function insert_user($args){
       $response = array();
-      $response["status"] = "ok";
+      $response["status"] = "ok"; 
       if(isset($this->db)){
         try{
           $this->db->beginTransaction();

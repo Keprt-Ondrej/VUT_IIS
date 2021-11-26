@@ -9,7 +9,7 @@
 
   $recv_data = json_decode(file_get_contents('php://input'), true); // POST Data
 
-    if(isset($_SESSION['role']) && $_SESSION['role']  == 'a'){
+    if(isset($_SESSION['role']) && ($_SESSION['role']  == 'a' || $_SESSION['role']  == 'm')){
       $retval = $database->approve_subject($recv_data);
       echo json_encode($retval);
     }
