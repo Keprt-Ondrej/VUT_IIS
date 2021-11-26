@@ -11,7 +11,7 @@
 
     if(isset($_SESSION['role']) && ($_SESSION['role']  == 'a' || $_SESSION['role'] == 's' )){
 
-      $retval = $database->write_answer($recv_data);
+      $retval = $database->react($recv_data);
       echo json_encode($retval);
     }
 ?>

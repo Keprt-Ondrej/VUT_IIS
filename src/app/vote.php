@@ -9,10 +9,9 @@
 
   $recv_data = json_decode(file_get_contents('php://input'), true); // POST Data
 
-    if(isset($_SESSION['role']) && ($_SESSION['role']  == 'a' || $_SESSION['role'] == 's' )){
-
-      $retval = $database->write_answer($recv_data);
+    if(isset($_SESSION['role']) && ($_SESSION['role']  == 't' || $_SESSION['role']  == 'a')){
+      $retval = $database->vote($recv_data);
       echo json_encode($retval);
     }
 ?>
-  
+
