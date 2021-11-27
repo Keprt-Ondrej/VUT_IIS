@@ -276,6 +276,22 @@
                     }
                 ]
             }
-        }
-    }
+        },
+
+        "list_points":{
+            "request":{
+            },
+            "response":{
+                "status" : "ok | subject_not_found",
+                "points_leader":[
+                    {   
+                        "subject_ID"   : "subject_ID",
+                        "login"        : "login",
+                        "points"  : "points",
+                    }
+                ]
+            }
+        } 
+
+    
 }

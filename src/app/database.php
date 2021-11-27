@@ -531,6 +531,24 @@
       return $response;
     }
 
+    public function list_votes($args){
+      $response = array();
+      $response["status"] = "ok";
+      if(isset($this->db)){
+        try{
+          $statement = $this->db->prepare("SELECT subject_ID,login,points FROM study ORDER BY points");
+          $statement->execute();
+
+          $response["statement"] = $statement;
+        }
+        catch(PDOException $e){
+          $response["status"] = "Database error: ".$e->getMessage();
+        }
+      }
+      else $response["status"] = "Database connection not initialized";
+      return $response;
+    }
+
   }
 /*
 
@@ -605,6 +623,8 @@ List reactions
   SELECT answer FROM answers WHERE question_ID=:question_ID AND login=:login
   SELECT * FROM reactions WHERE question_ID=:question_ID AND login=:login
 
+List_votes
+  SELECT subject_ID,login,points FROM study ORDER BY points
 */
 
 
