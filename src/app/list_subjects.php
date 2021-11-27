@@ -26,6 +26,7 @@
     $tmp = new stdClass();
     $tmp->login  = $row["login"];
     $tmp->subject_ID = $row["subject_ID"];
+    $tmp->subject_name = $row["subject_name"];
     array_push($response['subjects'], $tmp);
   } 
   echo json_encode($response);
