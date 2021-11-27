@@ -179,17 +179,15 @@
     }
 
     public function mark_answers($args){
-      return json_encode(array("status"=>"It's 3:34am... I'll do it in the morning"));
       $response = array();
       $response["status"] = "ok";
       if(isset($this->db)){
         try{
           $this->db->beginTransaction();
-          $statement = $this->db->prepare("");
-          $statement->execute();
-
-          $response["statement"] = $statement;
-
+          $statement = $this->db->prepare("UPDATE answers SET correct=:correct WHERE question_ID=:question_ID and login=:login");
+          $statement->execute($args);
+          $statement = $this->db->prepare("UPDATE study SET points=points+(SELECT COUNT(rating_login) FROM answers INNER JOIN answer_ratings ON answers.question_ID=answer_ratings.question_ID AND answers.login=answer_ratings.login)");
+          $statement->execute($args);
           $this->db->commit();
         }
         catch(PDOException $e){
@@ -298,7 +296,6 @@
     }
 
     public function create_course($args){
-      return json_encode(array("status"=>"Again, I'm too tired to do these 'complicated' ones now.. I'll fix it in the morning."));
       $response = array();
       $response["status"] = "ok";
       if(isset($this->db)){
@@ -327,6 +324,106 @@
           $this->db->beginTransaction();
           $statement = $this->db->prepare("INSERT INTO study (login,subject_ID) VALUES(:login,:subject_ID)");
           $statement->execute($args);
+          $this->db->commit();
+        }
+        catch(PDOException $e){
+          $this->db->rollback();
+          $response["status"] = "Database error: ".$e->getMessage();
+        }
+      }
+      else $response["status"] = "Database connection not initialized";
+      return $response;
+    }
+
+    public function list_categories($args){
+      $response = array();
+      $response["status"] = "ok";
+      if(isset($this->db)){
+        try{
+          $this->db->beginTransaction();
+          $parent   = $this->db->prepare("SELECT subject_name FROM subjects WHERE subject_ID=:subject_ID");
+          $children = $this->db->prepare("SELECT * FROM category WHERE subject_ID=:subject_ID");
+          $parent->execute($args);
+          $children->execute($args);
+
+          $response["statement_parent"]   = $parent;
+          $response["statement_children"] = $children;
+
+          $this->db->commit();
+        }
+        catch(PDOException $e){
+          $this->db->rollback();
+          $response["status"] = "Database error: ".$e->getMessage();
+        }
+      }
+      else $response["status"] = "Database connection not initialized";
+      return $response;
+    }
+
+    public function list_questions($args){
+      $response = array();
+      $response["status"] = "ok";
+      if(isset($this->db)){
+        try{
+          $this->db->beginTransaction();
+          $parent   = $this->db->prepare("SELECT brief FROM category WHERE category_ID=:category_ID");
+          $children = $this->db->prepare("SELECT * FROM questions WHERE category_ID=:category_ID");
+          $parent->execute($args);
+          $children->execute($args);
+
+          $response["statement_parent"]   = $parent;
+          $response["statement_children"] = $children;
+
+          $this->db->commit();
+        }
+        catch(PDOException $e){
+          $this->db->rollback();
+          $response["status"] = "Database error: ".$e->getMessage();
+        }
+      }
+      else $response["status"] = "Database connection not initialized";
+      return $response;
+    }
+
+    public function list_answers($args){
+      $response = array();
+      $response["status"] = "ok";
+      if(isset($this->db)){
+        try{
+          $this->db->beginTransaction();
+          $parent   = $this->db->prepare("SELECT brief,full_question,answer FROM questions WHERE question_ID=:question_ID");
+          $children = $this->db->prepare("SELECT * FROM answers WHERE question_ID=:question_ID");
+          $parent->execute($args);
+          $children->execute($args);
+
+          $response["statement_parent"]   = $parent;
+          $response["statement_children"] = $children;
+
+          $this->db->commit();
+        }
+        catch(PDOException $e){
+          $this->db->rollback();
+          $response["status"] = "Database error: ".$e->getMessage();
+        }
+      }
+      else $response["status"] = "Database connection not initialized";
+      return $response;
+    }
+
+    public function list_reactions($args){
+      $response = array();
+      $response["status"] = "ok";
+      if(isset($this->db)){
+        try{
+          $this->db->beginTransaction();
+          $parent   = $this->db->prepare("SELECT answer FROM answers WHERE question_ID=:question_ID AND login=:login");
+          $children = $this->db->prepare("SELECT * FROM reactions WHERE question_ID=:question_ID AND login=:login");
+          $parent->execute($args);
+          $children->execute($args);
+
+          $response["statement_parent"]   = $parent;
+          $response["statement_children"] = $children;
+
           $this->db->commit();
         }
         catch(PDOException $e){
@@ -390,6 +487,21 @@ Create course
 Sign up as student
   INSERT INTO study (login,subject_ID) VALUES(:login,:subject_ID)
 
+List categories
+  SELECT subject_name FROM subjects WHERE subject_ID=:subject_ID
+  SELECT * FROM category WHERE subject_ID=:subject_ID
+
+List questions
+  SELECT brief FROM category WHERE category_ID=:category_ID
+  SELECT * FROM questions WHERE category_ID=:category_ID
+
+List answers
+  SELECT brief,full_question,answer FROM questions WHERE question_ID=:question_ID
+  SELECT * FROM answers WHERE question_ID=:question_ID
+
+List reactions
+  SELECT answer FROM answers WHERE question_ID=:question_ID AND login=:login
+  SELECT * FROM reactions WHERE question_ID=:question_ID AND login=:login
 
 */
 
