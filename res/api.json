@@ -97,6 +97,16 @@
             "response":{
                 "status": "ok | internal_error"
             }
+        },
+
+        "create_category":{
+            "request":{
+                "subject_ID": "subject_ID",
+                "brief"     : "category_brief"
+            },
+            "response":{
+                "status": "ok | internal_error"
+            }
         }
     },
 
@@ -170,7 +180,6 @@
     },
 
     "UNREGISTERED":{
-
         "login":{
             "request":{
                 "login" : "login",
