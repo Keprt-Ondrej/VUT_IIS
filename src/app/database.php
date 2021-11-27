@@ -179,7 +179,7 @@
       return $response;
     }
 
-    public function list_subjects($args){
+    public function list_subjects($args, $table="teach"){
       $response = array();
       $response["status"] = "ok";
       $tmp = 0;
@@ -190,13 +190,13 @@
         try{
           switch($tmp){
             case 0: $response["status"] = "Empty request"; break;
-            case 1: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved=False");  break;
-            case 2: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved=True");    break;
-            case 3: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved is not NULL");   break;
-            case 4: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved is NULL");       break;
-            case 5: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved!=True");   break;
-            case 6: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved!=False"); break;
-            case 7: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID"); break;
+            case 1: $statement = $this->db->prepare("SELECT * FROM ".$table." INNER JOIN subjects ON ".$table.".subject_ID=subjects.subject_ID WHERE ".$table.".approved=False");       break;
+            case 2: $statement = $this->db->prepare("SELECT * FROM ".$table." INNER JOIN subjects ON ".$table.".subject_ID=subjects.subject_ID WHERE ".$table.".approved=True");        break;
+            case 3: $statement = $this->db->prepare("SELECT * FROM ".$table." INNER JOIN subjects ON ".$table.".subject_ID=subjects.subject_ID WHERE ".$table.".approved is not NULL"); break;
+            case 4: $statement = $this->db->prepare("SELECT * FROM ".$table." INNER JOIN subjects ON ".$table.".subject_ID=subjects.subject_ID WHERE ".$table.".approved is NULL");     break;
+            case 5: $statement = $this->db->prepare("SELECT * FROM ".$table." INNER JOIN subjects ON ".$table.".subject_ID=subjects.subject_ID WHERE ".$table.".approved!=True");       break;
+            case 6: $statement = $this->db->prepare("SELECT * FROM ".$table." INNER JOIN subjects ON ".$table.".subject_ID=subjects.subject_ID WHERE ".$table.".approved!=False");      break;
+            case 7: $statement = $this->db->prepare("SELECT * FROM ".$table." INNER JOIN subjects ON ".$table.".subject_ID=subjects.subject_ID"); break;
             default: $response["status"] = "Undefined combination"; break;
           }
           if($response["status"] == "ok"){
@@ -349,13 +349,12 @@
     }
 
     public function vote($args){
-      return json_encode(array("status"=>"We haven't decided on vote identifier, as this goes into the same table as react. I propose a random hash as a keyword."));
       $response = array();
       $response["status"] = "ok";
       if(isset($this->db)){
         try{
           $this->db->beginTransaction();
-          $statement = $this->db->prepare("INSERT INTO reactions (question_ID,answer_login,text) VALUES(:question_ID,:answer_login,'TEN points to griffindooOOOOoor')");
+          $statement = $this->db->prepare("INSERT INTO answer_ratings (question_ID,answer_login,rating_login) VALUES(:question_ID,:answer_login,:rating_login)");
           $statement->execute($args);
           $this->db->commit();
         }
@@ -595,7 +594,7 @@ React
   INSERT INTO reactions (question_ID,answer_login,text) VALUES(:question_ID,:answer_login,:reaction)
 
 Vote
-  INSERT INTO reactions (question_ID,answer_login,text) VALUES(:question_ID,:answer_login,"TEN points to griffindooOOOOoor")
+  INSERT INTO answer_ratings (question_ID,answer_login,rating_login) VALUES(:question_ID,:answer_login,:rating_login)
 
 Ask question
   INSERT INTO questions (category_ID,brief,full_question) VALUES(:category_ID,:brief,:full_question)
