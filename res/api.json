@@ -204,7 +204,8 @@
                         "login"       : "teacher_username",
                         "teach"       : "unapproved_subject_ID",
                         "subject_name": "subject_name",
-                        "approved"    : "approved"
+                        "approved"    : "approved",
+                        "role"        : "role_of_logged_in_user_in_regards_to_this_subject"
                     }
                 ]
             }
@@ -217,6 +218,7 @@
             "response":{
                 "status"      : "ok | subject_not_found",
                 "subject_name": "subject_name",
+                "role"     : "true | false | null",
                 "categories"   :[
                     {
                         "category_ID": "category_ID",
@@ -233,6 +235,7 @@
             "response":{
                 "status"   : "ok | category_not_found",
                 "brief"    : "category_brief",
+                "role"     : "true | false | null",
                 "questions":[
                     {
                         "question_ID": "question_ID",
@@ -251,6 +254,7 @@
                 "brief"        : "question_brief",
                 "full_question": "full_question",
                 "answer"       : "final_answer",
+                "role"     : "true | false | null",
                 "answers":[
                     {
                         "login" : "login",
@@ -268,6 +272,7 @@
             "response":{
                 "status"   : "ok | answer_not_found",
                 "answer"   : "answer",
+                "role"     : "true | false | null",
                 "reactions":[
                     {
                         "reaction_ID"   : "reaction_ID",
