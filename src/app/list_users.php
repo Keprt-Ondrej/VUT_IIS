@@ -22,11 +22,13 @@
 
       $response['status'] = 'ok';
 
+      $response['users'] = array();
+
        while($row = $retval['statement']->fetch()){
             $tmp = new stdClass();
             $tmp->login  = $row["login"];
             $tmp->role = $row["role"];
-            array_push($response, $tmp);
+            array_push($response['users'], $tmp);
         } 
       echo json_encode($response);
     }
