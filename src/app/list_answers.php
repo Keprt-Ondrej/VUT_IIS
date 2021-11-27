@@ -26,12 +26,14 @@
   $response['full_question'] = $row['full_question'];
   $response['answer'] = $row['answer'];
 
+  $response['answers'] = array();
+
 
   while($row = $retval['statement_children']->fetch()){
     $tmp = new stdClass();
     $tmp->login  = $row['login'];
     $tmp->answer = $row['answer'];
-    array_push($response, $tmp);
+    array_push($response['answers'], $tmp);
   } 
   echo json_encode($response);
 

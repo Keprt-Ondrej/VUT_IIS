@@ -22,12 +22,14 @@
 
   $response['answer'] = ($retval['statement_parent']->fetch())['answer'];
 
+  $response['reactions'] = array();
+
   while($row = $retval['statement_children']->fetch()){
     $tmp = new stdClass();
     $tmp->reaction_ID  = $row["reaction_ID"];
     $tmp->reaction_login = $row["reaction_login"];
     $tmp->text = $row["text"];
-    array_push($response, $tmp);
+    array_push($response['reactions'], $tmp);
   } 
   echo json_encode($response);
 

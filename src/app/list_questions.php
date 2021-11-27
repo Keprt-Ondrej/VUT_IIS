@@ -22,11 +22,13 @@
 
   $response['brief'] = ($retval['statement_parent']->fetch())['brief'];
 
+  $response['questions'] = array();
+ 
   while($row = $retval['statement_children']->fetch()){
     $tmp = new stdClass();
     $tmp->brief  = $row["brief"];
     $tmp->question_ID = $row["question_ID"];
-    array_push($response, $tmp);
+    array_push($response['questions'], $tmp);
   } 
   echo json_encode($response);
 

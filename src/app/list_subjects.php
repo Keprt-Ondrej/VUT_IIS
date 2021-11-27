@@ -20,11 +20,13 @@
 
   $response['status'] = 'ok';
 
+  $response['subjects'] = array();
+
   while($row = $retval['statement']->fetch()){
     $tmp = new stdClass();
     $tmp->login  = $row["login"];
     $tmp->subject_ID = $row["subject_ID"];
-    array_push($response, $tmp);
+    array_push($response['subjects'], $tmp);
   } 
   echo json_encode($response);
 

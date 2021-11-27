@@ -170,6 +170,18 @@
     },
 
     "UNREGISTERED":{
+
+        "login":{
+            "request":{
+                "login" : "login",
+                "pwd" : "password"
+            },
+            "response":{
+                "login" : "login",
+                "role"  : "role"
+            }
+
+        },
         "list_subjects":{
             "request":{
                 "unapproved": "true | false",
@@ -194,7 +206,7 @@
             "response":{
                 "status"      : "ok | subject_not_found",
                 "subject_name": "subject_name",
-                "questions"   :[
+                "categories"   :[
                     {
                         "category_ID": "category_ID",
                         "brief"      : "category_brief"

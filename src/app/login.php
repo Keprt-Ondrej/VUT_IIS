@@ -5,9 +5,7 @@
 
   include_once 'database.php';
 
-  $database = new database;
-
-  $db = $database->init();
+  $database = new Database;
   
   $recv_data = json_decode(file_get_contents('php://input'), true); // POST Data
 
@@ -15,23 +13,28 @@
   
   $_SESSION["pocet"] = 0; 
 
-  if($db != null){
+  $retval = $database->find_user($recv_data);
 
-    $stmt = $db->prepare("SELECT * from users where login=?");  
-    $stmt->execute(array($recv_data["login"]));
-    $row = $stmt->fetch();
+  if($retval['status'] != 'ok'){
+    echo json_encode($retval);
+    return;
+  }
 
-    if(!isset($row["login"])){ // user not found
-      $response["role"] = "not_user";
-      echo json_encode($response);
-      return;
-    }
+  $response['status'] = "ok";
+  
+  $row = $retval['statement']->fetch();
 
-    if($row["password"] == $recv_data["password"]){ 
-      $response["role"] = $row["role"];
-      $_SESSION["role"] = $row["role"];
-      $response["login"] = $row["login"];      
-      $_SESSION["login"] = $row["login"];
+  if(!isset($row["login"])){ // user not found
+    $response["role"] = "not_user";
+    echo json_encode($response);
+    return;
+  }
+
+  if($row["password"] == $recv_data["password"]){ 
+    $response["role"] = $row["role"];
+    $_SESSION["role"] = $row["role"];
+    $response["login"] = $row["login"];     
+    $_SESSION["login"] = $row["login"];
 
       echo json_encode($response);
     }
@@ -39,5 +42,5 @@
       $response["role"] = "w_pwd"; // passwords don't matchs 
       echo json_encode($response);  
     } 
-  }
+  
 ?>
