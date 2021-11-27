@@ -183,19 +183,19 @@
       $response = array();
       $response["status"] = "ok";
       $tmp = 0;
-      if($args["unapproved"] = true) $tmp += 1;
-      if($args["approved"]   = true) $tmp += 2;
-      if($args["undecided"]  = true) $tmp += 4;
+      if($args["unapproved"]) $tmp += 1;
+      if($args["approved"])   $tmp += 2;
+      if($args["undecided"])  $tmp += 4;
       if(isset($this->db)){
         try{
           switch($tmp){
             case 0: $response["status"] = "Empty request"; break;
-            case 1: $statement = $this->db->prepare("SELECT * FROM ".$table." INNER JOIN subjects ON ".$table.".subject_ID=subjects.subject_ID WHERE ".$table.".approved=False");       break;
-            case 2: $statement = $this->db->prepare("SELECT * FROM ".$table." INNER JOIN subjects ON ".$table.".subject_ID=subjects.subject_ID WHERE ".$table.".approved=True");        break;
-            case 3: $statement = $this->db->prepare("SELECT * FROM ".$table." INNER JOIN subjects ON ".$table.".subject_ID=subjects.subject_ID WHERE ".$table.".approved is not NULL"); break;
-            case 4: $statement = $this->db->prepare("SELECT * FROM ".$table." INNER JOIN subjects ON ".$table.".subject_ID=subjects.subject_ID WHERE ".$table.".approved is NULL");     break;
-            case 5: $statement = $this->db->prepare("SELECT * FROM ".$table." INNER JOIN subjects ON ".$table.".subject_ID=subjects.subject_ID WHERE ".$table.".approved!=True");       break;
-            case 6: $statement = $this->db->prepare("SELECT * FROM ".$table." INNER JOIN subjects ON ".$table.".subject_ID=subjects.subject_ID WHERE ".$table.".approved!=False");      break;
+            case 1: $statement = $this->db->prepare("SELECT * FROM ".$table." INNER JOIN subjects ON ".$table.".subject_ID=subjects.subject_ID WHERE ".$table.".approved=0");       break;
+            case 2: $statement = $this->db->prepare("SELECT * FROM ".$table." INNER JOIN subjects ON ".$table.".subject_ID=subjects.subject_ID WHERE ".$table.".approved=1");        break;
+            case 3: $statement = $this->db->prepare("SELECT * FROM ".$table." INNER JOIN subjects ON ".$table.".subject_ID=subjects.subject_ID WHERE ".$table.".approved IS NOT NULL"); break;
+            case 4: $statement = $this->db->prepare("SELECT * FROM ".$table." INNER JOIN subjects ON ".$table.".subject_ID=subjects.subject_ID WHERE ".$table.".approved IS NULL");     break;
+            case 5: $statement = $this->db->prepare("SELECT * FROM ".$table." INNER JOIN subjects ON ".$table.".subject_ID=subjects.subject_ID WHERE ".$table.".approved IS NULL OR ".$table.".approved=0");   break;
+            case 6: $statement = $this->db->prepare("SELECT * FROM ".$table." INNER JOIN subjects ON ".$table.".subject_ID=subjects.subject_ID WHERE ".$table.".approved IS NULL OR ".$table.".approved=1");  break;
             case 7: $statement = $this->db->prepare("SELECT * FROM ".$table." INNER JOIN subjects ON ".$table.".subject_ID=subjects.subject_ID"); break;
             default: $response["status"] = "Undefined combination"; break;
           }

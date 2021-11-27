@@ -9,6 +9,7 @@
     <script src="scripts/url.js" type="text/javascript"></script>
     <script src="scripts/moderator.js" type="text/javascript"></script>
     <script src="scripts/unregistered.js" type="text/javascript"></script>
+    <script src="scripts/registered.js" type="text/javascript"></script>  
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="css/styles.css">
 </head>

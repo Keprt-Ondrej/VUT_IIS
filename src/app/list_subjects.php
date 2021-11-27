@@ -21,9 +21,11 @@
   if(isset($_SESSION['login'])){
     $user_subjects = $database->list_subjects($recv_data, "study");
     if($user_subjects['status'] == 'ok'){
-      while($row = $user_subjects['statement']->fetch() && $row['login'] == $_SESSION['login']){
-        array_push($s_IDs, $row["subject_ID"]);
-        $s_approved[$row["subject_ID"]] = $row["approved"];
+      while($row = $user_subjects['statement']->fetch()){
+        if($row['login'] == $_SESSION['login']){
+          array_push($s_IDs, $row["subject_ID"]);
+          $s_approved[$row["subject_ID"]] = $row["approved"];
+        }
       }
     }
   }
