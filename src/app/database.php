@@ -90,7 +90,8 @@
       if(isset($this->db)){
         try{
           $statement = $this->db->prepare("SELECT * FROM users WHERE login=:login");
-          $statement->execute($args);
+          $statement->bindParam(":login", $args['login']);
+          $statement->execute();
 
           $response["statement"] = $statement;
         }
@@ -205,7 +206,7 @@
           $statement = $this->db->prepare("UPDATE answers SET correct=:correct WHERE question_ID=:question_ID and login=:login");
           $statement->execute($args);
           $statement = $this->db->prepare("UPDATE study SET points=points+(SELECT COUNT(rating_login) FROM answers INNER JOIN answer_ratings ON answers.question_ID=answer_ratings.question_ID AND answers.login=answer_ratings.login)");
-          $statement->execute($args);
+          $statement->execute();
           $this->db->commit();
         }
         catch(PDOException $e){
@@ -320,9 +321,13 @@
         try{
           $this->db->beginTransaction();
           $statement = $this->db->prepare("INSERT INTO subjects (subject_ID,subject_name) VALUES(:subject_ID,:subject_name)");
-          $statement->execute($args);
+          $statement->bindParam(":subject_ID", $args["subject_ID"]);
+          $statement->bindParam(":subject_name", $args["subject_name"]);
+          $statement->execute();
           $statement = $this->db->prepare("INSERT INTO teach (login,subject_ID) VALUES(:login,:subject_ID)");
-          $statement->execute($args);
+          $statement->bindParam(":login", $args["login"]);
+          $statement->bindParam(":subject_ID", $args["subject_ID"]);
+          $statement->execute();
           $this->db->commit();
         }
         catch(PDOException $e){
