@@ -16,12 +16,15 @@
     return;
   }
 
-  $subject_role = $database->role_in_subject(array("login" => $_SESSION['login'], "category_ID" => $recv_data['category_ID']));
-  
-  if($subject_role['status'] != 'ok'){
-    echo json_encode($subject_role);
-    return;
+  if(isset($_SESSION['login'])){
+    $subject_role = $database->role_in_subject(array("login" => $_SESSION['login'], "category_ID" => $recv_data['category_ID']));
+    
+    if($subject_role['status'] != 'ok'){
+      echo json_encode($subject_role);
+      return;
+    }
   }
+  else $subject_role = array('role'=>null);
 
   $response = array();
 
