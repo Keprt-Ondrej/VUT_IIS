@@ -136,12 +136,12 @@
         try{
           switch($tmp){
             case 0: $response["status"] = "Empty request"; break;
-            case 1: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved='unapproved'");  break;
-            case 2: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved='approved'");    break;
+            case 1: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved=False");  break;
+            case 2: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved=True");    break;
             case 3: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved is not NULL");   break;
             case 4: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved is NULL");       break;
-            case 5: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved!='approved'");   break;
-            case 6: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved!='unapproved'"); break;
+            case 5: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved!=True");   break;
+            case 6: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved!=False"); break;
             case 7: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID"); break;
             default: $response["status"] = "Undefined combination"; break;
           }
@@ -236,6 +236,26 @@
       else $response["status"] = "Database connection not initialized";
       return $response;
     }
+
+    public function create_category($args){
+      $response = array();
+      $response["status"] = "ok";
+      if(isset($this->db)){
+        try{
+          $this->db->beginTransaction();
+          $statement = $this->db->prepare("INSERT INTO category (subject_ID,brief) VALUES(:subject_ID,:brief)");
+          $statement->execute($args);
+          $this->db->commit();
+        }
+        catch(PDOException $e){
+          $this->db->rollback();
+          $response["status"] = "Database error: ".$e->getMessage();
+        }
+      }
+      else $response["status"] = "Database connection not initialized";
+      return $response;
+    }
+
 
     public function write_answer($args){
       $response = array();
@@ -486,6 +506,9 @@ Approve subject
 
 Approve student 
   UPDATE study set approved=:approved WHERE subject_ID=:subject_ID and login=:login
+
+Create category
+  INSERT INTO category (subject_ID,brief) VALUES(:subject_ID,:brief)
 
 Mark answers
   UPDATE answers SET correct=:correct WHERE question_ID=:question_ID and login=:login
