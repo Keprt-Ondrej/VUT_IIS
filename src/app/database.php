@@ -90,7 +90,7 @@
       if(isset($this->db)){
         try{
           $statement = $this->db->prepare("SELECT * FROM users WHERE login=:login");
-          $statement->execute();
+          $statement->execute($args);
 
           $response["statement"] = $statement;
         }
