@@ -9,13 +9,6 @@
     left:20px        
 } 
 
-table.menu_table, th.menu_table, td.menu_table{
-    text-align: center;     
-    width: 200px;
-    padding: 12px;
-    border: 2px solid black;
-}
-
 /*nav bar */
 ul {
     list-style-type: none;
@@ -42,49 +35,6 @@ li a:hover {
 }
 /*end nav bar */
 
-
-table.proffesor-upcoming_tests{
-    border: 1px solid black;
-    width: 100%;    
-    padding: 12px;
-    text-align: center;            
-}
-th.proffesor-upcoming_tests, td.proffesor-upcoming_tests{
-    border: 1px solid black;
-    width: 25%;
-    padding: 12px;
-    text-align: center; 
-}
-
-table.proffesor-my_groups{
-    border: 1px solid black;
-    width: 100%;    
-    padding: 12px;
-    text-align: center;
-    margin-bottom: 40px;            
-}
-th.proffesor-my_groups, td.proffesor-my_groups{
-    border: 1px solid black;
-    width: 16.6666%;
-    padding: 12px;
-    text-align: center; 
-}
-
-th.proffesor-create_test td.proffesor-create_test{
-    border: none;   
-    /*width: 100px;*/
-}
-table.proffesor-create_test{
-    border: none;
-    /*border: 1px solid black;*/
-} 
-
-th.admin-users td.proffesor-create_test{
-    border: none;   
-    /*width: 100px;*/
-}
-
-
 #link{
     color: #000000
 } 
@@ -107,8 +57,8 @@ th.admin-users td.proffesor-create_test{
 /*************************************************************/
 
 
-#myInput {
-  background-image: url('/css/searchicon.png'); /* Add a search icon to input */
+.myInput {
+  /*background-image: url('/css/searchicon.png'); /* Add a search icon to input */
   background-position: 10px 12px; /* Position the search icon */
   background-repeat: no-repeat; /* Do not repeat the icon image */
   width: 50px; /* Full-width */  
@@ -118,24 +68,24 @@ th.admin-users td.proffesor-create_test{
   margin-bottom: 12px; /* Add some space below the input */
 }
 
-#myTable {
+.myTable {
   border-collapse: collapse; /* Collapse borders */
   width: 100%; /* Full-width */
   border: 1px solid #ddd; /* Add a grey border */
   font-size: 18px; /* Increase font-size */
 }
 
-#myTable th, #myTable td {
+.myTable th, .myTable td {
   text-align: left; /* Left-align text */
   padding: 12px; /* Add padding */
 }
 
-#myTable tr {
+.myTable tr {
   /* Add a bottom border to all table rows */
   border-bottom: 1px solid #ddd;
 }
 
-#myTable tr.header, #myTable tr:hover {
+.myTable tr.header, .myTable tr:hover {
   /* Add a grey background color to the table header and on hover */
   background-color: #f1f1f1;
 }
