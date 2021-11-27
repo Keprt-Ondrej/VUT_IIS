@@ -136,8 +136,7 @@
         "vote":{
             "request":{
                "answer_login"  : "student_login",
-               "question_ID"   : "question_ID",
-               "reaction"      : "reaction_message"
+               "question_ID"   : "question_ID
             },
             "response":{
                 "status": "ok | internal_error"

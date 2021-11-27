@@ -10,6 +10,7 @@
   $recv_data = json_decode(file_get_contents('php://input'), true); // POST Data
 
     if(isset($_SESSION['role']) && $_SESSION['role']!= 't'){
+      $recv_data['rating_login'] = $_SESSION['login'];
       $retval = $database->vote($recv_data);
       echo json_encode($retval);
     }
