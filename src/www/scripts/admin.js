@@ -74,8 +74,8 @@ function show_all_users_content(){
                 var received_data = JSON.parse(request.responseText);
                 var destination = document.getElementById("content");
                 destination.innerHTML = `<div>
-                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.."></div>
-                <table id="myTable">
+                <input type="text" class="myInput" id="myInput" onkeyup="myFunction()" placeholder="Search for names.."></div>
+                <table class="myTable" id="myTable">
                 <tr class="header"><th>Login</th><th>Role</th><th></th><th></th></tr>`
                 var table = document.getElementById("myTable");
                 received_data["users"].forEach(element => {                    
