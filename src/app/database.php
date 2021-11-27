@@ -512,7 +512,7 @@
         try{
           $this->db->beginTransaction();
           $parent   = $this->db->prepare("SELECT answer FROM answers WHERE question_ID=:question_ID AND login=:login");
-          $children = $this->db->prepare("SELECT * FROM reactions WHERE question_ID=:question_ID AND login=:login");
+          $children = $this->db->prepare("SELECT * FROM reactions WHERE question_ID=:question_ID AND answer_login=:login");
           $parent->execute($args);
           $children->execute($args);
 
