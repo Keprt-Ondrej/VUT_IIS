@@ -5,32 +5,30 @@
 
   include_once 'database.php';
 
-  $database = new database;
+  $database = new Database();
 
-  $db = $database->init();
-  
   $recv_data = json_decode(file_get_contents('php://input'), true); // POST Data
 
-  $response = array();
+    if(isset($_SESSION['role']) && $_SESSION['role']  == 'a'){
 
+      $retval = $database->list_users($recv_data);
 
-  if($db != null){
+      if($retval['status'] != 'ok'){
+        echo json_encode($retval);
+        return;
+      }
 
-    if(isset($_SESSION['role']) && ($_SESSION['role']  == 'a'  || $_SESSION['role']  == 'm')){
+      $response = array();
 
-      $stmt = $stmt = $db->prepare("SELECT login,role from users");
+      $response['status'] = 'ok';
 
-      $stmt->execute();
-
-      while($row = $stmt->fetch()){
+       while($row = $retval['statement']->fetch()){
             $tmp = new stdClass();
-            $tmp->login    = $row["login"];
+            $tmp->login  = $row["login"];
             $tmp->role = $row["role"];
             array_push($response, $tmp);
         } 
-
       echo json_encode($response);
-
     }
-  }
 ?>
+  

@@ -9,9 +9,9 @@
 
   $recv_data = json_decode(file_get_contents('php://input'), true); // POST Data
 
-    if(isset($_SESSION['role']) && $_SESSION['role'] != 's'){
+    if(isset($_SESSION['role']) && $_SESSION['role']!= 't'){
 
-      $retval = $database->final_answer($recv_data);
+      $retval = $database->react($recv_data);
       echo json_encode($retval);
     }
 ?>

@@ -9,9 +9,8 @@
 
   $recv_data = json_decode(file_get_contents('php://input'), true); // POST Data
 
-    if(isset($_SESSION['role']) && $_SESSION['role'] != 's'){
-
-      $retval = $database->final_answer($recv_data);
+    if(isset($_SESSION['role'])){
+      $retval = $database->sign_up_as_student($recv_data);
       echo json_encode($retval);
     }
 ?>
