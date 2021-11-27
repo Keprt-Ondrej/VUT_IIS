@@ -25,9 +25,10 @@ function login_fce(){
                         show_moderator();
                         fill_header(received_data.login,"moderátor");
                     break;
-                    case "s" :
-                        window.location.href = "student/index.php";
+                    case "r" :
                         login.innerHTML = "";
+                        show_registered();                        
+                        fill_header(received_data.login,"moderátor");
                     break;
                     case "not_user" :                       
                         alert("Invalid login");
@@ -46,10 +47,6 @@ function login_fce(){
     return false; // to avoid default form submit behavior 
 }
 
-function header_info(login,role){
-
-}
-
 function logout(){
     document.cookie = "PHPSESSID=;path=/";
     document.cookie = "logged=notlogged;path=/";    
@@ -58,7 +55,6 @@ function logout(){
     document.getElementById("navigation").innerHTML = "";
     loadHTML("login","login.html");
 }
-
 
 function require_user(){
     var session = readCookie("PHPSESSID");
@@ -95,6 +91,11 @@ function require_user(){
                             show_moderator();
                             fill_header(received_data.login,"moderátor");
                         break;
+                        case "r":
+                            login.innerHTML = "";
+                            show_registered();
+                            fill_header(received_data.login,"moderátor");
+                        break;
                         case null:
                             logout();
                         break;
@@ -126,7 +127,7 @@ function show_moderator(){
     loadHTML("header","header.html",false);
 }
 
-function show_teacher(){
-    loadHTML("navigation","teacher/teacher_navigation.html");
+function show_registered(){
+    loadHTML("navigation","registered/registered_navigation.html");
     loadHTML("header","header.html",false);
 }
