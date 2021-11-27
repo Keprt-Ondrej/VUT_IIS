@@ -84,6 +84,24 @@
       return $response;
     }
 
+    public function find_user($args){
+      $response = array();
+      $response["status"] = "ok";
+      if(isset($this->db)){
+        try{
+          $statement = $this->db->prepare("SELECT * FROM users WHERE login=:login");
+          $statement->execute();
+
+          $response["statement"] = $statement;
+        }
+        catch(PDOException $e){
+          $response["status"] = "Database error: ".$e->getMessage();
+        }
+      }
+      else $response["status"] = "Database connection not initialized";
+      return $response;
+    }
+
     public function change_password($args){
       $response = array();
       $response["status"] = "ok";
@@ -110,9 +128,9 @@
       $response = array();
       $response["status"] = "ok";
       $tmp = 0;
-      if($args["unapproved"] = true) $tmp += 1
-      if($args["approved"]   = true) $tmp += 2
-      if($args["undecided"]  = true) $tmp += 4
+      if($args["unapproved"] = true) $tmp += 1;
+      if($args["approved"]   = true) $tmp += 2;
+      if($args["undecided"]  = true) $tmp += 4;
       if(isset($this->db)){
         try{
           switch($tmp){
@@ -263,7 +281,7 @@
       if(isset($this->db)){
         try{
           $this->db->beginTransaction();
-          $statement = $this->db->prepare("INSERT INTO reactions (question_ID,answer_login,text) VALUES(:question_ID,:answer_login,"TEN points to griffindooOOOOoor")");
+          $statement = $this->db->prepare("INSERT INTO reactions (question_ID,answer_login,text) VALUES(:question_ID,:answer_login,'TEN points to griffindooOOOOoor')");
           $statement->execute($args);
           $this->db->commit();
         }
@@ -448,6 +466,9 @@ Delete user
 
 List users
   SELECT login,role FROM users
+
+Find user
+  SELECT * FROM users WHERE login=:login
 
 Change password
   UPDATE users SET password=:pwd WHERE login=:login

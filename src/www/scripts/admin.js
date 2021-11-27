@@ -78,7 +78,7 @@ function show_all_users_content(){
                 <table id="myTable">
                 <tr class="header"><th>Login</th><th>Role</th><th></th><th></th></tr>`
                 var table = document.getElementById("myTable");
-                received_data.forEach(element => {                    
+                received_data["users"].forEach(element => {                    
                     table.innerHTML += `<tr id="${element.login}_row"><td>${element.login}</td><td>` + stringify_role(element.role) + `
                     </td><td><button type="button" onclick="prepare_change_user_password(\'${element.login}\');">změnit heslo</button>
                     </td><td><button type="button" onclick="prepare_delete_user(\'${element.login}\');">smazat</button></tr>`;
