@@ -11,12 +11,17 @@ function add_user_content(){
 function add_user(){
     var form = document.getElementById("add_user_form");
     var login = form.user_login.value;
-    var pwd = form.user_password.value;
-    if(login == "" || pwd == ""){
+    var pwd1 = form.user_password1.value;
+    var pwd2 = form.user_password2.value;
+    if(login == "" || pwd1 == ""){
         alert("Zadejte údaje o uživateli");
         return;
     }
-    var send_data = JSON.stringify({"login":login, "pwd":pwd,"role":form.user_role.value});
+    if(pwd1 != pwd2){
+        alert("Hesla se neshodují!");
+        return;
+    }
+    var send_data = JSON.stringify({"login":login, "pwd":pwd1,"role":form.user_role.value});
     console.log(send_data);
     try{
         var request = new XMLHttpRequest();
