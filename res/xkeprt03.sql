@@ -13,7 +13,7 @@ CREATE TABLE `study` (
   `login` char(8) NOT NULL,
   `subject_ID` varchar(5) NOT NULL,
   `points` int(11) DEFAULT '0',
-  `approved` tinyint(1) DEFAULT '0',
+  `approved` tinyint(1) DEFAULT NULL,
   foreign key(login) references users(login),
   foreign key(subject_ID) references subjects(subject_ID),
   PRIMARY KEY (`login`,`subject_ID`)
@@ -22,7 +22,7 @@ CREATE TABLE `study` (
 CREATE TABLE `teach` (
   `login` char(8) NOT NULL,
   `subject_ID` varchar(5) NOT NULL,
-  `approved` tinyint(1) DEFAULT '0',
+  `approved` tinyint(1) DEFAULT NULL,
   foreign key(login) references users(login),
   foreign key(subject_ID) references subjects(subject_ID),
   primary key(login,subject_ID)
