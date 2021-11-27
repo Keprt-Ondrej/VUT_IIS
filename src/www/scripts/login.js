@@ -95,12 +95,9 @@ function require_user(){
                             show_moderator();
                             fill_header(received_data.login,"moderátor");
                         break;
-                        case "t" :
-                            window.location.href = "teacher/index.php";
-                            break;
-                        case "s" :
-                            window.location.href = "student/index.php";
-                            break;
+                        case null:
+                            logout();
+                        break;
                     }
                 }
             }

@@ -4,7 +4,7 @@
         "insert_user":{
             "request":{
                 "login": "username",
-                "role" : "a | m | s | t",
+                "role" : "a | m | r",
                 "pwd"  : "password"
             },
             "response":{
@@ -24,100 +24,64 @@
 
         "list_users":{
             "request":{
-
             },
             "response":{
                 "users":[
                     {
                         "login": "username",
-                        "role": "role",
+                        "role": "role"
                     }
                 ]
-                
+
             }
         },
 
         "delete_user":{
             "request":{
-                "login": "username",
+                "login": "username"
             },
             "response":{
                 "status": "ok | wrong_login"
             }
-        },
-
+        }
     },
 
     "MODERATOR":{
-        "show_subjects":{
-            "request":{
-                "uapproved" : "true | false",
-                "approved"  : "true | false",
-                "all"       : "true | false"
-            },
-            "response":{
-                "status": "ok | unauthorized",
-                "subjects":[
-                    {
-                        "login": "teacher_username",
-                        "teach": "unapproved_subject_ID",
-                        "__comment-REMOVE__": "There will be N times of these subjects"
-                    }
-                ]
-            }
-        },
-
         "approve_subject":{
             "request":{
-                "approved": "true | false",
-                "login"   : "username",
-                "subject_ID" : "subject_ID"
+                "approved"  : "true | false",
+                "login"     : "username",
+                "subject_ID": "subject_ID"
             },
             "response":{
-                "login" : "login",
-                "status": "ok | internal_error"
+                "status"    : "ok | internal_error",
+                "approved"  : "true | false",
+                "login"     : "username",
+                "subject_ID": "subject_ID"
             }
         }
     },
 
     "TEACHER":{
-        "approve_students":{
+        "approve_student":{
             "request":{
-                "students":[
-                    {   
-                        "login" : "student_username",
-                        "study" : "subject_ID",
-                        "approved": "true | false",
-                        "__comment-REMOVE__": "There will be N times of these students"
-                    }
-                ]
+                "login" : "student_username",
+                "study" : "subject_ID",
+                "approved": "true | false"
             },
             "response":{
-                "status": "ok | internal_error"
-            }
-        },
-
-        "ask_question":{
-            "request":{
-                "category_ID"  : "category_ID",
-                "brief"        : "brief_version",
-                "full_question": "question"
-            },
-            "response":{
-                "status": "ok | internal_error"
+                "status": "ok | internal_error",
+                "login" : "student_username",
+                "study" : "subject_ID",
+                "approved": "true | false"
             }
         },
 
         "mark_answer":{
             "request":{
-                "answers":[
-                    {
-                        "login"  : "student_username",
-                        "study"  : "subject_ID",
-                        "correct": "true | false",
-                        "__comment-REMOVE__": "There will be N times of these answers"
-                    }
-                ]
+                "login"      : "student_username",
+                "question_ID": "question_ID",
+                "correct"    : "true | false"
             },
             "response":{
                 "status": "ok | internal_error"
@@ -137,18 +101,6 @@
     },
 
     "STUDENT":{
-        "ask_question":{
-            "__comment-REMOVE__": "This is the same request as teacher",
-            "request":{
-                "category_ID"  : "category_ID",
-                "brief"        : "brief_version",
-                "full_question": "question"
-            },
-            "response":{
-                "status": "ok | internal_error"
-            }
-        },
-
         "write_answer":{
             "request":{
                "login"      : "login",
@@ -164,8 +116,7 @@
             "request":{
                 "answer_login"  : "student_login",
                 "question_ID"   : "question_ID",
-                "reaction"      : "reaction_message",
-                "__comment-REMOVE__": "Removed reaction login since that is implied by sessionID"
+                "reaction"      : "reaction_message"
             },
             "response":{
                 "status": "ok | internal_error"
@@ -176,11 +127,131 @@
             "request":{
                "answer_login"  : "student_login",
                "question_ID"   : "question_ID",
-               "reaction"      : "reaction_message",
-                "__comment-REMOVE__": "Removed reaction login since that is implied by sessionID"
+               "reaction"      : "reaction_message"
             },
             "response":{
                 "status": "ok | internal_error"
+            }
+        }
+    },
+
+    "TEACHER | STUDENT":{
+        "ask_question":{
+            "request":{
+                "category_ID"  : "category_ID",
+                "brief"        : "brief_version",
+                "full_question": "question"
+            },
+            "response":{
+                "status": "ok | internal_error"
+            }
+        }
+    },
+
+    "REGISTERED":{
+        "create_course":{
+            "request":{
+                "subject_ID"  : "subject_shortcut",
+                "subject_name": "subject_full_name"
+            },
+            "response":{
+                "status": "ok | internal_error"
+            }
+        },
+
+        "sign_up_as_student":{
+            "request":{
+                "subject_ID"  : "subject_shortcut"
+            },
+            "response":{
+                "status": "ok | internal_error"
+            }
+        }
+    },
+
+    "UNREGISTERED":{
+        "list_subjects":{
+            "request":{
+                "unapproved": "true | false",
+                "approved"  : "true | false",
+                "undecided" : "true | false"
+            },
+            "response":{
+                "status": "ok | unauthorized",
+                "subjects":[
+                    {
+                        "login": "teacher_username",
+                        "teach": "unapproved_subject_ID"
+                    }
+                ]
+            }
+        },
+
+        "list_categories_to_subject":{
+            "request":{
+                "subject_ID" : "subject_ID"
+            },
+            "response":{
+                "status"      : "ok | subject_not_found",
+                "subject_name": "subject_name",
+                "questions"   :[
+                    {
+                        "category_ID": "category_ID",
+                        "brief"      : "category_brief"
+                    }
+                ]
+            }
+        },
+
+        "list_questions_to_category":{
+            "request":{
+                "category_ID" : "category_ID"
+            },
+            "response":{
+                "status"   : "ok | category_not_found",
+                "brief"    : "category_brief",
+                "questions":[
+                    {
+                        "question_ID": "question_ID",
+                        "brief"      : "question_brief"
+                    }
+                ]
+            }
+        },
+
+        "list_answers_to_question":{
+            "request":{
+                "question_ID": "question_ID"
+            },
+            "response":{
+                "status"       : "ok | question_not_found",
+                "brief"        : "question_brief",
+                "full_question": "full_question",
+                "answer"       : "final_answer",
+                "answers":[
+                    {
+                        "login" : "login",
+                        "answer": "student_answer"
+                    }
+                ]
+            }
+        },
+
+        "list_reactions":{
+            "request":{
+                "question_ID" : "question_ID",
+                "answer_login": "answer_login"
+            },
+            "response":{
+                "status"   : "ok | answer_not_found",
+                "answer"   : "answer",
+                "reactions":[
+                    {
+                        "reaction_ID"   : "reaction_ID",
+                        "reaction_login": "reaction_login",
+                        "text"          : "reaction_text"
+                    }
+                ]
             }
         }
     }

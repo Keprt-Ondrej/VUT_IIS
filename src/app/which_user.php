@@ -7,7 +7,15 @@ $recv_data = json_decode(file_get_contents('php://input'), true); // POST Data
 
 $response = array();
 
-$response["role"] = $_SESSION["role"];
-$response["login"] = $_SESSION["login"];
+if(isset($_SESSION["role"]) && isset($_SESSION["login"])){
+    $response["role"] = $_SESSION["role"];
+    $response["login"] = $_SESSION["login"];
+}
+else{
+    $response["role"] = null;
+    $response["login"] = null;
+}
+    
+
 echo json_encode($response);
 return;
