@@ -174,7 +174,7 @@
         "login":{
             "request":{
                 "login" : "login",
-                "pwd" : "password"
+                "password" : "password"
             },
             "response":{
                 "login" : "login",
@@ -192,8 +192,9 @@
                 "status": "ok | unauthorized",
                 "subjects":[
                     {
-                        "login": "teacher_username",
-                        "teach": "unapproved_subject_ID"
+                        "login"       : "teacher_username",
+                        "teach"       : "unapproved_subject_ID",
+                        "subject_name": "subject_name"
                     }
                 ]
             }
