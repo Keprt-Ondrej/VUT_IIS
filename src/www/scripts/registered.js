@@ -1,4 +1,5 @@
 function subjects_content(){
+    document.getElementById("content").innerHTML =`<h1>Seznam předmětů</h1>`;
     loadHTML("content","unregistered/course_list_form.html",false);
     document.getElementById("course_list_button").onclick = list_subjects;
 }

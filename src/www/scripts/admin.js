@@ -1,10 +1,5 @@
-function user_list(){
-    var content = document.getElementById("content");
-    content.innerHTML += "i was here";
-
-}
-
 function add_user_content(){
+    document.getElementById("content").innerHTML ="";
     loadHTML("content","admin/add_user.html");
 }
 
@@ -72,8 +67,9 @@ function show_all_users_content(){
             if (request.readyState === 4 && request.status === 200) {
                 console.log(request.responseText);
                 var received_data = JSON.parse(request.responseText);
-                var destination = document.getElementById("content");
-                destination.innerHTML = `<div>
+                document.getElementById("content").innerHTML= `<h1>Seznam uživatelů</h1>`;
+                var destination = document.getElementById("content");                
+                destination.innerHTML += `<div>
                 <input type="text" class="myInput" id="myInput" onkeyup="myFunction()" placeholder="Search for names.."></div>
                 <table class="myTable" id="myTable">
                 <tr class="header"><th>Login</th><th>Role</th><th></th><th></th></tr>`

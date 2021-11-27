@@ -1,4 +1,5 @@
-function course_management_content(){
+function course_management_content(){ 
+    document.getElementById("content").innerHTML =`<h1>Správa účtů</h1>`;   
     loadHTML("content","unregistered/course_list_form.html",false);
     document.getElementById("course_list_button").onclick = course_management_list_courses;
 }
@@ -14,13 +15,13 @@ function course_list_form_JSON(){
 function approved_converter(value){
     console.log("approved va: "+value);
     if(value == 1){
-        return "potvrzené";
+        return "Potvrzené";
     }
     else if(value === null){
-        return "nerozhodnuto"
+        return "Nerozhodnuto"
     }
     else{
-        return "nepotvrzené";
+        return "Nepotvrzené";
     }
     return;   
 }
@@ -64,8 +65,8 @@ function course_management_list_courses(){
             if (request.readyState === 4 && request.status === 200) {
                 console.log(request.responseText);
                 var received_data = JSON.parse(request.responseText);
-                var destination = document.getElementById("content2");
-                destination.innerHTML = `<div>
+                var destination = document.getElementById("content2");                
+                destination.innerHTML += `<div>
                 <input type="text" class="myInput" id="myInput" onkeyup="myFunction()" placeholder="Search for names.."></div>
                 <table class="myTable" id="myTable">
                 <tr class="header"><th>Zkratka</th><th>Jméno předmětu</th><th>Vyučující</th><th>Stav</th><th></th><th></th></tr>`

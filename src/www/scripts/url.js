@@ -17,7 +17,7 @@ function readCookie(name) {
 
 function loadHTML(destination,file_name,sync=true){
     var xhttp;
-    console.log(destination);
+    //console.log(destination);
     var element = document.getElementById(destination);
     let file = file_name;
     if (file){
@@ -26,7 +26,7 @@ function loadHTML(destination,file_name,sync=true){
         xhttp.onreadystatechange = function(){
             if(this.readyState == 4){
                 if(this.status == 200){                    
-                    element.innerHTML = `${this.responseText}`;
+                    element.innerHTML += `${this.responseText}`;
                 }
                 if(this.status == 404){element.innerHTML = "Not found"}
             }
