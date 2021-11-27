@@ -530,7 +530,7 @@
       return $response;
     }
 
-    public function list_votes($args){
+    public function list_points($args){
       $response = array();
       $response["status"] = "ok";
       if(isset($this->db)){
