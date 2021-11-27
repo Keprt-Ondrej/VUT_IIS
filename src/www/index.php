@@ -19,10 +19,24 @@
     <script>
         require_user();        
     </script>
+    
+    <div>
+        <div class="modal-container" id="modal">
+            <div class="modal">
+                <div class="modal-header text-center" id="modal-header">
+                    <h1>Ahoj ja jsem tady</h1>  
+                </div>
+                <a href="#" id="close-modal">
+                        <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTF3_Bp6uIXZ9m4-nPI9UX2rzk5d6Pd41jivkMJ8aZzeQu03AKzztRj8JE" alt="closeIcon">
+                    </a>
+
+                <div class="modal-body" id="modal-body">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="scripts/modal_window.js" type="text/javascript"></script> 
 </body>
-
-<script id="test" type="text/html">
-
-</script>
-
 </html>

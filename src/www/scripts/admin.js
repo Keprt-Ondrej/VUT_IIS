@@ -68,13 +68,15 @@ function show_all_users_content(){
                 console.log(request.responseText);
                 var received_data = JSON.parse(request.responseText);
                 var destination = document.getElementById("content");
-                destination.innerHTML = `
-                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+                destination.innerHTML = `<div>
+                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.."></div>
                 <table id="myTable">
                 <tr class="header"><th>Login</th><th>Role</th><th></th><th></th></tr>`
                 var table = document.getElementById("myTable");
                 received_data.forEach(element => {                    
-                    table.innerHTML += `<tr><td>`+ element.login + `</td><td>` + stringify_role(element.role) + `</td><td>button chng pwd</td><td>delete user button</td></tr>`;
+                    table.innerHTML += `<tr id="${element.login}_row"><td>${element.login}</td><td>` + stringify_role(element.role) + `
+                    </td><td><button type="button" onclick="prepare_change_user_password(\'${element.login}\');">změnit heslo</button>
+                    </td><td><button type="button" onclick="prepare_delete_user(\'${element.login}\');">smazat</button></tr>`;
                 });
                 destination.innerHTML += "</table>";
             }
@@ -86,6 +88,100 @@ function show_all_users_content(){
     }
     return;
 }
+
+function prepare_delete_user(login){
+    modal_header.innerHTML = "<h1>Opravdu chcete smazat uživatele " + login +"?<h1>"
+    modal_body.innerHTML = `<button type="button" onclick="delete_user(\'${login}\');">Smazat</button>`
+    open_modal();    
+}
+
+function delete_user(login){
+    try{
+        console.log("chci mazat "+login);
+        var request = new XMLHttpRequest();
+        var url = apiURL+"/app/delete_user.php";
+        var send_data = JSON.stringify({"login":login});
+        console.log("poslany data na api delete_user.php: "+send_data);
+        request.open("POST", url, true);
+        request.setRequestHeader("Content-Type", "application/json"); 
+        function ResponsFunc(request,login){
+            if (request.readyState === 4 && request.status === 200) {
+                console.log(request.responseText);
+                var received_data = JSON.parse(request.responseText);
+                if (received_data.status == "ok"){
+                    console.log("radek: \n"+login+"_row");
+                    document.getElementById(login+"_row").outerHTML = "";                
+                    close_modal();
+                }
+                else{
+                    alert("Špatný login!");
+                }
+            }
+        }       
+        request.onreadystatechange = function (){ResponsFunc(request,login)}
+        request.send(send_data);
+    }
+    catch(e){
+        alert(e.toString());
+    }
+    return;
+}
+
+function prepare_change_user_password(login){
+    modal_header.innerHTML = "<h1>Změna hesla uživatele " + login +"<h1>";
+    modal_body.innerHTML = `
+    <form id="change_password_form">    
+    <label for="user_password1">Nové heslo: </label>
+    <input type="password" id="user_password1" name="user_password1" placeholder="heslo"><br>
+    <label for="user_password2">Zopakujte heslo: </label>
+    <input type="password" id="user_password2" name="user_password2" placeholder="heslo"><br>
+    <input type="button" onclick="change_user_password(\'${login}\');" value="Změnit">
+    </form>
+    `
+    open_modal();
+}
+
+function change_user_password(login){
+    var form = document.getElementById("change_password_form");
+    var pwd1 = form.user_password1.value;
+    var pwd2 = form.user_password2.value;
+    if (pwd1 != pwd2){
+        alert("Hesla nejsou stejná");
+        return;
+    }
+    if(pwd1 == ""){
+        alert("zadejte heslo!");
+        return;
+    }
+
+    try{        
+        var request = new XMLHttpRequest();
+        var url = apiURL+"/app/change_pwd.php";
+        var send_data = JSON.stringify({"login":login,"pwd":pwd1});
+        console.log(send_data);
+        request.open("POST", url, true);
+        request.setRequestHeader("Content-Type", "application/json");      
+        request.onreadystatechange = function (){
+            if (request.readyState === 4 && request.status === 200) {
+                console.log(request.responseText);
+                var received_data = JSON.parse(request.responseText);
+                if (received_data.status == "ok"){                
+                    close_modal();
+                }
+                else{
+                    alert("Špatný login!");
+                }
+            }
+        }  
+        request.send(send_data);
+    }
+    catch(e){
+        alert(e.toString());
+    }
+    return;
+}
+
+
 
 
 //*********************************************** */
@@ -110,3 +206,7 @@ function myFunction() {
       }
     }
   }
+//***************************************************/
+
+
+
