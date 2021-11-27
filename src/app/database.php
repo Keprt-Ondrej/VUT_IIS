@@ -136,12 +136,12 @@
         try{
           switch($tmp){
             case 0: $response["status"] = "Empty request"; break;
-            case 1: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved='unapproved'");  break;
-            case 2: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved='approved'");    break;
+            case 1: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved=False");  break;
+            case 2: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved=True");    break;
             case 3: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved is not NULL");   break;
             case 4: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved is NULL");       break;
-            case 5: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved!='approved'");   break;
-            case 6: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved!='unapproved'"); break;
+            case 5: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved!=True");   break;
+            case 6: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID WHERE teach.approved!=False"); break;
             case 7: $statement = $this->db->prepare("SELECT * FROM teach INNER JOIN subjects ON teach.subject_ID=subjects.subject_ID"); break;
             default: $response["status"] = "Undefined combination"; break;
           }
