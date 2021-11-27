@@ -316,7 +316,7 @@
       if(isset($this->db)){
         try{
           $this->db->beginTransaction();
-          $statement = $this->db->prepare("INSERT INTO answers (login,answer) VALUES(:login,:answer)");
+          $statement = $this->db->prepare("INSERT INTO answers (login,answer,question_ID) VALUES(:login,:answer,:question_ID)");
           $statement->execute($args);
           $this->db->commit();
         }
