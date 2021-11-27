@@ -16,11 +16,20 @@
     return;
   }
 
+  $subject_role = $database->role_in_subject(array("login" => $_SESSION['login'], "question_ID" => $recv_data['question_ID']));
+  
+  if($subject_role['status'] != 'ok'){
+    echo json_encode($subject_role);
+    return;
+  }
+
   $response = array();
 
   $response['status'] = 'ok';
 
   $response['answer'] = ($retval['statement_parent']->fetch())['answer'];
+  
+  $response['role'] = $subject_role['role'];
 
   $response['reactions'] = array();
 

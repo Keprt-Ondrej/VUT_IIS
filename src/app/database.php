@@ -27,6 +27,60 @@
       return $this->init_error;
     }
 
+    public function role_in_subject($args){
+      $response = array();
+      $response["status"] = "ok";
+      if(isset($this->db)){
+        try{
+          if(!isset($args["subject_ID"])){
+            if(isset($args["category_ID"])){
+              $given = "category";
+              $stmt = $this->db->prepare("SELECT subject_ID FROM category WHERE category_ID=:category_ID");
+            }
+            else if(isset($args["question_ID"])){
+              $given = "question";
+              $stmt = $this->db->prepare("SELECT subject_ID FROM category INNER JOIN questions ON questions.category_ID=category.category_ID WHERE question_ID=:question_ID");
+            }
+            else $response["status"] = "Not given ID to subject or category or question";
+
+            if($response["status"] == "ok"){
+              $stmt->bindParam(":".$given."_ID", $args[$given."_ID"]);
+              $stmt->execute();
+              if($row = $stmt->fetch()) $args["subject_ID"] = $row["subject_ID"];
+              else                      $response["status"] = "There is no subject to given ".$given;
+            }
+
+          }
+          if($response["status"] == "ok"){
+            $teacher_stmt = $this->db->prepare("SELECT * FROM teach WHERE subject_ID=:subject_ID AND login=:login");
+            $student_stmt = $this->db->prepare("SELECT * FROM study WHERE subject_ID=:subject_ID AND login=:login");
+            $student_stmt->bindParam(":login", $args["login"]);
+            $student_stmt->bindParam(":subject_ID", $args["subject_ID"]);
+            $student_stmt->execute();
+
+            $teacher_stmt->bindParam(":login", $args["login"]);
+            $teacher_stmt->bindParam(":subject_ID", $args["subject_ID"]);
+            $teacher_stmt->execute();
+
+            $role = 0;
+            if($teacher_stmt->fetch()) $role += 1;
+            if($student_stmt->fetch()) $role += 2;
+            switch($role){
+              case 0:  $response["role"] = null; break;
+              case 1:  $response["role"] = True; break;
+              case 2:  $response["role"] = False; break;
+              default: $response["status"] = "Neither teacher\student\unaffiliated"; break;
+            }
+          }
+        }
+        catch(PDOException $e){
+          $response["status"] = "Database error: ".$e->getMessage();
+        }
+      }
+      else $response["status"] = "Database connection not initialized";
+      return $response;
+    }
+
     public function insert_user($args){
       $response = array();
       $response["status"] = "ok"; 
@@ -255,7 +309,6 @@
       else $response["status"] = "Database connection not initialized";
       return $response;
     }
-
 
     public function write_answer($args){
       $response = array();
