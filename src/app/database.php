@@ -237,6 +237,26 @@
       return $response;
     }
 
+    public function create_category($args){
+      $response = array();
+      $response["status"] = "ok";
+      if(isset($this->db)){
+        try{
+          $this->db->beginTransaction();
+          $statement = $this->db->prepare("INSERT INTO category (subject_ID,brief) VALUES(:subject_ID,:brief)");
+          $statement->execute($args);
+          $this->db->commit();
+        }
+        catch(PDOException $e){
+          $this->db->rollback();
+          $response["status"] = "Database error: ".$e->getMessage();
+        }
+      }
+      else $response["status"] = "Database connection not initialized";
+      return $response;
+    }
+
+
     public function write_answer($args){
       $response = array();
       $response["status"] = "ok";
@@ -486,6 +506,9 @@ Approve subject
 
 Approve student 
   UPDATE study set approved=:approved WHERE subject_ID=:subject_ID and login=:login
+
+Create category
+  INSERT INTO category (subject_ID,brief) VALUES(:subject_ID,:brief)
 
 Mark answers
   UPDATE answers SET correct=:correct WHERE question_ID=:question_ID and login=:login
