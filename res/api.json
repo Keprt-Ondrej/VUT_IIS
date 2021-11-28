@@ -296,7 +296,23 @@
                     }
                 ]
             }
-        } 
+        },
+
+        "list_students_to_subjects": {
+            "request":{
+                "subject_ID" : "subject_ID"
+            },
+            "response":{
+                "status" : "ok | subject_not_found",
+                "students":[
+                    {
+                        "login" : "login",
+                        "approved" : "approved"
+                    }
+                ]
+            }
+
+        }
 
     
 }
