@@ -387,7 +387,7 @@
           $statement = $this->db->prepare("INSERT INTO questions (category_ID,brief,full_question) VALUES(:category_ID,:brief,:full_question)");
           $statement->execute($args);
 
-          $statement = $this->db->prepare("SELECT question_ID FROM questions WHERE category_ID=:category_ID AND brief:=brief AND full_question=:full_question");
+          $statement = $this->db->prepare("SELECT question_ID FROM questions WHERE category_ID=:category_ID AND brief=:brief AND full_question=:full_question");
           $statement->execute($args);
 
           $response["statement"] = $statement;
