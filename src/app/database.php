@@ -548,7 +548,30 @@
       return $response;
     }
 
+    public function list_students_to_subjects($args){
+      $response = array();
+      $response["status"] = "ok";
+      if(isset($this->db)){
+        try{
+          $statement = $this->db->prepare("SELECT login,approved FROM study WHERE subject_ID=:subject_ID");
+          
+          $statement->execute($args);
+
+          $response["statement"] = $statement;
+        }
+        catch(PDOException $e){
+          $response["status"] = "Database error: ".$e->getMessage();
+        }
+      }
+      else $response["status"] = "Database connection not initialized";
+      return $response;
+    }
+
+
+
   }
+
+
 /*
 
 Insert user
