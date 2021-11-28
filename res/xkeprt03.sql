@@ -125,5 +125,44 @@ INSERT INTO `category` (`subject_ID`,`brief`) VALUES
   ('IFJ','Semestralni pisemka'),  
   ('IMS','Pulsemestralni pisemka');
 
-  
-  
+INSERT INTO `users` (`login`, `password`, `role`) VALUES
+  ('xlogin11','xlogin11','r'),
+  ('xlogin12','xlogin12','r'),
+  ('xlogin13','xlogin13','r'),
+  ('xlogin14','xlogin14','r'),
+  ('xlogin15','xlogin15','r'),
+  ('xlogin16','xlogin16','r'),
+  ('xlogin17','xlogin17','r'),
+  ('xlogin18','xlogin18','r'),
+  ('xlogin19','xlogin19','r'),
+  ('xlogin21','xlogin21','r'),
+  ('xlogin22','xlogin22','r'),
+  ('xlogin23','xlogin23','r'),
+  ('xlogin24','xlogin24','r'),
+  ('xlogin25','xlogin25','r'),
+  ('xlogin26','xlogin26','r'),
+  ('xlogin27','xlogin27','r'),
+  ('xlogin28','xlogin28','r'),
+  ('xlogin29','xlogin29','r'),
+  ('xlogin30','xlogin30','r'),
+  ('xlogin31','xlogin31','r'),
+  ('xlogin32','xlogin32','r'),
+  ('xlogin33','xlogin33','r'),
+  ('xlogin34','xlogin34','r');
+
+  INSERT INTO `study` (`login`, `subject_ID`, `approved`) VALUES
+  ('xlogin11','IFJ',NULL),
+  ('xlogin12','IFJ',NULL),
+  ('xlogin13','IFJ',NULL),
+  ('xlogin14','IFJ',NULL),
+  ('xlogin15','IFJ',NULL),
+  ('xlogin16','IFJ',NULL),
+  ('xlogin17','IFJ',NULL),
+  ('xlogin18','IFJ',NULL),
+  ('xlogin19','IFJ',NULL),
+  ('xlogin21','IFJ',NULL),
+  ('xlogin22','IFJ',NULL),
+  ('xlogin23','IFJ',NULL),
+  ('xlogin24','IFJ',NULL),
+  ('xlogin25','IFJ',NULL),
+  ('xlogin26','IFJ',NULL);

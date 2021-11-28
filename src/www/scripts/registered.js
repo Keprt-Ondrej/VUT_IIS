@@ -1,6 +1,8 @@
 function subjects_content(){
-    document.getElementById("content").innerHTML =`<h1>Seznam předmětů</h1>`;
+    var content = document.getElementById("content");
+    content.innerHTML =`<h1>Seznam předmětů</h1>`;
     loadHTML("content","unregistered/course_list_form.html",false);
+    document.getElementById("add_subject").innerHTML = `<h3><a href="#" onclick="create_subject_content();">Vytvořit předmět</a></h3>`
     document.getElementById("course_list_button").onclick = list_subjects;
 }
 
@@ -93,11 +95,12 @@ function list_category(subject_ID){
                     content.innerHTML = "";
                     content.innerHTML += `<h1>${received_data.subject_name}</h1>`;
                     if(received_data.role == true){
-                        content.innerHTML += `<a href="#" onclick="manage_students(\'${subject_ID}\');">Správa studentů</a>`;
+                        content.innerHTML += `<h3><a href="#" onclick="manage_students(\'${subject_ID}\');">Správa studentů</a></h3>`;
+                        content.innerHTML += `<h4><a href="#" onclick="create_category_content(\'${subject_ID}\');">Vytvořit kategorii</a></h4>`;                        
                     }                    
                     content.innerHTML += `<h3>Kategorie otázek</h3>`;
                     received_data["categories"].forEach(element => { 
-                        content.innerHTML+= `<a href="#" onclick="console.log(\'${element.category_ID}\');">${element.brief}</a><br>`
+                        content.innerHTML+= `<a href="#" onclick="list_questions(\'${element.category_ID}\');">${element.brief}</a><br>`
                     });
                 }
                 else{
@@ -150,12 +153,12 @@ function manage_students(subject_ID){
         request.onreadystatechange = function () {                
             if (request.readyState === 4 && request.status === 200) {
                 console.log(request.responseText);
-                var content = document.getElementById("content");
+                var content = document.getElementById("modal-body");
                 received_data = JSON.parse(request.responseText);
                 if(received_data.status == "ok"){
+                    document.getElementById("modal-header").innerHTML = `<h1>Správa studentů ${subject_ID}</h1>`
                     content.innerHTML = "";
-
-                   content.innerHTML += `<div>
+                    content.innerHTML += `<div>
                     <input type="text" class="myInput" id="myInput" onkeyup="myFunction()" placeholder="Search for names.."></div>
                     <table class="myTable" id="myTable">
                     <tr class="header"><th>Login</th><th>Stav</th><th></th><th></th></tr>`;
@@ -167,7 +170,7 @@ function manage_students(subject_ID){
                         </td><td><button type="button" onclick="approve_student(\'${element.login}\',\'${subject_ID}\',0);">Zamítnout</button></tr>`; 
                     });
                     content.innerHTML += `</table>`;
-                    
+                    open_modal();                    
                 }
                 else{
                     alert("Chyba");
@@ -180,4 +183,134 @@ function manage_students(subject_ID){
         alert(e.toString());
     }
     return;    
+}
+
+function create_subject_content(){
+    document.getElementById("modal-header").innerHTML = `<h1>Vytvořit předmět</h1>`;
+    var modal_content = document.getElementById("modal-body");
+    modal_content.innerHTML = `
+    <form id="create_subject_form">
+    <label for="subject_ID_create">Zkratka předmětu:</label>
+    <input type="text" id="subject_ID_create" name="subject_ID_create" maxlenght="5"><br>
+    <label for="subject_name_create">Jméno předmětu</label> 
+    <input type="text" id="subject_name_create" name"subject_name_create" maxlenght="255"><br>
+    <input type="button" onclick="create_subject();" value="Vytvořit">
+    </form>
+    `;
+    open_modal();
+}
+
+function create_subject(){
+    try{
+        var request = new XMLHttpRequest();
+        var url = apiURL+"/app/create_course.php";
+        var form = document.getElementById("create_subject_form")
+        var send_data = JSON.stringify({"subject_ID":form.subject_ID_create.value,"subject_name":form.subject_name_create.value});
+        console.log(send_data);
+        request.open("POST", url, true);
+        request.setRequestHeader("Content-Type", "application/json");        
+        request.onreadystatechange = function () {                
+            if (request.readyState === 4 && request.status === 200) {
+                console.log(request.responseText);
+                var received_data = JSON.parse(this.responseText);
+                if(received_data.status == "ok"){
+                    close_modal();
+                }
+                else{
+                    alert("Předmět se nepodařilo vytvořit!");
+                }       
+            }
+        }
+        request.send(send_data);
+    }
+    catch(e){
+        alert(e.toString());
+    }
+    return;
+}
+
+function create_category_content(subject_ID){
+    document.getElementById("modal-header").innerHTML = `<h1>Vytvořit kategorii pro předmět ${subject_ID}</h1>`;
+    var modal_content = document.getElementById("modal-body");
+    modal_content.innerHTML =`
+    <form id="create_category_form">
+    <label for="category_name_create">Název kategorie: </label>
+    <input type="text" id="category_name_create" name="category_name_create" maxlenght="255"><br>
+    <input type="button" onclick="create_category(\'${subject_ID}\');" value="Vytvořit">
+    </form>
+    `;
+    
+    open_modal()
+}
+
+function create_category(subject_ID){
+    try{
+        var request = new XMLHttpRequest();
+        var url = apiURL+"/app/create_category.php";
+        var form = document.getElementById("create_category_form")
+        var send_data = JSON.stringify({"subject_ID":subject_ID,"brief":form.category_name_create.value});
+        console.log(send_data);
+        request.open("POST", url, true);
+        request.setRequestHeader("Content-Type", "application/json");        
+        request.onreadystatechange = function () {                
+            if (request.readyState === 4 && request.status === 200) {
+                console.log(request.responseText);
+                var received_data = JSON.parse(this.responseText);
+                if(received_data.status == "ok"){
+                    var content = document.getElementById("content");
+                    content.innerHTML += `<a href="#" onclick="list_questions(\'${received_data.category_ID}\');">${form.category_name_create.value}</a><br>`
+                    close_modal();
+                }
+                else{
+                    alert("Kategorii se nepodařilo vytvořit!");
+                }       
+            }
+        }
+        request.send(send_data);
+    }
+    catch(e){
+        alert(e.toString());
+    }
+    return;
+}
+
+function list_questions(category_ID){
+    try{
+        var request = new XMLHttpRequest();
+        var url = apiURL+"/app/list_questions.php";
+        var send_data = JSON.stringify({"category_ID":category_ID});
+        console.log(send_data);
+        request.open("POST", url, true);
+        request.setRequestHeader("Content-Type", "application/json");        
+        request.onreadystatechange = function () {                
+            if (request.readyState === 4 && request.status === 200) {
+                console.log(request.responseText);
+                var received_data = JSON.parse(this.responseText);
+                if(received_data.status == "ok"){
+                    var content = document.getElementById("content");
+                    content.innerHTML = `<h1>${received_data.brief}</h1>`;
+                    if(received_data.role != null){ //null = unregistered on course
+                        content.innerHTML += `<h3><a href="#" onclick="create_question_content(\'${category_ID}\');">Vytvořit otázku</a></h3>`
+                    }
+                    received_data["questions"].forEach(element => {
+                       content.innerHTML +=` <a href="#" onclick=";">${element.brief}</a><br>`
+                    });
+
+                }
+                else{
+                    alert("Kategorie nebyla nalezena!");
+                }       
+            }
+        }
+        request.send(send_data);
+    }
+    catch(e){
+        alert(e.toString());
+    }
+    return;
+}
+
+function create_question_content(category_ID){
+    //TODO HERE
+    console.log(category_ID)
 }
