@@ -292,7 +292,7 @@
                     {   
                         "subject_ID"   : "subject_ID",
                         "login"        : "login",
-                        "points"  : "points",
+                        "points"  : "points"
                     }
                 ]
             }
