@@ -335,7 +335,7 @@
       if(isset($this->db)){
         try{
           $this->db->beginTransaction();
-          $statement = $this->db->prepare("INSERT INTO reactions (question_ID,answer_login,text) VALUES(:question_ID,:answer_login,:reaction)");
+          $statement = $this->db->prepare("INSERT INTO reactions (question_ID,answer_login,text,reaction_login) VALUES(:question_ID,:answer_login,:reaction,:reaction_login)");
           $statement->execute($args);
           $this->db->commit();
         }
@@ -512,7 +512,7 @@
         try{
           $this->db->beginTransaction();
           $parent   = $this->db->prepare("SELECT answer FROM answers WHERE question_ID=:question_ID AND login=:login");
-          $children = $this->db->prepare("SELECT * FROM reactions WHERE question_ID=:question_ID AND login=:login");
+          $children = $this->db->prepare("SELECT * FROM reactions WHERE question_ID=:question_ID AND answer_login=:login");
           $parent->execute($args);
           $children->execute($args);
 
