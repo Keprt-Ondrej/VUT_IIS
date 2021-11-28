@@ -49,6 +49,7 @@ CREATE TABLE `answers` (
   `login` char(8) NOT NULL,
   `question_ID` bigint(20) UNSIGNED not NULL,
   `answer` varchar(1024) DEFAULT NULL,
+  `correct` tinyint(1) DEFAULT NULL,
   foreign key(question_ID) references questions(question_ID),
   foreign key(login) references users(login),
   primary key(login,question_ID)
