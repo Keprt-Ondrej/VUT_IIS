@@ -304,7 +304,8 @@
           $statement = $this->db->prepare("INSERT INTO category (subject_ID,brief) VALUES(:subject_ID,:brief)");
           $statement->execute($args);
 
-          $statement = $this->db->prepare("SELECT category_ID FROM category WHERE subject_ID=:subject_ID AND brief=:brief")
+          $statement = $this->db->prepare("SELECT category_ID FROM category WHERE subject_ID=:subject_ID AND brief=:brief");
+
           $statement->execute($args);
 
           $response["statement"] = $statement;
