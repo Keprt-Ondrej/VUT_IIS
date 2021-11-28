@@ -128,3 +128,11 @@ li a:hover {
 #close-modal img {
     width: 30px;
 }
+
+.answer {
+    border-radius: 5px;
+    border: 2px solid black;
+    margin-bottom: 10px;
+    padding: 5px; 
+}
+  

@@ -348,6 +348,16 @@ function create_question(category_ID){
     return;
 }
 
+function correct_answer_converter(value){
+    if(value == null){
+        return "nehodnoceno";
+    }
+    else if(value == 1){
+        return "správně";
+    }
+    else return "špatně";
+}
+
 function list_answers_content(question_ID){
     console.log("otazka: " +question_ID);
     try{
@@ -366,20 +376,31 @@ function list_answers_content(question_ID){
                     var content = document.getElementById("content");
                     content.innerHTML = "";
                     content.innerHTML += `<h3>Otázka: ${received_data.brief}</h3>`;
-                    content.innerHTML += `<p>${received_data.full_question}</p>`
-                    if (received_data.answer != null){
+                    content.innerHTML += `<p>${received_data.full_question}</p>`; 
+                    var answer_actions;
+                    if (received_data.answer != null){  //final answer is defined
                         content.innerHTML +=`<h3>Správná odpověd:</h3>
                         <p>${received_data.answer}</p>`;
                     }
                     else{
-                        //TODO pridat form na odpoved
-
+                        if(received_data.role == true){                            
+                            //ucitel
+                            content.innerHTML += `<h3><a href="#" onclick="write_answer_content(\'${question_ID}\',true);">Zadat finální odpověď</a></h3>`;
+                        }
+                        else if (received_data.role == false){
+                            content.innerHTML += `<h3><a href="#" onclick="write_answer_content(\'${question_ID}\',false);">Odpovědět na otázku</a></h3>`;
+                        }
                     }
-                    //TODO ucitel/zak/null
-
                     content.innerHTML += `<h3>Odpovědi</h3>`;
                     received_data["answers"].forEach(element => {
-                        content.innerHTML += `${login}: ${answer}<br><br>`
+                        if(received_data.answer == null){
+                            login = "";
+                        }
+                        else{
+                            login = `${element.login}:<br>`
+                        }
+                        var actions = return_answer_actions_area(received_data.answer,received_data.role,element.login,question_ID);
+                        content.innerHTML += `<div class="answer"><div style="padding-bottom: 2px">${actions}</div>${login}${element.answer}<br></div>`
                     });
                 }
                 else{
@@ -393,5 +414,117 @@ function list_answers_content(question_ID){
         alert(e.toString());
     }
     return;
+}
+
+function return_answer_actions_area(final_answer,role,login,question_ID,votes){
+    if(final_answer == null){   //final answer is not set
+        if(role == true){   //teacher
+            return "";
+        }
+        else if(role == false){     //student
+            //vote + reactions
+            return `
+            <input type="button" onclick="list_reactions_content(\'${question_ID}\',\'${login}\');" value="Zobrazit reakce">
+            <input type="button" onclick="add_rating(\'${question_ID}\',\'${login}\');" value="Přidat hlas">`;
+        }
+    }
+    else{
+        if(role == true){   //teacher
+            //evaluate
+            return ``;
+
+        }
+        else if(role == false){     //student   list_reactions_content(question_ID,login)
+            //reactions
+            return `<input type="button" onclick="list_reactions_content(\'${question_ID}\',\'${login}\');" value="Zobrazit reakce">`; 
+        }
+    }
+    return ``;
+}
+
+function write_answer_content(question_ID,role){    
+    var body = document.getElementById("modal-body");
+    body.innerHTML = "";
+    loadHTML("modal-body","registered/create_answer_form.html",false);
+    if(role){   //teacher
+        document.getElementById("modal-header").innerHTML = "<h1>Správná odpověď<h1>";
+        body.innerHTML += `<button type="button" onclick="final_answer(\'${question_ID}\');">Uložit</button>`;
+    }
+    else{ //student
+        document.getElementById("modal-header").innerHTML = "<h1>Odpověď<h1>";
+        body.innerHTML += `<button type="button" onclick="write_answer(\'${question_ID}\');">Uložit</button>`;
+    }
+    open_modal();
+}
+
+function final_answer(question_ID){
+    console.log("otazka: " +question_ID);
+    try{
+        var request = new XMLHttpRequest();
+        var url = apiURL+"/app/final_answer.php";
+        var form = document.getElementById("answer_form");
+        var send_data = JSON.stringify({"question_ID": question_ID,"answer":form.answer.value});
+        console.log(send_data);
+        request.open("POST", url, true);
+        request.setRequestHeader("Content-Type", "application/json");        
+        request.onreadystatechange = function () {                
+            if (request.readyState === 4 && request.status === 200) {
+                console.log(request.responseText);
+                var received_data = JSON.parse(this.responseText);
+                if(received_data.status == "ok"){
+                   close_modal();
+                }
+                else{
+                    alert("Nelze uložit finální odpověď");
+                }       
+            }
+        }
+        request.send(send_data);
+    }
+    catch(e){
+        alert(e.toString());
+    }
+    return;
+}
+
+function write_answer(question_ID){
+    console.log("otazka: " +question_ID);
+    try{
+        var request = new XMLHttpRequest();
+        var url = apiURL+"/app/write_answer.php";
+        var form = document.getElementById("answer_form");
+        var send_data = JSON.stringify({"question_ID": question_ID,"answer":form.answer.value});
+        console.log(send_data);
+        request.open("POST", url, true);
+        request.setRequestHeader("Content-Type", "application/json");        
+        request.onreadystatechange = function () {                
+            if (request.readyState === 4 && request.status === 200) {
+                console.log(request.responseText);
+                var received_data = JSON.parse(this.responseText);
+                if(received_data.status == "ok"){
+                   close_modal();
+                }
+                else{
+                    alert("Nelze uložit odpověď");
+                }       
+            }
+        }
+        request.send(send_data);
+    }
+    catch(e){
+        alert(e.toString());
+    }
+    return;
+}
+
+function evaluate_answer(){
+    
+}
+
+function list_reactions_content(question_ID,login){
+    console.log("zobrazuji reakce")
+}
+
+function add_rating(question_ID,answer_login){
 
 }
