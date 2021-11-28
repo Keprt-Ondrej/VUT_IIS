@@ -1,5 +1,5 @@
 function course_management_content(){ 
-    document.getElementById("content").innerHTML =`<h1>Správa účtů</h1>`;   
+    document.getElementById("content").innerHTML =`<h1>Schvalování vedoucích předmětů</h1>`;   
     loadHTML("content","unregistered/course_list_form.html",false);
     document.getElementById("course_list_button").onclick = course_management_list_courses;
 }
