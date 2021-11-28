@@ -257,7 +257,8 @@
                 "answers":[
                     {
                         "login" : "login",
-                        "answer": "student_answer"
+                        "answer": "student_answer",
+                        "points": "points"
                     }
                 ]
             }
