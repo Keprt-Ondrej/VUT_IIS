@@ -260,8 +260,9 @@
           $statement = $this->db->prepare("UPDATE answers SET correct=:correct WHERE question_ID=:question_ID and login=:login");
           $statement->execute($args);
           if($args["correct"]){
-            $statement = $this->db->prepare("UPDATE study SET points=points+(SELECT COUNT(rating_login) FROM answers INNER JOIN answer_ratings ON answers.question_ID=answer_ratings.question_ID AND answers.login=answer_ratings.answer_login) WHERE login=:login");
+            $statement = $this->db->prepare("UPDATE study SET points=points+(SELECT COUNT(rating_login) FROM answers INNER JOIN answer_ratings ON answers.question_ID=answer_ratings.question_ID AND answers.login=answer_ratings.answer_login) WHERE login=:login AND (SELECT subject_ID FROM category INNER JOIN questions ON questions.category_ID=category.category_ID WHERE question_ID=:question_ID)");
             $statement->bindParam(":login", $args["login"]);
+            $statement->bindParam(":question_ID", $args["question_ID"]);
             $statement->execute();
           }
           $this->db->commit();
@@ -538,7 +539,7 @@
       $response["status"] = "ok";
       if(isset($this->db)){
         try{
-          $statement = $this->db->prepare("SELECT subject_ID,login,points FROM study ORDER BY points");
+          $statement = $this->db->prepare("SELECT subject_ID,login,points FROM study ORDER BY subject_ID, points DESC");
           $statement->execute();
 
           $response["statement"] = $statement;
