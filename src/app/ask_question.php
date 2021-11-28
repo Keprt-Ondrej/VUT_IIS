@@ -9,10 +9,19 @@
 
   $recv_data = json_decode(file_get_contents('php://input'), true); // POST Data
 
-  if(isset($_SESSION['role'])){
+  $retval = $database->ask_question($recv_data);
 
-    $retval = $database->ask_question($recv_data);
-    echo json_encode($retval);
+  if($retval['status'] != 'ok'){
+      echo json_encode($retval);
+      return;
   }
+
+  $response = array();
+
+  $response['status'] = 'ok';
+
+  $response['question_ID'] = ($retval['statement']->fetch())['question_ID'];
+
+  echo json_encode($response);
 ?>
   
