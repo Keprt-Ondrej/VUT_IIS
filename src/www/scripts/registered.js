@@ -293,7 +293,7 @@ function list_questions(category_ID){
                         content.innerHTML += `<h3><a href="#" onclick="create_question_content(\'${category_ID}\');">Vytvořit otázku</a></h3>`
                     }
                     received_data["questions"].forEach(element => {
-                       content.innerHTML +=` <a href="#" onclick=";">${element.brief}</a><br>`
+                       content.innerHTML +=` <a href="#" onclick="list_answers_content(\'${element.question_ID}\');">${element.brief}</a><br>`
                     });
 
                 }
@@ -311,6 +311,71 @@ function list_questions(category_ID){
 }
 
 function create_question_content(category_ID){
-    //TODO HERE
-    console.log(category_ID)
+    document.getElementById("modal-header").innerHTML = `<h1>Vytvořit otázku</h1>`;
+    document.getElementById("modal-body").innerHTML ="";
+    loadHTML("modal-body","registered/create_question_form.html",false);
+    document.getElementById("modal-body").innerHTML += `<input type="button" onclick="create_question(\'${category_ID}\');" value="Vytvořit otázku">`;    
+    open_modal();
+}
+
+function create_question(category_ID){
+    try{
+        var request = new XMLHttpRequest();
+        var url = apiURL+"/app/ask_question.php";
+        var form = document.getElementById("create_question_form");
+        var send_data = JSON.stringify({"category_ID":category_ID,"brief": form.question_brief.value, "full_question":form.full_question.value});
+        console.log(send_data);
+        request.open("POST", url, true);
+        request.setRequestHeader("Content-Type", "application/json");        
+        request.onreadystatechange = function () {                
+            if (request.readyState === 4 && request.status === 200) {
+                console.log(request.responseText);
+                var received_data = JSON.parse(this.responseText);
+                if(received_data.status == "ok"){
+
+                    close_modal();
+                }
+                else{
+                    alert("Nastala chyba při vytváření otázky");
+                }       
+            }
+        }
+        request.send(send_data);
+    }
+    catch(e){
+        alert(e.toString());
+    }
+    return;
+}
+
+function list_answers_content(question_ID){
+    console.log("otazka: " +question_ID);
+    try{
+        var request = new XMLHttpRequest();
+        var url = apiURL+"/app/list_answers.php";
+        var form = document.getElementById("create_question_form");
+        var send_data = JSON.stringify({"question_ID": question_ID});
+        console.log(send_data);
+        request.open("POST", url, true);
+        request.setRequestHeader("Content-Type", "application/json");        
+        request.onreadystatechange = function () {                
+            if (request.readyState === 4 && request.status === 200) {
+                console.log(request.responseText);
+                var received_data = JSON.parse(this.responseText);
+                if(received_data.status == "ok"){
+                    var content = document.getElementById("content");
+                    content.innerHTML += `<h1>Odpovedi</h1>`;
+                }
+                else{
+                    alert("Otázka nebyla nalezena");
+                }       
+            }
+        }
+        request.send(send_data);
+    }
+    catch(e){
+        alert(e.toString());
+    }
+    return;
+
 }
