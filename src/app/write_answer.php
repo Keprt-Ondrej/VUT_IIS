@@ -8,11 +8,11 @@
   $database = new Database();
 
   $recv_data = json_decode(file_get_contents('php://input'), true); // POST Data
+   
+  $recv_data['login'] = $_SESSION['login'];
 
-    if(isset($_SESSION['role']) && $_SESSION['role']!= 't'){
-      $recv_data['login'] = $_SESSION['login'];
-      $retval = $database->write_answer($recv_data);
-      echo json_encode($retval);
-    }
+  $retval = $database->write_answer($recv_data);
+
+  echo json_encode($retval);
 ?>
   

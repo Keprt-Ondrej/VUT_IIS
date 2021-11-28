@@ -282,7 +282,7 @@
       if(isset($this->db)){
         try{
           $this->db->beginTransaction();
-          $statement = $this->db->prepare("UPDATE questions SET answer=:answer WHERE question_ID=:question_ID AND category_ID=:category_ID");
+          $statement = $this->db->prepare("UPDATE questions SET answer=:answer WHERE question_ID=:question_ID");
           $statement->execute($args);
           $this->db->commit();
         }
