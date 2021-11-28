@@ -90,7 +90,6 @@
 
         "final_answer":{
             "request":{
-                "category_ID": "category_ID",
                 "question_ID": "question_ID",
                 "answer"     : "answer"
             },
@@ -114,7 +113,6 @@
     "STUDENT":{
         "write_answer":{
             "request":{
-               "login"      : "login",
                "question_ID": "question_ID",
                "answer"     : "answer"
             },
