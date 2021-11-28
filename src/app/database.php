@@ -259,8 +259,11 @@
           $this->db->beginTransaction();
           $statement = $this->db->prepare("UPDATE answers SET correct=:correct WHERE question_ID=:question_ID and login=:login");
           $statement->execute($args);
-          $statement = $this->db->prepare("UPDATE study SET points=points+(SELECT COUNT(rating_login) FROM answers INNER JOIN answer_ratings ON answers.question_ID=answer_ratings.question_ID AND answers.login=answer_ratings.login)");
-          $statement->execute();
+          if($args["correct"]){
+            $statement = $this->db->prepare("UPDATE study SET points=points+(SELECT COUNT(rating_login) FROM answers INNER JOIN answer_ratings ON answers.question_ID=answer_ratings.question_ID AND answers.login=answer_ratings.answer_login) WHERE login=:login");
+            $statement->bindParam(":login", $args["login"]);
+            $statement->execute();
+          }
           $this->db->commit();
         }
         catch(PDOException $e){
