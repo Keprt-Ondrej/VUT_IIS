@@ -546,6 +546,30 @@
 
     }
 
+    public function number_of_ratings($args){
+      $response = array();
+      $response["status"] = "ok";
+      if(isset($this->db)){
+        try{
+          $this->db->beginTransaction();
+          $statement  = $this->db->prepare("SELECT COUNT(*) FROM answer_ratings WHERE question_ID=:question_ID AND rating_login=:login");
+          
+          $statement->execute($args);
+
+          $response["statement"] = $statement;
+
+          $this->db->commit();
+        }
+        catch(PDOException $e){
+          $this->db->rollback();
+          $response["status"] = "Database error: ".$e->getMessage();
+        }
+      }
+      else $response["status"] = "Database connection not initialized";
+      return $response;
+
+    }
+
     public function list_reactions($args){
       $response = array();
       $response["status"] = "ok";

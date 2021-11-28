@@ -138,7 +138,7 @@
                "question_ID"   : "question_ID"
             },
             "response":{
-                "status": "ok | internal_error"
+                "status": "ok | internal_error | out_of_votes"
             }
         }
     },
