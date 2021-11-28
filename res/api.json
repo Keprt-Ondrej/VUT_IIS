@@ -105,7 +105,8 @@
                 "brief"     : "category_brief"
             },
             "response":{
-                "status": "ok | internal_error"
+                "status": "ok | internal_error",
+                "category_ID" : "category_ID"
             }
         }
     },

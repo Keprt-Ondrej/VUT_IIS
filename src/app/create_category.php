@@ -12,7 +12,19 @@
     if(isset($_SESSION['role']) && $_SESSION['role'] != 's'){
 
       $retval = $database->create_category($recv_data);
-      echo json_encode($retval);
+      
+      if($retval['status'] != 'ok'){
+        echo json_encode($retval);
+        return;
+      }
+
+      $response = array();
+
+      $response['status'] = 'ok';
+
+      $response['category_ID'] = ($retval['statement']->fetch())['category_ID'];
+
+      echo json_encode($response);
     }
 ?>
   
