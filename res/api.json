@@ -136,8 +136,7 @@
         "vote":{
             "request":{
                "answer_login"  : "student_login",
-               "question_ID"   : "question_ID",
-               "reaction"      : "reaction_message"
+               "question_ID"   : "question_ID
             },
             "response":{
                 "status": "ok | internal_error"
@@ -267,7 +266,7 @@
         "list_reactions":{
             "request":{
                 "question_ID" : "question_ID",
-                "answer_login": "answer_login"
+                "login": "answer_login"
             },
             "response":{
                 "status"   : "ok | answer_not_found",
