@@ -45,8 +45,8 @@
     $tmp = new stdClass();
     $tmp->login  = $row['login'];
     $tmp->answer = $row['answer'];
-    $tmp->points = (login_to_points(array("login" => $row['login'], "question_ID" => $recv_data['question_ID'])))->fetchColumn();
-    
+    $tmp->points = ($database->login_to_points(array("login" => $row['login'], "question_ID" => $recv_data['question_ID']))['statement'])->fetchColumn();
+
     array_push($response['answers'], $tmp);
   } 
   echo json_encode($response);
