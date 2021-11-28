@@ -26,8 +26,7 @@
     <div>
         <div class="modal-container" id="modal">
             <div class="modal">
-                <div class="modal-header text-center" id="modal-header">
-                    <h1>Ahoj ja jsem tady</h1>  
+                <div class="modal-header text-center" id="modal-header">  
                 </div>
                 <a href="#" id="close-modal">
                         <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTF3_Bp6uIXZ9m4-nPI9UX2rzk5d6Pd41jivkMJ8aZzeQu03AKzztRj8JE" alt="closeIcon">
