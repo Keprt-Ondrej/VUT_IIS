@@ -332,7 +332,7 @@ function create_question(category_ID){
                 console.log(request.responseText);
                 var received_data = JSON.parse(this.responseText);
                 if(received_data.status == "ok"){
-
+                    document.getElementById("content").innerHTML +=`<a href="#" onclick="list_answers_content(\'${received_data.question_ID}\');">${form.question_brief.value}</a><br>`
                     close_modal();
                 }
                 else{
@@ -364,7 +364,23 @@ function list_answers_content(question_ID){
                 var received_data = JSON.parse(this.responseText);
                 if(received_data.status == "ok"){
                     var content = document.getElementById("content");
-                    content.innerHTML += `<h1>Odpovedi</h1>`;
+                    content.innerHTML = "";
+                    content.innerHTML += `<h3>Otázka: ${received_data.brief}</h3>`;
+                    content.innerHTML += `<p>${received_data.full_question}</p>`
+                    if (received_data.answer != null){
+                        content.innerHTML +=`<h3>Správná odpověd:</h3>
+                        <p>${received_data.answer}</p>`;
+                    }
+                    else{
+                        //TODO pridat form na odpoved
+
+                    }
+                    //TODO ucitel/zak/null
+
+                    content.innerHTML += `<h3>Odpovědi</h3>`;
+                    received_data["answers"].forEach(element => {
+                        content.innerHTML += `${login}: ${answer}<br><br>`
+                    });
                 }
                 else{
                     alert("Otázka nebyla nalezena");
