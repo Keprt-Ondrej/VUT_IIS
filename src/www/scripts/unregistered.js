@@ -1,9 +1,12 @@
 function show_unregistered(){
+    console.log("loguji jako unregistered");
+    document.cookie = "logged=neregistrovan;path=/"
+    document.getElementById("login").innerHTML = "";
     document.getElementById("navigation").innerHTML ="";
     loadHTML("navigation","unregistered/unregistered_navigation.html");
     document.getElementById("header").innerHTML ="";
     loadHTML("header","header.html",false);
-    fill_header("","Nepřihlášen");
+    fill_header(`<br>`,"Nepřihlášen");
 }
 
 function show_all_users_points(){
