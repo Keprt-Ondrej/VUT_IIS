@@ -57,16 +57,16 @@
 <p>
 	<h3>Back-end</h3>
 	<p>
-		<h4>Rozhranie databaze</h4>
+		<h4>Rozhraní databáze</h4>
 		<p>
-            Rozhraní pro práci s databází je definované v souboru <label class="code">src/app/database.php</label>. Jedná se o PHP třídu, která zapouzdřuje práci s databází typu <label class="code">MySQL</label> tak, aby přímé dotazy mimo tohoto souboru nebyli nutně. Ovšem pokud by nastal případ, kde by bylo přímé dotazování potřebný, existuje funkce <label class="code">Database::get_pdo()</label> která vrátí referenci na <label class="code">PDO</label> objekt.<br>
+            Rozhraní pro práci s databází je definované v souboru <label class="code">src/app/database.php</label>. Jedná se o PHP třídu, která zapouzdřuje práci s databází typu <label class="code">MySQL</label> tak, aby přímé dotazy mimo tento soubor nebyli nutné. Ovšem pokud by nastal případ, kde by bylo přímé dotazování potřebné, existuje funkce <label class="code">Database::get_pdo()</label> která vrátí referenci na <label class="code">PDO</label> objekt.<br>
             Veškerá funkčnost našeho API je obsažena v tyto třídě.<br>
             Každá funkce má stejnou strukturu:
             <ul>
                 <li>Definování návratové proměnné <label class="code">$response</label></li>
                 <li><label class="code">try catch</label> blok, který zachytí případný chyby v jednotlivých dotazech</li>
-                <li>Samotný SQL dotazy</li>
-                <li>Databázový transakce jestli vkládáme data do databáze</li>
+                <li>Samotné SQL dotazy</li>
+                <li>Databázové transakce, pokud vkládáme data do databáze</li>
                 <li>Odevzdání proměnné <label class="code">$response</label> uživateli</li>
             </ul>
         </p>
@@ -110,12 +110,6 @@
 				uživatele "smaže", uživatel se nepřihlásí do systému, ale jeho provedené akce se nadále budou v systému zobrazovat. 
 			</p>
 		</p>
-
-		
-		
-		
-		
-
 	</p>
 </p>
 
