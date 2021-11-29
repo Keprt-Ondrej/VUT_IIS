@@ -32,7 +32,8 @@
 
   $response['answer'] = ($retval['statement_parent']->fetch())['answer'];
   
-  $response['role'] = $subject_role['role'];
+  if($subject_role["approved"]) $response['role'] = $subject_role['role'];
+  else                          $response['role'] = null;
 
   $response['reactions'] = array();
 

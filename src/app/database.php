@@ -63,8 +63,14 @@
             $teacher_stmt->execute();
 
             $role = 0;
-            if($teacher_stmt->fetch()) $role += 1;
-            if($student_stmt->fetch()) $role += 2;
+            if($row = $teacher_stmt->fetch()){
+              $role += 1;
+              $response["approved"] = $row["approved"];
+            }
+            if($row = $student_stmt->fetch()){
+              $role += 2;
+              $response["approved"] = $row["approved"];
+            }
             switch($role){
               case 0:  $response["role"] = null; break;
               case 1:  $response["role"] = True; break;
@@ -550,7 +556,7 @@
       return $response;
     }
 
-   public function login_to_points($args){
+    public function login_to_points($args){
       $response = array();
       $response["status"] = "ok";
       if(isset($this->db)){
@@ -571,7 +577,6 @@
       }
       else $response["status"] = "Database connection not initialized";
       return $response;
-
     }
 
     public function number_of_ratings($args){
@@ -595,7 +600,6 @@
       }
       else $response["status"] = "Database connection not initialized";
       return $response;
-
     }
 
     public function list_reactions($args){
