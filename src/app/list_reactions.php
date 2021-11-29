@@ -24,7 +24,7 @@
       return;
     }
   }
-  else $subject_role = array('role'=>null);
+  else $subject_role = array('role'=>null, 'approved' => null);
 
   $response = array();
 
