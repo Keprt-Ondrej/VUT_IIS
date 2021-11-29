@@ -107,13 +107,12 @@
     }
 
     public function delete_user($args){
-      return json_encode(array("status"=>"Not implemented due to me wanting to sleep and this is too much to think about..."));
       $response = array();
       $response["status"] = "ok";
       if(isset($this->db)){
         try{
           $this->db->beginTransaction();
-          $statement = $this->db->prepare("DELETE FROM users WHERE login=:login");
+          $statement = $this->db->prepare("UPDATE users SET deleted=:deleted WHERE login=:login");
           $statement->execute($args);
           $this->db->commit();
         }
