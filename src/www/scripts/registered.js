@@ -535,10 +535,14 @@ function write_answer(question_ID){
                 console.log(request.responseText);
                 var received_data = JSON.parse(this.responseText);
                 if(received_data.status == "ok"){
-                   close_modal();
+                    list_answers_content(question_ID);
+                    close_modal();
                 }
-                else{
-                    alert("Nelze uložit odpověď");
+                else if(received_data.status == "your_question"){
+                    alert("Nelze odpovídat na vlastní otázku");
+                }
+                else if(received_data.status == "wrong_question_ID"){
+
                 }       
             }
         }
@@ -686,6 +690,7 @@ function create_reaction(question_ID,login){
                 var received_data = JSON.parse(this.responseText);
                 if(received_data.status == "ok"){
                     console.log("zadano");
+                    list_reactions_content(question_ID,login);
                     close_modal();
                 }
                 else{
