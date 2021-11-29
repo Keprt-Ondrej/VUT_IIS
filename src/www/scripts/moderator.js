@@ -13,15 +13,15 @@ function course_list_form_JSON(){
 }
 
 function approved_converter(value){
-    console.log("approved va: "+value);
+    console.log("approved converter: "+ value);
     if(value == 1){
         return "Potvrzené";
     }
-    else if(value === null){
-        return "Nerozhodnuto"
+    else if(value == 0){
+        return "Zamítnuté";
     }
     else{
-        return "Nepotvrzené";
+        return "Nerozhodnuto"
     }
     return;   
 }
@@ -73,7 +73,7 @@ function course_management_list_courses(){
                 var table = document.getElementById("myTable");
                 received_data["subjects"].forEach(element => {
                     console.log(element);
-                    var status = approved_converter(element.approved);                                                           
+                    var status = approved_converter(element.approved);                                                                                                   
                     table.innerHTML += `<tr><td>${element.subject_ID}</td><td>${element.subject_name}</td><td>${element.login}</td>
                     <td id="${element.login}_${element.subject_ID}_row">${status}</td>
                     <td><button type="button" onclick="approve_course(\'${element.login}\',\'${element.subject_ID}\',1);">Potvrdit</button>
