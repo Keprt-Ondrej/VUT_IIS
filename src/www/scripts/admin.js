@@ -77,16 +77,19 @@ function show_all_users_content(){
                 var table = document.getElementById("myTable");
                 received_data["users"].forEach(element => {
                     var deleted;
+                    var button;
                     if(element.deleted == null){
                         deleted = "";
+                        button =`<button type="button" onclick="prepare_delete_user(\'${element.login}\',${true});">Smazat</button>`;
                     }
                     else{
                         deleted = "smazán";
+                        button =`<button type="button" onclick="prepare_delete_user(\'${element.login}\',${null});">aktivovat</button>`;
                     }
                     table.innerHTML += `<tr><td id="${element.login}_user_list_role">${element.login}</td><td>` + stringify_role(element.role) + `
                     </td><td><button type="button" onclick="prepare_change_user_password(\'${element.login}\');">Změna hesla</button>
                     </td><td><button type="button" onclick="prepare_change_user_role(\'${element.login}\');">Změna role</button>
-                    </td><td><button type="button" onclick="prepare_delete_user(\'${element.login}\');">Smazat</button>
+                    </td><td id="${element.login}_button">${button}</td>
                     <td id="${element.login}_user_list_deleted">${deleted}</td></tr>`;
                 });
                 destination.innerHTML += "</table>";
@@ -100,9 +103,19 @@ function show_all_users_content(){
     return;
 }
 
-function prepare_delete_user(login){
-    modal_header.innerHTML = "<h1>Opravdu chcete smazat uživatele " + login +"?<h1>"
-    modal_body.innerHTML = `<button type="button" onclick="delete_user(\'${login}\');">Smazat</button>`
+function prepare_delete_user(login,action){
+    console.log("akce: ",action)
+    var what;
+    if(action == null){
+        //activate
+        modal_header.innerHTML = "<h1>Opravdu chcete aktivovat uživatele " + login +"?<h1>"
+        modal_body.innerHTML = `<button type="button" onclick="delete_user(\'${login}\',${action});">aktivovat</button>`
+    }
+    else{
+        //delete
+        modal_header.innerHTML = "<h1>Opravdu chcete smazat uživatele " + login +"?<h1>"
+        modal_body.innerHTML = `<button type="button" onclick="delete_user(\'${login}\',${action});">smazat</button>`
+    }
     open_modal();    
 }
 
@@ -152,12 +165,12 @@ function change_user_role(login){
     
 }
 
-function delete_user(login){
+function delete_user(login,action){
     try{
         console.log("chci mazat "+login);
         var request = new XMLHttpRequest();
         var url = apiURL+"/app/delete_user.php";
-        var send_data = JSON.stringify({"login":login});
+        var send_data = JSON.stringify({"login":login ,"deleted": action});
         console.log("poslany data na api delete_user.php: "+send_data);
         request.open("POST", url, true);
         request.setRequestHeader("Content-Type", "application/json"); 
@@ -165,8 +178,18 @@ function delete_user(login){
             if (request.readyState === 4 && request.status === 200) {
                 console.log(request.responseText);
                 var received_data = JSON.parse(request.responseText);
-                if (received_data.status == "ok"){
-                    document.getElementById(login+"_user_list_deleted").outerHTML = "smazán"; 
+                if (received_data.status == "ok"){                    
+                    var button = document.getElementById(login+"_button");
+                    var status = document.getElementById(login+"_user_list_deleted")
+                    if (action == null){
+                        button.innerHTML= `<button type="button" onclick="prepare_delete_user(\'${login}\',${true});">smazat</button>`;
+                        status.innerHTML = ""; 
+                    }
+                    else{
+                        button.innerHTML= `<button type="button" onclick="prepare_delete_user(\'${login}\',${null});">aktivovat</button>`;
+                        status.innerHTML = "smazán"; 
+                    }                                    
+                    close_modal();
                 }
                 else{
                     alert("Špatný login!");
