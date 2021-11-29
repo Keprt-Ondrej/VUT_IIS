@@ -57,7 +57,11 @@ function stringify_role(role){
     }
 }
 
-function show_all_users_content(){
+function show_all_users_content(log=true){
+    if(log){
+        actions_array.push(function(){show_all_users_content(false);});   
+    }
+    actions_array.push(function(){show_all_users_content();});
     try{
         var request = new XMLHttpRequest();
         var url = apiURL+"/app/list_users.php";

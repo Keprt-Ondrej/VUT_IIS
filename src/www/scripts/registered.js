@@ -1,4 +1,7 @@
-function subjects_content(){
+function subjects_content(log=true){
+    if(log){
+        actions_array.push(function(){subjects_content();});    
+    }
     var content = document.getElementById("content");
     content.innerHTML =`<h1>Seznam předmětů</h1>`;
     loadHTML("content","unregistered/course_list_form.html",false);
@@ -39,7 +42,10 @@ function sign_up_as_student(subject_ID){
     return;    
 }
 
-function list_subjects(){
+function list_subjects(log=true){
+    if(log){
+        actions_array.push(function(){list_subjects(false);});    
+    }
     console.log("list_subjects");
     var send_data = course_list_form_JSON();
     console.log(send_data);
@@ -87,7 +93,11 @@ function list_subjects(){
     return;    
 }
 
-function list_category(subject_ID){
+function list_category(subject_ID,log=true){
+    if(log){
+        actions_array.push(function(){list_category(subject_ID,false);});   
+    }
+      
     try{
         var request = new XMLHttpRequest();
         var url = apiURL+"/app/list_categories.php";
@@ -150,7 +160,10 @@ function approve_student(login,subject_ID,value){
     return; 
 }
 
-function manage_students(subject_ID){
+function manage_students(subject_ID,log=true){
+    if(log){
+        actions_array.push(function(){manage_students(subject_ID,false);});   
+    }
     console.log(subject_ID);
     try{
         var request = new XMLHttpRequest();
@@ -283,7 +296,10 @@ function create_category(subject_ID){
     return;
 }
 
-function list_questions(category_ID){
+function list_questions(category_ID,log = true){
+    if(log){
+        actions_array.push(function(){list_questions(category_ID,false);});     
+    }  
     try{
         var request = new XMLHttpRequest();
         var url = apiURL+"/app/list_questions.php";
@@ -368,7 +384,10 @@ function correct_answer_converter(value){
     else return `<div style="color: red;float: left;margin-right: 10px;">špatně  </div>`;
 }
 
-function list_answers_content(question_ID){
+function list_answers_content(question_ID,log=true){
+    if(log){
+        actions_array.push(function(){list_answers_content(question_ID,false);});     
+    }   
     console.log("otazka: " +question_ID);
     try{
         var request = new XMLHttpRequest();
@@ -456,7 +475,7 @@ function return_answer_actions_area(final_answer,role,login,question_ID,votes,co
     return ``;
 }
 
-function write_answer_content(question_ID,role){    
+function write_answer_content(question_ID,role){        
     var body = document.getElementById("modal-body");
     body.innerHTML = "";
     loadHTML("modal-body","registered/create_answer_form.html",false);
@@ -572,7 +591,10 @@ function evaluate_answer(question_ID,login,votes){
     return;
 }
 
-function list_reactions_content(question_ID,login){    
+function list_reactions_content(question_ID,login,log=true){
+    if(log){
+        actions_array.push(function(){list_reactions_content(question_ID,login,false);});     
+    }       
     console.log("otazka: " +question_ID);
     try{
         var request = new XMLHttpRequest();

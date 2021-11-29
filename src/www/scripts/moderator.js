@@ -1,4 +1,8 @@
-function course_management_content(){ 
+function course_management_content(log = true){
+    if(log){
+        actions_array.push(function(){course_management_content(false);});   
+    }
+     
     document.getElementById("content").innerHTML =`<h1>Schvalování vedoucích předmětů</h1>`;   
     loadHTML("content","unregistered/course_list_form.html",false);
     document.getElementById("course_list_button").onclick = course_management_list_courses;
@@ -53,7 +57,11 @@ function approve_course(login,subject_ID,value){
 }
 
 
-function course_management_list_courses(){
+function course_management_list_courses(log=true){
+    if(log){
+        actions_array.push(function(){course_management_list_courses(false);});   
+    }
+     
     var send_data = course_list_form_JSON();
     console.log(send_data);
     try{
