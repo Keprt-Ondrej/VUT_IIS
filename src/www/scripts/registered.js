@@ -162,9 +162,9 @@ function manage_students(subject_ID){
                     <input type="text" class="myInput" id="myInput" onkeyup="myFunction()" placeholder="Search for names.."></div>
                     <table class="myTable" id="myTable">
                     <tr class="header"><th>Login</th><th>Stav</th><th></th><th></th></tr>`;
-                    var table = document.getElementById("myTable"); 
-                    var status = approved_converter(received_data.approved);    
+                    var table = document.getElementById("myTable");                        
                     received_data["students"].forEach(element => {
+                        var status = approved_converter(element.approved); 
                         table.innerHTML += `<tr><td>${element.login}</td><td id="${element.login}_row">${status}</td>
                         <td><button type="button" onclick="approve_student(\'${element.login}\',\'${subject_ID}\',1);">Potvrdit</button>
                         </td><td><button type="button" onclick="approve_student(\'${element.login}\',\'${subject_ID}\',0);">Zamítnout</button></tr>`; 
@@ -399,7 +399,7 @@ function list_answers_content(question_ID){
                         else{
                             login = `${element.login}:<br>`
                         }
-                        var actions = return_answer_actions_area(received_data.answer,received_data.role,element.login,question_ID);
+                        var actions = return_answer_actions_area(received_data.answer,received_data.role,element.login,question_ID,element.points);
                         content.innerHTML += `<div class="answer"><div style="padding-bottom: 2px">${actions}</div>${login}${element.answer}<br></div>`
                     });
                 }
@@ -430,9 +430,8 @@ function return_answer_actions_area(final_answer,role,login,question_ID,votes){
     }
     else{
         if(role == true){   //teacher
-            //evaluate
-            return ``;
-
+            //evaluate            
+            return `<label>Body: </label><input type="text" id="${login}_points"size="1" value="${votes}"> Správně: <input type="checkbox" id="${login}_correct"><input type="button" onclick="evaluate_answer(\'${question_ID}\',\'${login}\',\'${votes}\');" value="Vyhodnotit">`;
         }
         else if(role == false){     //student   list_reactions_content(question_ID,login)
             //reactions
@@ -517,14 +516,110 @@ function write_answer(question_ID){
     return;
 }
 
-function evaluate_answer(){
-    
+function evaluate_answer(question_ID,login,votes){
+    var correct = document.getElementById(login+"_correct").checked;
+    var points = document.getElementById(login+"_points").value;
+    if(isNaN(points)){
+        alert("Body musí být číslo");
+        return;
+    }
+    if(!correct){
+        points = 0;
+    }
+    if(points < 0){
+        alert("Body musí být kladné");
+        return;
+    }
+    try{
+        var request = new XMLHttpRequest();
+        var url = apiURL+"/app/mark_answers.php";
+        var send_data = JSON.stringify({"login":login,"question_ID": question_ID,"correct":correct,"points":points});
+        console.log(send_data);
+        request.open("POST", url, true);
+        request.setRequestHeader("Content-Type", "application/json");        
+        request.onreadystatechange = function () {                
+            if (request.readyState === 4 && request.status === 200) {
+                console.log(request.responseText);
+                var received_data = JSON.parse(this.responseText);
+                if(received_data.status == "ok"){
+                    var content = document.getElementById("content");
+                    content.innerHTML = "";
+                }
+                else{
+                    alert("Nelze zobrazit reakce");
+                }       
+            }
+        }
+        request.send(send_data);
+    }
+    catch(e){
+        alert(e.toString());
+    }
+    return;
 }
 
-function list_reactions_content(question_ID,login){
-    console.log("zobrazuji reakce")
+function list_reactions_content(question_ID,login){    
+    console.log("otazka: " +question_ID);
+    try{
+        var request = new XMLHttpRequest();
+        var url = apiURL+"/app/list_reactions.php";
+        var send_data = JSON.stringify({"question_ID": question_ID,"login":login});
+        console.log(send_data);
+        request.open("POST", url, true);
+        request.setRequestHeader("Content-Type", "application/json");        
+        request.onreadystatechange = function () {                
+            if (request.readyState === 4 && request.status === 200) {
+                console.log(request.responseText);
+                var received_data = JSON.parse(this.responseText);
+                if(received_data.status == "ok"){
+                    var content = document.getElementById("content");
+                    content.innerHTML = "<h3>Odpověď:</h3>";                
+                    content.innerHTML += `${received_data.answer}`;
+                    content.innerHTML += `<h3><a href="#" onclick="create_reaction_content">Vytvořit reakci</a></h3>`;
+                    content.innerHTML += `<h3>Reakce:</h3>`;                    
+                    received_data["reactions"].forEach(element => {
+                        
+                    });
+
+                }
+                else{
+                    alert("Nelze zobrazit reakce");
+                }       
+            }
+        }
+        request.send(send_data);
+    }
+    catch(e){
+        alert(e.toString());
+    }
+    return;
 }
 
 function add_rating(question_ID,answer_login){
-
+    console.log("otazka: " +question_ID);
+    try{
+        var request = new XMLHttpRequest();
+        var url = apiURL+"/app/vote.php";
+        var send_data = JSON.stringify({"question_ID": question_ID,"answer_login":answer_login});
+        console.log(send_data);
+        request.open("POST", url, true);
+        request.setRequestHeader("Content-Type", "application/json");        
+        request.onreadystatechange = function () {                
+            if (request.readyState === 4 && request.status === 200) {
+                console.log(request.responseText);
+                var received_data = JSON.parse(this.responseText);
+                if(received_data.status == "ok"){
+                    console.log("zadano");
+                }
+                else{
+                    alert("Nelze zobrazit reakce");
+                }       
+            }
+        }
+        request.send(send_data);
+    }
+    catch(e){
+        alert(e.toString());
+    }
+    return;
 }
