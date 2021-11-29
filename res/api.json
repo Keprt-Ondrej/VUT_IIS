@@ -81,7 +81,8 @@
             "request":{
                 "login"      : "student_username",
                 "question_ID": "question_ID",
-                "correct"    : "true | false"
+                "correct"    : "true | false",
+                "points"     : "points"
             },
             "response":{
                 "status": "ok | internal_error"
