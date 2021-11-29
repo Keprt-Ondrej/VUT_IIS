@@ -53,7 +53,7 @@
 <img src="https://www.stud.fit.vutbr.cz/~xfabom01/xfabom01/Use-Case.png" alt="Use Case">
 
 <h2>Implementace</h2>
-<p>V adresáři app sa nachází implementace rest api a také třída databáze, která poskytuje rozhraní mezi rest api a databází. Ako php rozhraní pro práci s mysql databází jsme se rozhodli zvolit PDO.</p>
+<p>Návrh API sa nachádzí v <label class="code">src/api.json</label>. V adresáři <label class="code">src/app</label> sa nachází implementace rest API. Od klienta se pošle json na konkrétní end-point, který obsahuje potrebné informáce na komunikaci s databází. Ďalej sa dáta spracují a zašlou databáze na následní spracovaní. Z databázy sa vrátí požadovaný údaje, které sou zformátované na json a zaslané klientovi. </p>
 <p>
 	<h3>Back-end</h3>
 	<p>
