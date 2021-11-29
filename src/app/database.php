@@ -373,9 +373,9 @@
               $statement->bindParam(":login", $args["login"]);
               $statement->execute();
             }
-            else $response["status"] = "Can't answer your own question!";
+            else $response["status"] = "your_questions";
           }
-          else $response["status"] = "There is no question with that ID.";
+          else $response["status"] = "wrong_question_ID";
           $this->db->commit();
         }
         catch(PDOException $e){
@@ -676,90 +676,5 @@
       else $response["status"] = "Database connection not initialized";
       return $response;
     }
-
-
-
   }
-
-
-/*
-
-Insert user
-  INSERT INTO users (login,password,role) VALUES(:login,:pwd,:role)
-
-Delete user
-  DELETE FROM study WHERE login=:login
-  DELETE FROM users WHERE login=:login
-  ===Cascade remove all mentions===
-
-List users
-  SELECT login,role FROM users
-
-Find user
-  SELECT * FROM users WHERE login=:login
-
-Change password
-  UPDATE users SET password=:pwd WHERE login=:login
-
-List subjects
-  SELECT * FROM teach INNER JOIN subjects WHERE teach.approved={change based on request}
-
-Approve subject
-  UPDATE teach SET approved=:approved WHERE subject_ID=:subject_ID and login=:login
-
-Approve student 
-  UPDATE study set approved=:approved WHERE subject_ID=:subject_ID and login=:login
-
-Create category
-  INSERT INTO category (subject_ID,brief) VALUES(:subject_ID,:brief)
-
-Mark answers
-  UPDATE answers SET correct=:correct WHERE question_ID=:question_ID and login=:login
-  UPDATE study SET points=points+(SELECT COUNT(rating_login) FROM answers INNER JOIN answer_ratings ON answers.question_ID=answer_ratings.question_ID AND answers.login=answer_ratings.login)
-
-Final answer
-  UPDATE questions SET answer=:answer WHERE question_ID=:question_ID AND category_ID=:category_ID
-
-Write answer
-  INSERT INTO answers (login,answer) VALUES(:login,:answer)
-
-React
-  INSERT INTO reactions (question_ID,answer_login,text) VALUES(:question_ID,:answer_login,:reaction)
-
-Vote
-  INSERT INTO answer_ratings (question_ID,answer_login,rating_login) VALUES(:question_ID,:answer_login,:rating_login)
-
-Ask question
-  INSERT INTO questions (category_ID,brief,full_question) VALUES(:category_ID,:brief,:full_question)
-
-Create course
-  INSERT INTO subjects (subject_ID,subject_name) VALUES(:subject_ID,:subject_name)
-  INSERT INTO teach (login,subject_ID) VALUES(:login,:subject_ID)
-
-Sign up as student
-  INSERT INTO study (login,subject_ID) VALUES(:login,:subject_ID)
-
-List categories
-  SELECT subject_name FROM subjects WHERE subject_ID=:subject_ID
-  SELECT * FROM category WHERE subject_ID=:subject_ID
-
-List questions
-  SELECT brief FROM category WHERE category_ID=:category_ID
-  SELECT * FROM questions WHERE category_ID=:category_ID
-
-List answers
-  SELECT brief,full_question,answer FROM questions WHERE question_ID=:question_ID
-  SELECT * FROM answers WHERE question_ID=:question_ID
-
-List reactions
-  SELECT answer FROM answers WHERE question_ID=:question_ID AND login=:login
-  SELECT * FROM reactions WHERE question_ID=:question_ID AND login=:login
-
-List_votes
-  SELECT subject_ID,login,points FROM study ORDER BY points
-*/
-
-
-
-
 ?>
