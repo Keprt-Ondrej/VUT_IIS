@@ -30,7 +30,8 @@
 
   $response['status'] = 'ok';
   
-  $response['role'] = $subject_role['role'];
+  if($subject_role["approved"]) $response['role'] = $subject_role['role'];
+  else                          $response['role'] = null;
 
   $row = $retval['statement_parent']->fetch();
 

@@ -30,6 +30,12 @@
     return;
   }
 
+  if($row["deleted"]){
+    $response["role"] = "deleted_user";
+    echo json_encode($response);
+    return;
+  }
+
   if($row["password"] == $recv_data["password"]){ 
     $response["role"] = $row["role"];
     $_SESSION["role"] = $row["role"];
