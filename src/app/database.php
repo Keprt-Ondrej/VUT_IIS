@@ -270,7 +270,7 @@
           if($args["correct"]){
             
            
-            $statement = $this->db->prepare("UPDATE study SET points=points+:points WHERE login=:login AND (SELECT subject_ID FROM category INNER JOIN questions ON questions.category_ID=category.category_ID WHERE question_ID=:question_ID)");
+            $statement = $this->db->prepare("UPDATE study SET points=points+:points WHERE login=:login AND subject_ID=(SELECT subject_ID FROM category INNER JOIN questions ON questions.category_ID=category.category_ID WHERE question_ID=:question_ID)");
 
             $statement->bindParam(":login", $args["login"]);
             $statement->bindParam(":question_ID", $args["question_ID"]);
