@@ -59,17 +59,63 @@
 	<p>
 		<h4>Rozhranie databaze</h4>
 		<p>
-			Rozhranie pre pracu s databazou je definovane v subore <label class="code">src/app/database.php</label>. Jedna sa o PHP triedu, ktora zapuzdruje pracu s databazou <label class="code">MySQL</label> tak, aby priame dotazy mimo tohoto suboru neboli nutne. Avsak pre pripad, ze by to bolo potrebne, existuje funkcia <label class="code">Database::get_pdo()</label>, ktora vrati referenciu na <label class="code">PDO</label> objekt. <br>
-			Cela funkcnost naseho API je obsiahnuta v tejto triede.<br>
-			Kazda funkcia ma tu istu strukturu:
-			<ul>
-				<li>Definovanie navratovej premennej <label class="code">$response</label></li>
-				<li><label class="code">try catch</label> blok, ktory zachyti pripadne errory s jednotlivymi dotazmi</li>
-				<li>Samotne SQL dotazy</li>
-				<li>Databazove transakcie ak vkladame data do databazy</li>
-				<li>Vratenie premennej <label class="code">$response</label></li>
-			</ul>
+            Rozhraní pro práci s databází je definované v souboru <label class="code">src/app/database.php</label>. Jedná se o PHP třídu, která zapouzdřuje práci s databází typu <label class="code">MySQL</label> tak, aby přímé dotazy mimo tohoto souboru nebyli nutně. Ovšem pokud by nastal případ, kde by bylo přímé dotazování potřebný, existuje funkce <label class="code">Database::get_pdo()</label> která vrátí referenci na <label class="code">PDO</label> objekt.<br>
+            Veškerá funkčnost našeho API je obsažena v tyto třídě.<br>
+            Každá funkce má stejnou strukturu:
+            <ul>
+                <li>Definování návratové proměnné <label class="code">$response</label></li>
+                <li><label class="code">try catch</label> blok, který zachytí případný chyby v jednotlivých dotazech</li>
+                <li>Samotný SQL dotazy</li>
+                <li>Databázový transakce jestli vkládáme data do databáze</li>
+                <li>Odevzdání proměnné <label class="code">$response</label> uživateli</li>
+            </ul>
+        </p>
+	</p>
+	<h3>Front-end</h3>
+	<p>
+		Front-end komunikuje s databází pomocí REST api, data jsou posílána pomocí JSONu.
+		Stránka je jenom jedna a data v ní jsou upravována pomocí JavaScriptu dynamicky. Proto bylo třeba potřeba vytvořit vlastní tlačítko Zpět.
+		<h4>Neregistrovaný uživatel</h4>
+		<p>
+			Může zobrazovat tabulku s body (v menu Tabulka bodů), které uživatele nasbíraly za správné odpovědi. Tuto tabulku lze filtrovat zadáním zkratky předmětu do pole.
 		</p>
+		<p>
+			Po rozkliknutí Předměty, může pomocí formuláře zadat, které předměty chce zobrazit. Po zobrazení tabulky lze opět filtrovat pomocí zadání zkratky předmětu.
+			Při kliknutí na tlačítko přihlásit, vyskočí hláška, aby se uživatel přihlásil do systému Fitušky. Po kliknutí na zkratku předmětu nebo jeho jméno, se zobrazí
+			kategorie otázek daného předmětu. Předměty, které nejsou potvrzené od moderátora nelze otevřít, musí být nejdříve potvrzeny.
+		</p>
+		<p>
+			Dále může uživatel vybrat jednu z kategoríí a zobrazit, otázky k dané kategorii, po rozkliknutí otázky, se zobrazí celé znění otázky a odpovědi. Ke každé odpovědi
+			je vyčleněno diskuzní fórum,které lze rozkliknout a prohlížet.
+		</p>
+		<h4>Běžný uživatel</h4>
+		<p>
+			Má stejné možnosti jako nepřihlášený uživatel s několika rozšířenímy. V záložce předměty, může vytvořit předmět. Proto, aby mohl přidávat kategorie apodobně je potřeba,aby byl schválen moderátorem.
+			Pokud bude schválen, stává se vyučujícím kurzu. Jako vyučujíci po rozkliknutí předmětu může navíc vytvářet kategorie a spravovat studenty, kteří se přihlásili na předmět.
+			Ve správě žáků lze danéno studenta kdykoliv později zamítnout a zemezit mu tak v přístupu studenta(položené otázky a zadané odpovědi v předmětu jako historie zůstává).
+			<p>
+				Po rozkliknutí otázky, může zadat finální odpověď. Tím zamezí dalšího přidávání odpovědí a hlasu studenty. A může začít opravovat pokud je odpověď správná
+				zaškrtne checkbox, upraví počet bodu, pokud nesouhlasí a odešle.
+			</p>
+			<p>
+				Student , může pokládat otazky, odpovědi a může prohlížet a přidávat reakce. Dále take u každé odpovědi může hlasovat (max 3 u jedné otázky)
+			</p>
+			<h4>Moderátor</h4>
+			<p>
+				Potvrzuje předměty v záložce Schvalování předmětů. Pokud předmět zamítne, může jej později povolit. Zamítnutý předmět nelze prohlížet ani přidávat otazky apod.
+			</p>
+			<h4>Stránka administrátora</h4>
+			<p>
+				Administrátor vytváří nové uživatele v záložce Přidat uživatele. V seznamu uživatelů může měnit role a hesla ostatních uživatelů. Pokud 
+				uživatele "smaže", uživatel se nepřihlásí do systému, ale jeho provedené akce se nadále budou v systému zobrazovat. 
+			</p>
+		</p>
+
+		
+		
+		
+		
+
 	</p>
 </p>
 
@@ -89,11 +135,17 @@
 <li>Spustit skript pro generování databáze(xkeprt03_clean.sql pro DB pouze s účtem admin, xkeprt03.sql se vzorovými příklady)</li>
 <li>Upravit url serveru v souboru src/www/scripts/url.js</li>
 <li>Nastavit přístup k databázi v souboru src/app/database.php ve třídě Database</li>
-<li>Zobrazit stranku <label class="code">/www/index.php</label></li>
+<li>Zobrazit stránku <label class="code">/www/index.php</label></li>
 </ul>
 
 <h2>Známé problémy</h2>
 <p>Tlačítko zpět je potřeba občas zmáčknout 2x</p>
+<p>Hesla jsou přenášena a ukládána v prostém textu, správně by mělo být použito hashování a ukládat hash.
+	Pokud by ale hesla nefungovala (pro kontrolu projektu) je proto možné nahlednout do skriptu DB a hesla zjistit.
+</p>
+<p>
+	Znovu rozkliknout otázku po zadání odpovědi, aby se mohlo opravovat.
+</p>
 
 
 
