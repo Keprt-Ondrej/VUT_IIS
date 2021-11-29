@@ -29,7 +29,7 @@ function login_fce(){
                     case "r" :
                         login.innerHTML = "";
                         show_registered();                        
-                        fill_header(received_data.login,"Běžný uřivatel");
+                        fill_header(received_data.login,"Běžný uživatel");
                     break;
                     case "not_user" :                       
                         alert("Invalid login");
@@ -63,6 +63,7 @@ function require_user(){
     var logged = readCookie("logged");
     //user not logged    
     if (session == null || session == 0 || logged == "notlogged"){
+        console.log("this is the problem")
         document.getElementById("login").innerHTML ="";
         loadHTML("login","login.html");
         document.getElementById("header").innerHTML = "";
@@ -97,7 +98,7 @@ function require_user(){
                         case "r":
                             login.innerHTML = "";
                             show_registered();
-                            fill_header(received_data.login,"Běžný uřivatel");
+                            fill_header(received_data.login,"Běžný uživatel");
                         break;
                         case null:
                             logout();
