@@ -24,14 +24,14 @@
       return;
     }
   }
-  else $subject_role = array('role'=>null, 'approved' => null);
+  else $subject_role = array('role'=>null);
 
   $response = array();
 
   $response['status'] = 'ok';
   
-  if($subject_role["approved"]) $response['role'] = $subject_role['role'];
-  else                          $response['role'] = null;
+  if(isset($subject_role["approved"]) && $subject_role["approved"]) $response['role'] = $subject_role['role'];
+  else                                                              $response['role'] = null;
 
   $row = $retval['statement_parent']->fetch();
 
