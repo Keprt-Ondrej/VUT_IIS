@@ -9,7 +9,7 @@
 
   $recv_data = json_decode(file_get_contents('php://input'), true); // POST Data
 
-    if(isset($_SESSION['role']) && $_SESSION['role'] != 's'){
+    if(isset($_SESSION['role'])){
       $retval = $database->mark_answers($recv_data);
       echo json_encode($retval);
     }
