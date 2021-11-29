@@ -8,6 +8,7 @@
     	td, th { border: 1px solid black; padding: 0.3em 0.5em; text-align: left; }
     	dt { font-weight: bold; margin-top: 0.5em; }
     	.code { font-family: monospace; font-size: 120%; }
+    	img { max-height: 700px; width: auto; }
     </style>
 </head>
 <body data-new-gr-c-s-check-loaded="14.1040.0" data-gr-ext-installed="">
@@ -53,6 +54,24 @@
 
 <h2>Implementace</h2>
 <p>V adresáři app sa nachází implementace rest api a také třída databáze, která poskytuje rozhraní mezi rest api a databází. Ako php rozhraní pro práci s mysql databází jsme se rozhodli zvolit PDO.</p>
+<p>
+	<h3>Back-end</h3>
+	<p>
+		<h4>Rozhranie databaze</h4>
+		<p>
+			Rozhranie pre pracu s databazou je definovane v subore <label class="code">src/app/database.php</label>. Jedna sa o PHP triedu, ktora zapuzdruje pracu s databazou <label class="code">MySQL</label> tak, aby priame dotazy mimo tohoto suboru neboli nutne. Avsak pre pripad, ze by to bolo potrebne, existuje funkcia <label class="code">Database::get_pdo()</label>, ktora vrati referenciu na <label class="code">PDO</label> objekt. <br>
+			Cela funkcnost naseho API je obsiahnuta v tejto triede.<br>
+			Kazda funkcia ma tu istu strukturu:
+			<ul>
+				<li>Definovanie navratovej premennej <label class="code">$response</label></li>
+				<li><label class="code">try catch</label> blok, ktory zachyti pripadne errory s jednotlivymi dotazmi</li>
+				<li>Samotne SQL dotazy</li>
+				<li>Databazove transakcie ak vkladame data do databazy</li>
+				<li>Vratenie premennej <label class="code">$response</label></li>
+			</ul>
+		</p>
+	</p>
+</p>
 
 <h3>Databáze</h3>
 
