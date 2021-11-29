@@ -1,10 +1,13 @@
 <mxfile host="65bd71144e">
     <diagram id="y5Ir1uq-bIaTkiJV2Tjh" name="Page-1">
-        <mxGraphModel dx="1025" dy="431" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="199" dy="84" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="QSaYC3hY5f7kPyK0T7Ko-4" value="&lt;div&gt;Admin&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+                <mxCell id="4" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="QSaYC3hY5f7kPyK0T7Ko-4" target="QSaYC3hY5f7kPyK0T7Ko-15">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="QSaYC3hY5f7kPyK0T7Ko-4" value="&lt;div&gt;Administrátor&lt;/div&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
                     <mxGeometry x="260" y="170" width="30" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="QSaYC3hY5f7kPyK0T7Ko-5" value="Smazat uživatele" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -13,13 +16,13 @@
                 <mxCell id="QSaYC3hY5f7kPyK0T7Ko-8" value="Změnit roli uživatele" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="40" y="210" width="135" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="QSaYC3hY5f7kPyK0T7Ko-15" value="Moderator" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+                <mxCell id="QSaYC3hY5f7kPyK0T7Ko-15" value="Moderátor" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
                     <mxGeometry x="260" y="340" width="30" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="QSaYC3hY5f7kPyK0T7Ko-17" value="Potvrzení předmětů" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="30" y="340" width="135" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="QSaYC3hY5f7kPyK0T7Ko-26" value="Student" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+                <mxCell id="QSaYC3hY5f7kPyK0T7Ko-26" value="&quot;student předmětu&quot;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
                     <mxGeometry x="390" y="400" width="30" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="QSaYC3hY5f7kPyK0T7Ko-29" value="Pokláda otázky" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -58,7 +61,7 @@
                         <mxPoint x="440" y="370" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="QSaYC3hY5f7kPyK0T7Ko-41" value="Registered user" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+                <mxCell id="QSaYC3hY5f7kPyK0T7Ko-41" value="Registrovaný uživatel" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
                     <mxGeometry x="260" y="520" width="30" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="QSaYC3hY5f7kPyK0T7Ko-42" value="Vytvořit předmět" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -70,7 +73,7 @@
                         <mxPoint x="370" y="580" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="QSaYC3hY5f7kPyK0T7Ko-55" value="Teacher" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+                <mxCell id="QSaYC3hY5f7kPyK0T7Ko-55" value="&quot;vedoucí kurzu&quot;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
                     <mxGeometry x="390" y="660" width="30" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="QSaYC3hY5f7kPyK0T7Ko-56" value="Potvrzuje studenty" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -151,7 +154,7 @@
                         <mxPoint x="300" y="540" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="QSaYC3hY5f7kPyK0T7Ko-77" value="Unregistered user" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+                <mxCell id="QSaYC3hY5f7kPyK0T7Ko-77" value="Neregistrovaný uživatel" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
                     <mxGeometry x="260" y="790" width="30" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="QSaYC3hY5f7kPyK0T7Ko-78" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
@@ -190,7 +193,7 @@
                         <mxPoint x="250" y="820" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="QSaYC3hY5f7kPyK0T7Ko-88" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="QSaYC3hY5f7kPyK0T7Ko-82" edge="1" target="QSaYC3hY5f7kPyK0T7Ko-77">
+                <mxCell id="QSaYC3hY5f7kPyK0T7Ko-88" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="QSaYC3hY5f7kPyK0T7Ko-82" target="QSaYC3hY5f7kPyK0T7Ko-77" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="290" y="760" as="sourcePoint"/>
                         <mxPoint x="250" y="830" as="targetPoint"/>
@@ -220,10 +223,10 @@
                 <mxCell id="QSaYC3hY5f7kPyK0T7Ko-114" value="&amp;lt;&amp;lt;Include &amp;gt;&amp;gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=105;" parent="1" vertex="1">
                     <mxGeometry x="660" y="940" width="110" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="2" value="Prohlížet předměty" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="2" value="Prohlížet předměty" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="50" y="880" width="135" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="3" value="" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="2" target="QSaYC3hY5f7kPyK0T7Ko-77">
+                <mxCell id="3" value="" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="2" target="QSaYC3hY5f7kPyK0T7Ko-77" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="200" y="885" as="sourcePoint"/>
                         <mxPoint x="275" y="855" as="targetPoint"/>
