@@ -257,10 +257,20 @@
       if(isset($this->db)){
         try{
           $this->db->beginTransaction();
+        
           $statement = $this->db->prepare("UPDATE answers SET correct=:correct WHERE question_ID=:question_ID and login=:login");
-          $statement->execute($args);
+
+          $statement->bindParam(":correct", $args["correct"]);
+          $statement->bindParam(":question_ID", $args["question_ID"]);
+          $statement->bindParam(":login", $args["login"]);
+
+          $statement->execute();
+
+
           if($args["correct"]){
-            $statement = $this->db->prepare("UPDATE study SET points=points+:points WHERE AND login=:login AND (SELECT subject_ID FROM category INNER JOIN questions ON questions.category_ID=category.category_ID WHERE question_ID=:question_ID)");
+            
+           
+            $statement = $this->db->prepare("UPDATE study SET points=points+:points WHERE login=:login AND (SELECT subject_ID FROM category INNER JOIN questions ON questions.category_ID=category.category_ID WHERE question_ID=:question_ID)");
 
             $statement->bindParam(":login", $args["login"]);
             $statement->bindParam(":question_ID", $args["question_ID"]);
@@ -268,11 +278,13 @@
 
             $statement->execute();
 
-            /*$statement = $this->db->prepare("UPDATE study SET points=points+(SELECT COUNT(rating_login) FROM answers INNER JOIN answer_ratings ON answers.question_ID=answer_ratings.question_ID AND answers.login=answer_ratings.answer_login) WHERE login=:login AND (SELECT subject_ID FROM category INNER JOIN questions ON questions.category_ID=category.category_ID WHERE question_ID=:question_ID)");
+            /*
+            $statement = $this->db->prepare("UPDATE study SET points=points+(SELECT COUNT(rating_login) FROM answers INNER JOIN answer_ratings ON answers.question_ID=answer_ratings.question_ID AND answers.login=answer_ratings.answer_login) WHERE login=:login AND (SELECT subject_ID FROM category INNER JOIN questions ON questions.category_ID=category.category_ID WHERE question_ID=:question_ID)");
             $statement->bindParam(":login", $args["login"]);
             $statement->bindParam(":question_ID", $args["question_ID"]);
             $statement->execute();
             */
+            
           }
           $this->db->commit();
         }
