@@ -7,6 +7,7 @@
     	table { border-collapse: collapse; }
     	td, th { border: 1px solid black; padding: 0.3em 0.5em; text-align: left; }
     	dt { font-weight: bold; margin-top: 0.5em; }
+    	.code { font-family: monospace; font-size: 120%; }
     </style>
 </head>
 <body data-new-gr-c-s-check-loaded="14.1040.0" data-gr-ext-installed="">
@@ -16,20 +17,22 @@
 
 <h1>Fituška-v2: sdílení a řešení testových otázek studenty</h1> <!-- Nahraďte názvem svého zadání -->
 
+<table>
+	<tr><th>Autori</th><th>Email</th><th>Podiel práce</th></dt>
+	<tr><td>Matúš Fabo</td> <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+	    <td><a href="mailto:xfabom01@stud.fit.vutbr.cz">xfabom01@stud.fit.vutbr.cz</a></td>
+		<td>Back-end</td>
+	</tr>
+	<tr><td>Ondrej Keprt</td> <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+	    <td><a href="mailto:xkeprt03@stud.fit.vutbr.cz">xkeprt03@stud.fit.vutbr.cz</a></td>
+		<td>Návrh DB/Front-end</td>
+	</tr>
+  	<tr><td>Vladimír Drengubiak</td> <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+	    <td><a href="mailto:xdreng01@stud.fit.vutbr.cz">xdreng01@stud.fit.vutbr.cz</a></td>
+		<td>Back-end</td>
+	</tr>
+</table>
 <dl>
-	<dt>Autori</dt>
-	<dd>Matúš Fabo <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
-	    <a href="mailto:xfabom01@stud.fit.vutbr.cz">xfabom01@stud.fit.vutbr.cz</a> -
-		Back-end
-	</dd>
-	<dd>Ondrej Keprt <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
-	    <a href="mailto:xkeprt03@stud.fit.vutbr.cz">xkeprt03@stud.fit.vutbr.cz</a> - 
-		Návrh DB/Front-end
-	</dd>
-  <dd>Vladimír Drengubiak <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
-	    <a href="mailto:xdreng01@stud.fit.vutbr.cz">xdreng01@stud.fit.vutbr.cz</a> - 
-		Back-end 
-	</dd>
 	<dt>URL aplikace</dt>
 	<dd><a href="http://www.stud.fit.vutbr.cz/~xfabom01/xfabom01/www/">http://www.stud.fit.vutbr.cz/~xfabom01/xfabom01/www/</a></dd>
 </dl>
@@ -44,26 +47,32 @@
 <tr><td>Tomko</td><td>123</td><td>Učiteľ</td></tr>
 </tbody></table>
 
-<p>(Diagram případù užití není nutné vkládat, pokud IS implementuje role a případy užití definované zadáním.)</p> 
+<h2>Use case diagram</h2>
+
+<img src="https://www.stud.fit.vutbr.cz/~xfabom01/xdreng01/Use-Case.png" alt="Use Case">
 
 <h2>Implementace</h2>
-<p>V adresári app sa nachádza implementácia rest api a tak tiež trieda databázy, ktorá poskytuje rozhranie medzi rest api a databázou. Ako php rozhranie pre prácu s mysql databázou sme sa rozhodli zvoliť PDO.</p>
+<p>V adresári app sa nachádzi implementace rest api a také trieda databáze, která poskytuje rozhraní medzi rest api a databází. Ako php rozhraní pre prácu s mysql databázou sme se rozhodli zvoliť PDO.</p>
 
 <h3>Databáze</h3>
 
 <img src="https://www.stud.fit.vutbr.cz/~xfabom01/xdreng01/DB_schema.png" alt="DB Schema">
 
-<h2>Instalace</h2>
-
-Stručne popište: 
+<h2>Požadavky</h2>
 <ul>
-<li>postup instalace na server,</li>
-<li>softwarové požadavky (verze PHP apod.),</li>
+<li><label class="code">PHP server v.5.6.40</label> a novsie</li>
+</ul>
+
+<h2>Instalace</h2>
+<ul>
+<li>Spustit PHP server</li>
+<li>Skopirovat vsetko zo zlozky <label class="code">src</label> do zlozky, kde je spusteny PHP server</li>
+<li>Zobrazit stranku <label class="code">/www/index.php</label></li>
 <li>jak rozbalit, konfigurovat, inicializovat databázi, ...</li>
 </ul>
 
 <h2>Známé problémy</h2>
-<p>Všetko šlape ;) .</p>
+<p>Všechno jede jak má ;) .</p>
 
 
 

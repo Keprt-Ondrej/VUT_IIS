@@ -9,6 +9,7 @@
 
   $recv_data = json_decode(file_get_contents('php://input'), true); // POST Data
 
+  $recv_data['login'] = $_SESSION['login'];
   $retval = $database->ask_question($recv_data);
 
   if($retval['status'] != 'ok'){
