@@ -44,15 +44,15 @@
     $tmp->approved     = $row["approved"];
     if(isset($_SESSION['login'])){
       if($row["login"] == $_SESSION['login']){
-        if($row["approved"] == null) $tmp->role = "Nerozhodnuto";
-        else if($row["approved"])    $tmp->role = "Učím";
-        else if(!$row["approved"])   $tmp->role = "Zamítnut";
+        if(is_null($row["approved"])) $tmp->role = "Nerozhodnuto";
+        else if($row["approved"])     $tmp->role = "Učím";
+        else if(!$row["approved"])    $tmp->role = "Zamítnut";
       }
       else{
         if(in_array($row["subject_ID"], $s_IDs)){
           if(is_null($s_approved[$row["subject_ID"]])) $tmp->role = "Nerozhodnuto";
-          else if($s_approved[$row["subject_ID"]])    $tmp->role = "Přihlášen";
-          else if(!$s_approved[$row["subject_ID"]])   $tmp->role = "Zamítnut";
+          else if($s_approved[$row["subject_ID"]])     $tmp->role = "Přihlášen";
+          else if(!$s_approved[$row["subject_ID"]])    $tmp->role = "Zamítnut";
         }
         else $tmp->role = "0";
       }
