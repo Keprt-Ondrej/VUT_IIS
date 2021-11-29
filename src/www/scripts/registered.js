@@ -301,6 +301,7 @@ function list_questions(category_ID){
                     if(received_data.role != null){ //null = unregistered on course
                         content.innerHTML += `<h3><a href="#" onclick="create_question_content(\'${category_ID}\');">Vytvořit otázku</a></h3>`
                     }
+                    content.innerHTML += `<h3>Otázky:</h3>`;
                     received_data["questions"].forEach(element => {
                        content.innerHTML +=` <a href="#" onclick="list_answers_content(\'${element.question_ID}\');">${element.brief}</a><br>`
                     });
@@ -359,12 +360,12 @@ function create_question(category_ID){
 
 function correct_answer_converter(value){
     if(value == null){
-        return "nehodnoceno";
+        return `<div style="color: blue;float: left;margin-right: 10px;">nehodnoceno  </div>`;
     }
     else if(value == 1){
-        return "správně";
+        return `<div style="color: green;float: left;margin-right: 10px;">správně  </div>`;
     }
-    else return "špatně";
+    else return `<div style="color: red;float: left;margin-right: 10px;">špatně  </div>`;
 }
 
 function list_answers_content(question_ID){
@@ -407,7 +408,7 @@ function list_answers_content(question_ID){
                         else{
                             login = `${element.login}:<br>`
                         }
-                        var actions = return_answer_actions_area(received_data.answer,received_data.role,element.login,question_ID,element.points);
+                        var actions = return_answer_actions_area(received_data.answer,received_data.role,element.login,question_ID,element.points,element.correct);
                         content.innerHTML += `<div class="answer"><div style="padding-bottom: 2px">${actions}</div>${login}${element.answer}<br></div>`
                     });
                 }
@@ -424,10 +425,10 @@ function list_answers_content(question_ID){
     return;
 }
 
-function return_answer_actions_area(final_answer,role,login,question_ID,votes){
+function return_answer_actions_area(final_answer,role,login,question_ID,votes,correct){
     if(final_answer == null){   //final answer is not set
         if(role == true){   //teacher
-            return "";
+            return `počet hlasů: ${votes}<br>`;
         }
         else if(role == false){     //student
             //vote + reactions
@@ -442,14 +443,14 @@ function return_answer_actions_area(final_answer,role,login,question_ID,votes){
     else{
         if(role == true){   //teacher
             //evaluate            
-            return `<label>Body: </label><input type="text" id="${login}_points"size="1" value="${votes}"> Správně: <input type="checkbox" id="${login}_correct"><input type="button" onclick="evaluate_answer(\'${question_ID}\',\'${login}\',\'${votes}\');" value="Vyhodnotit">`;
+            return `${correct_answer_converter(correct)}<label>Body: </label><input type="text" id="${login}_points"size="1" value="${votes}"> Správně: <input type="checkbox" id="${login}_correct"><input type="button" onclick="evaluate_answer(\'${question_ID}\',\'${login}\',\'${votes}\');" value="Vyhodnotit">`;
         }
         else if(role == false){     //student   list_reactions_content(question_ID,login)
             //reactions
-            return `<input type="button" onclick="list_reactions_content(\'${question_ID}\',\'${login}\');" value="Zobrazit reakce">`; 
+            return `${correct_answer_converter(correct)} Hlasovalo: ${votes} <input type="button" onclick="list_reactions_content(\'${question_ID}\',\'${login}\');" value="Zobrazit reakce">`; 
         }
         else{
-            return `<input type="button" onclick="list_reactions_content(\'${question_ID}\',\'${login}\');" value="Zobrazit reakce">`;
+            return `${correct_answer_converter(correct)} Hlasovalo: ${votes} <input type="button" onclick="list_reactions_content(\'${question_ID}\',\'${login}\');" value="Zobrazit reakce">`;
         }
     }
     return ``;
@@ -556,8 +557,7 @@ function evaluate_answer(question_ID,login,votes){
                 console.log(request.responseText);
                 var received_data = JSON.parse(this.responseText);
                 if(received_data.status == "ok"){
-                    var content = document.getElementById("content");
-                    content.innerHTML = "";
+                    alert("prijato");
                 }
                 else{
                     alert("Nelze zobrazit reakce");
