@@ -130,7 +130,7 @@
       $response["status"] = "ok";
       if(isset($this->db)){
         try{
-          $statement = $this->db->prepare("SELECT login,role FROM users");
+          $statement = $this->db->prepare("SELECT login,role,deleted FROM users");
           $statement->execute();
 
           $response["statement"] = $statement;

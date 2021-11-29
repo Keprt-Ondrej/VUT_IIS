@@ -73,14 +73,21 @@ function show_all_users_content(){
                 destination.innerHTML += `<div>
                 <input type="text" class="myInput" id="myInput" onkeyup="myFunction()" placeholder="Search for names.."></div>
                 <table class="myTable" id="myTable">
-                <tr class="header"><th>Login</th><th>Role</th><th></th><th></th></tr>`
+                <tr class="header"><th>Login</th><th>Role</th><th></th><th></th><th></th><th></th></tr>`
                 var table = document.getElementById("myTable");
                 received_data["users"].forEach(element => {
-
-                    table.innerHTML += `<tr id="${element.login}_row"><td>${element.login}</td><td>` + stringify_role(element.role) + `
+                    var deleted;
+                    if(element.deleted == null){
+                        deleted = "";
+                    }
+                    else{
+                        deleted = "smazán";
+                    }
+                    table.innerHTML += `<tr><td id="${element.login}_user_list_role">${element.login}</td><td>` + stringify_role(element.role) + `
                     </td><td><button type="button" onclick="prepare_change_user_password(\'${element.login}\');">Změna hesla</button>
                     </td><td><button type="button" onclick="prepare_change_user_role(\'${element.login}\');">Změna role</button>
-                    </td><td><button type="button" onclick="prepare_delete_user(\'${element.login}\');">Smazat</button></tr>`;
+                    </td><td><button type="button" onclick="prepare_delete_user(\'${element.login}\');">Smazat</button>
+                    <td id="${element.login}_user_list_deleted">${deleted}</td></tr>`;
                 });
                 destination.innerHTML += "</table>";
             }
@@ -127,8 +134,9 @@ function change_user_role(login){
             if (request.readyState === 4 && request.status === 200) {
                 console.log(request.responseText);
                 var received_data = JSON.parse(request.responseText);
-                if (received_data.status == "ok"){                
-                    close_modal();
+                if (received_data.status == "ok"){ 
+                    document.getElementById(login+"_user_list_role").innerHTML = role.value;      
+                    close_modal();             
                 }
                 else{
                     alert("Špatný login!");
@@ -158,9 +166,7 @@ function delete_user(login){
                 console.log(request.responseText);
                 var received_data = JSON.parse(request.responseText);
                 if (received_data.status == "ok"){
-                    console.log("radek: \n"+login+"_row");
-                    document.getElementById(login+"_row").outerHTML = "";                
-                    close_modal();
+                    document.getElementById(login+"_user_list_deleted").outerHTML = "smazán"; 
                 }
                 else{
                     alert("Špatný login!");
@@ -184,12 +190,7 @@ function prepare_change_user_password(login){
     <input type="password" id="user_password1" name="user_password1" placeholder="heslo"><br>
     <label for="user_password2">Zopakujte heslo: </label>
     <input type="password" id="user_password2" name="user_password2" placeholder="heslo"><br>
-    <input type="button" onclick="change_user_password(\'${login}\');" value="Změnit">
-    <select id="user_role" name="user_role">
-        <option value="r">Uživatel</option>
-        <option value="a">Administrátor</option>
-        <option value="m">Moderátor</option>        
-    </select><br>
+    <input type="button" onclick="change_user_password(\'${login}\');" value="Změnit">    
     </form>
     `
     open_modal();
