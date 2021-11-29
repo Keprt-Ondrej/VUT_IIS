@@ -44,16 +44,16 @@
 <tbody><tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
 <tr><td>admin</td><td>admin</td><td>Administrátor</td></tr>
 <tr><td>mod</td><td>mod</td><td>Moderátor</td></tr>
-<tr><td>Rakosnik</td><td>rakosnik</td><td>Študent</td></tr>
-<tr><td>Tomko</td><td>123</td><td>Učiteľ</td></tr>
+<tr><td>rakosnik</td><td>rakosnik</td><td>Uživatel</td></tr>
+<tr><td>tomko</td><td>tomko</td><td>Uživatel</td></tr>
 </tbody></table>
 
 <h2>Use case diagram</h2>
 
-<img src="https://www.stud.fit.vutbr.cz/~xfabom01/xfabom01/Use-Case.png" alt="Use Case">
+<img src="https://www.stud.fit.vutbr.cz/~xfabom01/xfabom01/use-case.drawio.png" alt="Use Case">
 
 <h2>Implementace</h2>
-<p>V adresáři app sa nachází implementace rest api a také třída databáze, která poskytuje rozhraní mezi rest api a databází. Ako php rozhraní pro práci s mysql databází jsme se rozhodli zvolit PDO.</p>
+<p>Návrh API sa nachádzí v <label class="code">src/api.json</label>. V adresáři <label class="code">src/app</label> sa nachází implementace rest API. Od klienta se pošle json na konkrétní end-point, který obsahuje potrebné informáce na komunikaci s databází. Ďalej sa dáta spracují a zašlou databáze na následní spracovaní. Z databázy sa vrátí požadovaný údaje, které sou zformátované na json a zaslané klientovi. </p>
 <p>
 	<h3>Back-end</h3>
 	<p>
