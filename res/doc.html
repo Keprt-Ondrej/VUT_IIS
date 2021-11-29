@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!-- saved from url=(0070)https://www.fit.vutbr.cz/study/courses/IIS/private/projekt/doc.html.cs -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <title>Projekt IIS</title>
     <style type="text/css">
@@ -11,22 +11,22 @@
 </head>
 <body data-new-gr-c-s-check-loaded="14.1040.0" data-gr-ext-installed="">
 
-<!-- Zkontrolujte prosím nastavení kódování v hlavièce dokumentu 
-     podle pouitého editoru -->
+<!-- Zkontrolujte prosÃ­m nastavenÃ­ kÃ³dovÃ¡nÃ­ v hlaviÄce dokumentu 
+     podle pouÅ¾itÃ©ho editoru -->
 
-<h1>Název zadání (editujte)</h1> <!-- Nahradte názvem svého zadání -->
+<h1>FituÅ¡ka-v2: sdÃ­lenÃ­ a Å™eÅ¡enÃ­ testovÃ½ch otÃ¡zek studenty</h1> <!-- NahraÄte nÃ¡zvem svÃ©ho zadÃ¡nÃ­ -->
 
 <dl>
-	<dt>Autoøi</dt>
-	<dd>Matúš Fabo <!-- Nahraïte skuteènım jménem a e-mailem autora a popisem èinnosti -->
+	<dt>Autori</dt>
+	<dd>MatÃºÅ¡ Fabo <!-- NahraÄte skuteÄnÃ½m jmÃ©nem a e-mailem autora a popisem Äinnosti -->
 	    <a href="mailto:xfabom01@stud.fit.vutbr.cz">xfabom01@stud.fit.vutbr.cz</a> -
 		Back-end
 	</dd>
-	<dd>Ondrej Keprt <!-- Nahraïte skuteènım jménem a e-mailem autora a popisem èinnosti -->
+	<dd>Ondrej Keprt <!-- NahraÄte skuteÄnÃ½m jmÃ©nem a e-mailem autora a popisem Äinnosti -->
 	    <a href="mailto:xkeprt03@stud.fit.vutbr.cz">xkeprt03@stud.fit.vutbr.cz</a> - 
-		Návrh DB/Front-end
+		NÃ¡vrh DB/Front-end
 	</dd>
-  <dd>Vladimír Drengubiak <!-- Nahraïte skuteènım jménem a e-mailem autora a popisem èinnosti -->
+  <dd>VladimÃ­r Drengubiak <!-- NahraÄte skuteÄnÃ½m jmÃ©nem a e-mailem autora a popisem Äinnosti -->
 	    <a href="mailto:xdreng01@stud.fit.vutbr.cz">xdreng01@stud.fit.vutbr.cz</a> - 
 		Back-end 
 	</dd>
@@ -34,37 +34,36 @@
 	<dd><a href="http://www.stud.fit.vutbr.cz/~xfabom01/xfabom01/www/">http://www.stud.fit.vutbr.cz/~xfabom01/xfabom01/www/</a></dd>
 </dl>
 
-<h2>Uivatelé systému pro testování</h2>
-<p>Uveïte prosím existující zástupce <strong>všech rolí uivatelù</strong>.</p>
+<h2>UÅ¾ivatelÃ© systÃ©mu pro testovÃ¡nÃ­</h2>
+<p><strong>ZÃ¡stupcovÃ© vÅ¡ech rolÃ­ uÅ¾ivatelÃ¹</strong>.</p>
 <table>
 <tbody><tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
-<tr><td>admin</td><td>admin</td><td>Administrátor</td></tr>
-<tr><td>mod</td><td>mod</td><td>Moderátor</td></tr>
-<tr><td>Rakosnik</td><td>rakosnik</td><td>Študent</td></tr>
-<tr><td>Tomko</td><td>123</td><td>Uèite¾</td></tr>
+<tr><td>admin</td><td>admin</td><td>AdministrÃ¡tor</td></tr>
+<tr><td>mod</td><td>mod</td><td>ModerÃ¡tor</td></tr>
+<tr><td>Rakosnik</td><td>rakosnik</td><td>Å tudent</td></tr>
+<tr><td>Tomko</td><td>123</td><td>UÄiteÄ¾</td></tr>
 </tbody></table>
 
-<p>(Diagram pøípadù uití není nutné vkládat, pokud IS implementuje role a pøípady uití definované zadáním.)</p> 
+<p>(Diagram pÅ™Ã­padÃ¹ uÅ¾itÃ­ nenÃ­ nutnÃ© vklÃ¡dat, pokud IS implementuje role a pÅ™Ã­pady uÅ¾itÃ­ definovanÃ© zadÃ¡nÃ­m.)</p> 
 
 <h2>Implementace</h2>
-<p>Struèná dokumentace k implementaci, která popisuje, které èásti projektu (napø. PHP skripty) implementují jednotlivé pøípady pouití.</p>
+<p>V adresÃ¡ri app sa nachÃ¡dza implementÃ¡cia rest api a tak tieÅ¾ trieda databÃ¡zy, ktorÃ¡ poskytuje rozhranie medzi rest api a databÃ¡zou. Ako php rozhranie pre prÃ¡cu s mysql databÃ¡zou sme sa rozhodli zvoliÅ¥ PDO.</p>
 
-<h3>Databáze</h3>
+<h3>DatabÃ¡ze</h3>
 
-Zde vlote grafické schéma relaèní databáze (tabulek v databázi).
-<img src="https://www.stud.fit.vutbr.cz/~xfabom01/xfabom01/res/DB_schema.png" alt="DB Schema">
+<img src="https://www.stud.fit.vutbr.cz/~xfabom01/xdreng01/DB_schema.png" alt="DB Schema">
 
 <h2>Instalace</h2>
 
-Struènì popište: 
+StruÄne popiÅ¡te: 
 <ul>
 <li>postup instalace na server,</li>
-<li>softwarové poadavky (verze PHP apod.),</li>
-<li>jak rozbalit, konfigurovat, inicializovat databázi, ...</li>
+<li>softwarovÃ© poÅ¾adavky (verze PHP apod.),</li>
+<li>jak rozbalit, konfigurovat, inicializovat databÃ¡zi, ...</li>
 </ul>
 
-<h2>Známé problémy</h2>
-<p>Zde popište, které body zadání nejsou implementovány a z jakého dùvodu. Napø. &#8222;Z èasovıch dùvodù nebyla implementována správa uivatelù.&#8221; Pomùete tím zrychlit hodnocení, kdy neimplementované funkce nebudeme muset dlouze hledat.</p>
+<h2>ZnÃ¡mÃ© problÃ©my</h2>
+<p>VÅ¡etko Å¡lape ;) .</p>
 
 
 
