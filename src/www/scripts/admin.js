@@ -30,7 +30,8 @@ function add_user(){
                 if (received_data.status == "ok"){
                     var form = document.getElementById("add_user_form");
                     form.user_login.value = "";
-                    form.user_password.value = "";
+                    form.user_password1.value = "";
+                    form.user_password2.value = "";
                 }
                 else{
                     alert("Uživatel již existuje!");
@@ -74,10 +75,12 @@ function show_all_users_content(){
                 <table class="myTable" id="myTable">
                 <tr class="header"><th>Login</th><th>Role</th><th></th><th></th></tr>`
                 var table = document.getElementById("myTable");
-                received_data["users"].forEach(element => {                    
+                received_data["users"].forEach(element => {
+
                     table.innerHTML += `<tr id="${element.login}_row"><td>${element.login}</td><td>` + stringify_role(element.role) + `
-                    </td><td><button type="button" onclick="prepare_change_user_password(\'${element.login}\');">změnit heslo</button>
-                    </td><td><button type="button" onclick="prepare_delete_user(\'${element.login}\');">smazat</button></tr>`;
+                    </td><td><button type="button" onclick="prepare_change_user_password(\'${element.login}\');">Změna hesla</button>
+                    </td><td><button type="button" onclick="prepare_change_user_role(\'${element.login}\');">Změna role</button>
+                    </td><td><button type="button" onclick="prepare_delete_user(\'${element.login}\');">Smazat</button></tr>`;
                 });
                 destination.innerHTML += "</table>";
             }
@@ -94,6 +97,51 @@ function prepare_delete_user(login){
     modal_header.innerHTML = "<h1>Opravdu chcete smazat uživatele " + login +"?<h1>"
     modal_body.innerHTML = `<button type="button" onclick="delete_user(\'${login}\');">Smazat</button>`
     open_modal();    
+}
+
+function prepare_change_user_role(login){
+    document.getElementById("modal-header").innerHTML = `<h1>Změna role uživatele ${login}</h1>`;
+    var body = document.getElementById("modal-body");
+    body.innerHTML =`
+    <label for="user_role_new">Nová role:</label>        
+    <select id="user_role_new" name="user_role_new">
+        <option value="r">Uživatel</option>
+        <option value="a">Administrátor</option>
+        <option value="m">Moderátor</option>        
+    </select><br>
+    <input type="button" onclick="change_user_role(\'${login}\');" value="Změnit">
+    `;
+    open_modal();
+}
+
+function change_user_role(login){
+    var role = document.getElementById("user_role_new");
+    try{        
+        var request = new XMLHttpRequest();
+        var url = apiURL+"/app/change_pwd.php";
+        var send_data = JSON.stringify({"login":login,"role":role.value});
+        console.log(send_data);
+        request.open("POST", url, true);
+        request.setRequestHeader("Content-Type", "application/json");      
+        request.onreadystatechange = function (){
+            if (request.readyState === 4 && request.status === 200) {
+                console.log(request.responseText);
+                var received_data = JSON.parse(request.responseText);
+                if (received_data.status == "ok"){                
+                    close_modal();
+                }
+                else{
+                    alert("Špatný login!");
+                }
+            }
+        }  
+        request.send(send_data);
+    }
+    catch(e){
+        alert(e.toString());
+    }
+    return;
+    
 }
 
 function delete_user(login){
@@ -137,6 +185,11 @@ function prepare_change_user_password(login){
     <label for="user_password2">Zopakujte heslo: </label>
     <input type="password" id="user_password2" name="user_password2" placeholder="heslo"><br>
     <input type="button" onclick="change_user_password(\'${login}\');" value="Změnit">
+    <select id="user_role" name="user_role">
+        <option value="r">Uživatel</option>
+        <option value="a">Administrátor</option>
+        <option value="m">Moderátor</option>        
+    </select><br>
     </form>
     `
     open_modal();
@@ -181,9 +234,6 @@ function change_user_password(login){
     }
     return;
 }
-
-
-
 
 //*********************************************** */
 function myFunction() {
