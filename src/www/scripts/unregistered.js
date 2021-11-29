@@ -1,3 +1,11 @@
+function show_unregistered(){
+    document.getElementById("navigation").innerHTML ="";
+    loadHTML("navigation","unregistered/unregistered_navigation.html");
+    document.getElementById("header").innerHTML ="";
+    loadHTML("header","header.html",false);
+    fill_header("","Nepřihlášen");
+}
+
 function show_all_users_points(){
     try{
         var request = new XMLHttpRequest();
@@ -10,9 +18,9 @@ function show_all_users_points(){
                 console.log(request.responseText);
                 var destination = document.getElementById("content");
                 destination.innerHTML = `<div>
-                <input type="text" id="myInput" class="myInput" onkeyup="myFunction()" placeholder="Search for names.."></div>
+                <input type="text" id="myInput" class="myInput" onkeyup="myFunction()" placeholder="Filtrovat pomocí zkratky předmětu"></div>
                 <table id="myTable" class="myTable">
-                <tr class="header"><th>Subject_ID</th><th>Login</th><th>Points</th><th></th></tr>`
+                <tr class="header"><th>Zkratka předmětu</th><th>Uživatel</th><th>Body</th></tr>`
                 var table = document.getElementById("myTable");
                 var received_data = JSON.parse(request.responseText);
                 received_data["list_points"].forEach(element => {                    
