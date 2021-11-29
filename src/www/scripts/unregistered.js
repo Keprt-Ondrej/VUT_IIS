@@ -9,7 +9,10 @@ function show_unregistered(){
     fill_header(`<br>`,"Nepřihlášen");
 }
 
-function show_all_users_points(){
+function show_all_users_points(log=true){
+    if(log){
+        actions_array.push(function(){show_all_users_points(false);});    
+    }
     try{
         var request = new XMLHttpRequest();
         var url = apiURL+"/app/list_points.php";

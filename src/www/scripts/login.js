@@ -1,3 +1,28 @@
+var actions_array = Array();
+function one_kepy_back(){
+    try{
+        var funkce = actions_array.pop();
+        var delka = actions_array.length;
+        console.log(delka);
+        funkce();
+    }
+    catch (e){
+        ;
+    }
+}
+
+function kepy_refresh(){
+    try{
+        var funkce = actions_array[actions_array.length-1];
+        var delka = actions_array.length;
+        console.log(delka);
+        funkce();
+    }
+    catch (e){
+        ;
+    } 
+}
+
 function login_fce(){ 
     try{               
         var element = document.getElementById('login-data');
@@ -13,7 +38,6 @@ function login_fce(){
                 var role = received_data.role
                 document.cookie = "logged="+true+";path=/";
                 var login = document.getElementById("login");
-                //TODO spatne heslo a jmeno, neposila se v role ale v USER!
                 switch(role){
                     case "a" :
                         login.innerHTML = "";
