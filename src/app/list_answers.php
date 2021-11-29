@@ -45,6 +45,7 @@
     $tmp = new stdClass();
     $tmp->login  = $row['login'];
     $tmp->answer = $row['answer'];
+    $tmp->correct = $row['correct'];
     $tmp->points = ($database->login_to_points(array("login" => $row['login'], "question_ID" => $recv_data['question_ID']))['statement'])->fetchColumn();
 
     array_push($response['answers'], $tmp);

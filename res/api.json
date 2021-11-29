@@ -256,9 +256,10 @@
                 "role"     : "true | false | null",
                 "answers":[
                     {
-                        "login" : "login",
-                        "answer": "student_answer",
-                        "points": "points"
+                        "login"  : "login",
+                        "answer" : "student_answer",
+                        "points" : "points",
+                        "correct": "correct"
                     }
                 ]
             }
