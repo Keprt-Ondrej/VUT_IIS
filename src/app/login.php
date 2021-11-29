@@ -31,7 +31,7 @@
   }
 
   if($row["deleted"]){
-    $response["status"] = "deleted_user";
+    $response["role"] = "deleted_user";
     echo json_encode($response);
     return;
   }
