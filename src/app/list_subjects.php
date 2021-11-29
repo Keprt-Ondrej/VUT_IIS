@@ -19,7 +19,7 @@
   $s_IDs = array();
   $s_approved = array();
   if(isset($_SESSION['login'])){
-    $user_subjects = $database->list_subjects($recv_data, "study");
+    $user_subjects = $database->list_subjects(array("approved"=>true,"unapproved"=>true,"undecided"=>true), "study");
     if($user_subjects['status'] == 'ok'){
       while($row = $user_subjects['statement']->fetch()){
         if($row['login'] == $_SESSION['login']){
@@ -50,7 +50,7 @@
       }
       else{
         if(in_array($row["subject_ID"], $s_IDs)){
-          if($s_approved[$row["subject_ID"]] == null) $tmp->role = "Nerozhodnuto";
+          if(is_null($s_approved[$row["subject_ID"]])) $tmp->role = "Nerozhodnuto";
           else if($s_approved[$row["subject_ID"]])    $tmp->role = "Přihlášen";
           else if(!$s_approved[$row["subject_ID"]])   $tmp->role = "Zamítnut";
         }
