@@ -33,9 +33,13 @@ function login_fce(){
                     break;
                     case "not_user" :                       
                         alert("Invalid login");
-                    break;
+                        return;
+                    case "deleted_user":
+                        alert("Váš účet byl smazán");
+                        return;
                     case "w_pwd" :                        
                         alert("Invalid password");
+                        return;
                     break;
                 }
             }
