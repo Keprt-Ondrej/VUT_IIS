@@ -514,7 +514,8 @@ function final_answer(question_ID){
                 console.log(request.responseText);
                 var received_data = JSON.parse(this.responseText);
                 if(received_data.status == "ok"){
-                   close_modal();
+                    list_answers_content(question_ID,false);
+                    close_modal();
                 }
                 else{
                     alert("Nelze uložit finální odpověď");
