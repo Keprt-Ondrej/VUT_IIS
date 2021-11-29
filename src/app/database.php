@@ -362,9 +362,20 @@
       if(isset($this->db)){
         try{
           $this->db->beginTransaction();
-          //$question_owner = $this->db->prepare("SELECT login FROM ");
-          $statement = $this->db->prepare("INSERT INTO answers (login,answer,question_ID) VALUES(:login,:answer,:question_ID)");
-          $statement->execute($args);
+          $question_owner = $this->db->prepare("SELECT login FROM questions WHERE question_ID=:question_ID");
+          $question_owner->bindParam(":question_ID", $args["question_ID"]);
+          $question_owner->execute();
+          if($row = $question_owner->fetch()){
+            if($row["login"] != $args["login"]){
+              $statement = $this->db->prepare("INSERT INTO answers (login,answer,question_ID) VALUES(:login,:answer,:question_ID)");
+              $statement->bindParam(":question_ID", $args["question_ID"]);
+              $statement->bindParam(":answer", $args["answer"]);
+              $statement->bindParam(":login", $args["login"]);
+              $statement->execute();
+            }
+            else $response["status"] = "Can't answer your own question!";
+          }
+          else $response["status"] = "There is no question with that ID.";
           $this->db->commit();
         }
         catch(PDOException $e){
@@ -420,10 +431,10 @@
       if(isset($this->db)){
         try{
           $this->db->beginTransaction();
-          $statement = $this->db->prepare("INSERT INTO questions (category_ID,brief,full_question) VALUES(:category_ID,:brief,:full_question)");
+          $statement = $this->db->prepare("INSERT INTO questions (login,category_ID,brief,full_question) VALUES(:login,:category_ID,:brief,:full_question)");
           $statement->execute($args);
 
-          $statement = $this->db->prepare("SELECT question_ID FROM questions WHERE category_ID=:category_ID AND brief=:brief AND full_question=:full_question");
+          $statement = $this->db->prepare("SELECT question_ID FROM questions WHERE category_ID=:category_ID AND brief=:brief AND full_question=:full_question AND login=:login");
           $statement->execute($args);
 
           $response["statement"] = $statement;
