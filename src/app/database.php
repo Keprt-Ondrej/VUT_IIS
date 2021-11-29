@@ -272,7 +272,9 @@
         
           $statement = $this->db->prepare("UPDATE answers SET correct=:correct WHERE question_ID=:question_ID and login=:login");
 
-          $statement->bindParam(":correct", $args["correct"]);
+          if($args["correct"]) $correct = 1;
+          else                 $correct = 0;
+          $statement->bindParam(":correct", $correct);
           $statement->bindParam(":question_ID", $args["question_ID"]);
           $statement->bindParam(":login", $args["login"]);
 
@@ -360,6 +362,7 @@
       if(isset($this->db)){
         try{
           $this->db->beginTransaction();
+          //$question_owner = $this->db->prepare("SELECT login FROM ");
           $statement = $this->db->prepare("INSERT INTO answers (login,answer,question_ID) VALUES(:login,:answer,:question_ID)");
           $statement->execute($args);
           $this->db->commit();
