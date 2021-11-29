@@ -575,10 +575,10 @@ function list_reactions_content(question_ID,login){
                     var content = document.getElementById("content");
                     content.innerHTML = "<h3>Odpověď:</h3>";                
                     content.innerHTML += `${received_data.answer}`;
-                    content.innerHTML += `<h3><a href="#" onclick="create_reaction_content">Vytvořit reakci</a></h3>`;
+                    content.innerHTML += `<h3><a href="#" onclick="create_reaction_content(\'${question_ID}\',\'${login}\');">Vytvořit reakci</a></h3>`;
                     content.innerHTML += `<h3>Reakce:</h3>`;                    
-                    received_data["reactions"].forEach(element => {
-                        
+                    received_data["reactions"].reverse().forEach(element => {
+                        content.innerHTML += `<div class="answer">autor:${element.reaction_login}<br>${element.text}</div`;
                     });
 
                 }
@@ -609,7 +609,46 @@ function add_rating(question_ID,answer_login){
                 console.log(request.responseText);
                 var received_data = JSON.parse(this.responseText);
                 if(received_data.status == "ok"){
+                    close_modal();
+                }
+                else{
+                    alert("Nelze zobrazit reakce");
+                }       
+            }
+        }
+        request.send(send_data);
+    }
+    catch(e){
+        alert(e.toString());
+    }
+    return;
+}
+
+function create_reaction_content(question_ID,login){
+    document.getElementById("modal-header").innerHTML = "Tvroba reakce";
+    document.getElementById("modal-body").innerHTML = `
+    <label for="reaction_value">Zadejte reakci na odpověď:</label><br>
+    <textarea id="reaction_value" name="reaction_value" placeholder="Odpověď"></textarea><br>
+    <button type="button" onclick="create_reaction(\'${question_ID}\',\'${login}\');">Odeslat</button>
+    `;
+    open_modal();
+}
+
+function create_reaction(question_ID,login){
+    try{
+        var request = new XMLHttpRequest();
+        var url = apiURL+"/app/react.php";
+        var send_data = JSON.stringify({"question_ID": question_ID,"answer_login":login,"reaction":document.getElementById("reaction_value").value});
+        console.log(send_data);
+        request.open("POST", url, true);
+        request.setRequestHeader("Content-Type", "application/json");        
+        request.onreadystatechange = function () {                
+            if (request.readyState === 4 && request.status === 200) {
+                console.log(request.responseText);
+                var received_data = JSON.parse(this.responseText);
+                if(received_data.status == "ok"){
                     console.log("zadano");
+                    close_modal();
                 }
                 else{
                     alert("Nelze zobrazit reakce");
