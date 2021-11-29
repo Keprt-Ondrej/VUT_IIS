@@ -75,7 +75,7 @@ function course_management_list_courses(log=true){
                 var received_data = JSON.parse(request.responseText);
                 var destination = document.getElementById("content2");                
                 destination.innerHTML += `<div>
-                <input type="text" class="myInput" id="myInput" onkeyup="myFunction()" placeholder="Search for names.."></div>
+                <input type="text" class="myInput" id="myInput" onkeyup="myFunction()" placeholder="Filtrovat pomocí zkratky předmětu"></div>
                 <table class="myTable" id="myTable">
                 <tr class="header"><th>Zkratka</th><th>Jméno předmětu</th><th>Vyučující</th><th>Stav</th><th></th><th></th></tr>`
                 var table = document.getElementById("myTable");

@@ -60,7 +60,7 @@ function list_subjects(log=true){
                 var received_data = JSON.parse(request.responseText);
                 var destination = document.getElementById("content2");
                 destination.innerHTML = `<div>
-                <input type="text" class="myInput" id="myInput" onkeyup="myFunction()" placeholder="Search for names.."></div>
+                <input type="text" class="myInput" id="myInput" onkeyup="myFunction()" placeholder="Filtrovat pomocí zkratky"></div>
                 <table class="myTable" id="myTable">
                 <tr class="header"><th>Zkratka</th><th>Jméno předmětu</th><th>Vyučující</th><th>Stav</th><th>Stav předmětu</th></tr>`
                 var table = document.getElementById("myTable"); 
@@ -190,7 +190,7 @@ function manage_students(subject_ID,log=true){
                     document.getElementById("modal-header").innerHTML = `<h1>Správa studentů ${subject_ID}</h1>`
                     content.innerHTML = "";
                     content.innerHTML += `<div>
-                    <input type="text" class="myInput" id="myInput" onkeyup="myFunction()" placeholder="Search for names.."></div>
+                    <input type="text" class="myInput" id="myInput" onkeyup="myFunction()" placeholder="Filtrovat pomocí uživatele"></div>
                     <table class="myTable" id="myTable">
                     <tr class="header"><th>Login</th><th>Stav</th><th></th><th></th></tr>`;
                     var table = document.getElementById("myTable");                        
@@ -544,7 +544,7 @@ function write_answer(question_ID){
                 console.log(request.responseText);
                 var received_data = JSON.parse(this.responseText);
                 if(received_data.status == "ok"){
-                    list_answers_content(question_ID);
+                    list_answers_content(question_ID,false);
                     close_modal();
                 }
                 else if(received_data.status == "your_question"){
@@ -705,7 +705,7 @@ function create_reaction(question_ID,login){
                 var received_data = JSON.parse(this.responseText);
                 if(received_data.status == "ok"){
                     console.log("zadano");
-                    list_reactions_content(question_ID,login);
+                    list_reactions_content(question_ID,login,false);
                     close_modal();
                 }
                 else{
