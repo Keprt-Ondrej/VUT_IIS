@@ -74,10 +74,19 @@ function list_subjects(log=true){
                     else{
                         user_status = element.role;
                     }
-                    
+                    var link1;
+                    var link2;
+                    if(status_subject == "Potvrzené"){
+                        link1 = `<a href="#" onclick="list_category(\'${element.subject_ID}\');">${element.subject_ID}</a>`
+                        link2 = `<a href="#" onclick="list_category(\'${element.subject_ID}\');">${element.subject_name}</a>`;
+                    }   
+                    else{
+                        link1 = element.subject_ID;
+                        link2 = element.subject_name;
+                    }                    
                     table.innerHTML += `<tr>
-                    <td><a href="#" onclick="list_category(\'${element.subject_ID}\');">${element.subject_ID}</a></td>
-                    <td><a href="#" onclick="list_category(\'${element.subject_ID}\');">${element.subject_name}</a></td>
+                    <td>${link1}</td>
+                    <td>${link2}</td>
                     <td>${element.login}</td>
                     <td id="${element.subject_ID}_row">${user_status}</td> 
                     <td>${status_subject}</td></tr>`;
@@ -462,7 +471,7 @@ function return_answer_actions_area(final_answer,role,login,question_ID,votes,co
     else{
         if(role == true){   //teacher
             //evaluate            
-            return `${correct_answer_converter(correct)}<label>Body: </label><input type="text" id="${login}_points"size="1" value="${votes}"> Správně: <input type="checkbox" id="${login}_correct"><input type="button" onclick="evaluate_answer(\'${question_ID}\',\'${login}\',\'${votes}\');" value="Vyhodnotit">`;
+            return `<div id="${login}_answer" style="float: left;">${correct_answer_converter(correct)}</div><label>Body: </label><input type="text" id="${login}_points"size="1" value="${votes}"> Správně: <input type="checkbox" id="${login}_correct"><input type="button" onclick="evaluate_answer(\'${question_ID}\',\'${login}\',\'${votes}\');" value="Vyhodnotit">`;
         }
         else if(role == false){     //student   list_reactions_content(question_ID,login)
             //reactions
@@ -580,7 +589,13 @@ function evaluate_answer(question_ID,login,votes){
                 console.log(request.responseText);
                 var received_data = JSON.parse(this.responseText);
                 if(received_data.status == "ok"){
-                    alert("prijato");
+                    if(correct){
+                        document.getElementById(login+"_answer").innerHTML = `<div style="color: green;float: left;margin-right: 10px;">správně  </div>`;
+                    }
+                    else{
+                        document.getElementById(login+"_answer").innerHTML = `<div style="color: red;float: left;margin-right: 10px;">špatně  </div>`;
+                    }
+                    alert("Přijato");
                 }
                 else{
                     alert("Nelze zobrazit reakce");
