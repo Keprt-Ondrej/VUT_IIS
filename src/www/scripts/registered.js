@@ -2,7 +2,11 @@ function subjects_content(){
     var content = document.getElementById("content");
     content.innerHTML =`<h1>Seznam předmětů</h1>`;
     loadHTML("content","unregistered/course_list_form.html",false);
-    document.getElementById("add_subject").innerHTML = `<h3><a href="#" onclick="create_subject_content();">Vytvořit předmět</a></h3>`
+    var logged = readCookie("logged");
+    console.log("list predmetu: "+logged)
+    if(logged != "neregistrovan"){
+        document.getElementById("add_subject").innerHTML = `<h3><a href="#" onclick="create_subject_content();">Vytvořit předmět</a></h3>`
+    }    
     document.getElementById("course_list_button").onclick = list_subjects;
 }
 
@@ -16,9 +20,15 @@ function sign_up_as_student(subject_ID){
         request.setRequestHeader("Content-Type", "application/json");
         request.onreadystatechange = function () {                
             if (request.readyState === 4 && request.status === 200) {
-                console.log(request.responseText);
-                console.log();
-                document.getElementById(subject_ID+"_row").innerHTML = `Nerozhodnuto`;                                
+                console.log(request.responseText);              
+                received_data = JSON.parse(request.responseText);
+                if (received_data.status == "ok"){
+                    document.getElementById(subject_ID+"_row").innerHTML = `Nerozhodnuto`; 
+                }
+                else if(received_data.status == "not_logged"){
+                    alert("Přihlaste se do systému Fitusky!");
+                }
+                else  alert("Nastala chyba");                                              
             }
         }
         request.send(send_data);
@@ -29,7 +39,6 @@ function sign_up_as_student(subject_ID){
     return;    
 }
 
-//<a href="#" onclick="subjects_content();">Předměty</a>
 function list_subjects(){
     console.log("list_subjects");
     var send_data = course_list_form_JSON();
@@ -376,8 +385,7 @@ function list_answers_content(question_ID){
                     var content = document.getElementById("content");
                     content.innerHTML = "";
                     content.innerHTML += `<h3>Otázka: ${received_data.brief}</h3>`;
-                    content.innerHTML += `<p>${received_data.full_question}</p>`; 
-                    var answer_actions;
+                    content.innerHTML += `<p>${received_data.full_question}</p>`;
                     if (received_data.answer != null){  //final answer is defined
                         content.innerHTML +=`<h3>Správná odpověd:</h3>
                         <p>${received_data.answer}</p>`;
@@ -427,6 +435,9 @@ function return_answer_actions_area(final_answer,role,login,question_ID,votes){
             <input type="button" onclick="list_reactions_content(\'${question_ID}\',\'${login}\');" value="Zobrazit reakce">
             <input type="button" onclick="add_rating(\'${question_ID}\',\'${login}\');" value="Přidat hlas">`;
         }
+        else{
+            return `<input type="button" onclick="list_reactions_content(\'${question_ID}\',\'${login}\');" value="Zobrazit reakce">`;
+        }
     }
     else{
         if(role == true){   //teacher
@@ -436,6 +447,9 @@ function return_answer_actions_area(final_answer,role,login,question_ID,votes){
         else if(role == false){     //student   list_reactions_content(question_ID,login)
             //reactions
             return `<input type="button" onclick="list_reactions_content(\'${question_ID}\',\'${login}\');" value="Zobrazit reakce">`; 
+        }
+        else{
+            return `<input type="button" onclick="list_reactions_content(\'${question_ID}\',\'${login}\');" value="Zobrazit reakce">`;
         }
     }
     return ``;
@@ -575,7 +589,9 @@ function list_reactions_content(question_ID,login){
                     var content = document.getElementById("content");
                     content.innerHTML = "<h3>Odpověď:</h3>";                
                     content.innerHTML += `${received_data.answer}`;
-                    content.innerHTML += `<h3><a href="#" onclick="create_reaction_content(\'${question_ID}\',\'${login}\');">Vytvořit reakci</a></h3>`;
+                    if(received_data.role != null){
+                        content.innerHTML += `<h3><a href="#" onclick="create_reaction_content(\'${question_ID}\',\'${login}\');">Vytvořit reakci</a></h3>`;
+                    }
                     content.innerHTML += `<h3>Reakce:</h3>`;                    
                     received_data["reactions"].reverse().forEach(element => {
                         content.innerHTML += `<div class="answer">autor:${element.reaction_login}<br>${element.text}</div`;

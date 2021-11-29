@@ -15,7 +15,8 @@
         "change_password":{
             "request":{
                 "login": "username",
-                "pwd"  : "new_password"
+                "pwd"  : "new_password",
+                "role" : "new_role"
             },
             "response":{
                 "status": "ok | wrong_login"
@@ -38,7 +39,8 @@
 
         "delete_user":{
             "request":{
-                "login": "username"
+                "login"  : "username",
+                "deleted": "true | null"
             },
             "response":{
                 "status": "ok | wrong_login"
@@ -186,10 +188,10 @@
                 "password" : "password"
             },
             "response":{
+                "status": "ok | deleted_user",
                 "login" : "login",
                 "role"  : "role"
             }
-
         },
         "list_subjects":{
             "request":{
@@ -313,8 +315,6 @@
                     }
                 ]
             }
-
         }
-
-    
+    }
 }

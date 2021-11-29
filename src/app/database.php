@@ -63,8 +63,14 @@
             $teacher_stmt->execute();
 
             $role = 0;
-            if($teacher_stmt->fetch()) $role += 1;
-            if($student_stmt->fetch()) $role += 2;
+            if($row = $teacher_stmt->fetch()){
+              $role += 1;
+              $response["approved"] = $row["approved"];
+            }
+            if($row = $student_stmt->fetch()){
+              $role += 2;
+              $response["approved"] = $row["approved"];
+            }
             switch($role){
               case 0:  $response["role"] = null; break;
               case 1:  $response["role"] = True; break;
@@ -101,13 +107,12 @@
     }
 
     public function delete_user($args){
-      return json_encode(array("status"=>"Not implemented due to me wanting to sleep and this is too much to think about..."));
       $response = array();
       $response["status"] = "ok";
       if(isset($this->db)){
         try{
           $this->db->beginTransaction();
-          $statement = $this->db->prepare("DELETE FROM users WHERE login=:login");
+          $statement = $this->db->prepare("UPDATE users SET deleted=:deleted WHERE login=:login");
           $statement->execute($args);
           $this->db->commit();
         }
@@ -125,7 +130,7 @@
       $response["status"] = "ok";
       if(isset($this->db)){
         try{
-          $statement = $this->db->prepare("SELECT login,role FROM users");
+          $statement = $this->db->prepare("SELECT login,role,deleted FROM users");
           $statement->execute();
 
           $response["statement"] = $statement;
@@ -163,11 +168,18 @@
       if(isset($this->db)){
         try{
           $this->db->beginTransaction();
-          $statement = $this->db->prepare("UPDATE users SET password=:pwd WHERE login=:login");
-          $statement->execute($args);
-
-          $response["statement"] = $statement;
-
+          if(isset($args["pwd"])){
+            $statement = $this->db->prepare("UPDATE users SET password=:pwd WHERE login=:login");
+            $statement->bindParam(":login", $args["login"]);
+            $statement->bindParam(":pwd", $args["pwd"]);
+            $statement->execute();
+          }
+          if(isset($args["role"])){
+            $statement = $this->db->prepare("UPDATE users SET role=:role WHERE login=:login");
+            $statement->bindParam(":login", $args["login"]);
+            $statement->bindParam(":role", $args["role"]);
+            $statement->execute();
+          }
           $this->db->commit();
         }
         catch(PDOException $e){
@@ -543,7 +555,7 @@
       return $response;
     }
 
-   public function login_to_points($args){
+    public function login_to_points($args){
       $response = array();
       $response["status"] = "ok";
       if(isset($this->db)){
@@ -564,7 +576,6 @@
       }
       else $response["status"] = "Database connection not initialized";
       return $response;
-
     }
 
     public function number_of_ratings($args){
@@ -588,7 +599,6 @@
       }
       else $response["status"] = "Database connection not initialized";
       return $response;
-
     }
 
     public function list_reactions($args){

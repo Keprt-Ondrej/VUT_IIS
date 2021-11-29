@@ -14,5 +14,8 @@
       $retval = $database->sign_up_as_student($recv_data);
       echo json_encode($retval);
     }
+    else{
+      echo json_encode(array("status" => "not_logged")); 
+    }       
 ?>
   

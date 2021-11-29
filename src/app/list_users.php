@@ -28,6 +28,7 @@
       $tmp = new stdClass();
       $tmp->login  = $row["login"];
       $tmp->role = $row["role"];
+      $tmp->deleted = $row["deleted"];
       array_push($response['users'], $tmp);
     } 
       echo json_encode($response);
