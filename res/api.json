@@ -15,7 +15,8 @@
         "change_password":{
             "request":{
                 "login": "username",
-                "pwd"  : "new_password"
+                "pwd"  : "new_password",
+                "role" : "new_role"
             },
             "response":{
                 "status": "ok | wrong_login"

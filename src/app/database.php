@@ -163,11 +163,18 @@
       if(isset($this->db)){
         try{
           $this->db->beginTransaction();
-          $statement = $this->db->prepare("UPDATE users SET password=:pwd WHERE login=:login");
-          $statement->execute($args);
-
-          $response["statement"] = $statement;
-
+          if(isset($args["pwd"])){
+            $statement = $this->db->prepare("UPDATE users SET password=:pwd WHERE login=:login");
+            $statement->bindParam(":login", $args["login"]);
+            $statement->bindParam(":pwd", $args["pwd"]);
+            $statement->execute();
+          }
+          if(isset($args["role"])){
+            $statement = $this->db->prepare("UPDATE users SET role=:role WHERE login=:login");
+            $statement->bindParam(":login", $args["login"]);
+            $statement->bindParam(":role", $args["role"]);
+            $statement->execute();
+          }
           $this->db->commit();
         }
         catch(PDOException $e){
